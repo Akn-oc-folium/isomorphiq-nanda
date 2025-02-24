@@ -4,23 +4,23 @@
 
 import 'dart:convert';
 
-GoogleSign googleSignFromJson(String str) =>
-    GoogleSign.fromJson(json.decode(str));
+SignAuth googleSignFromJson(String str) =>
+    SignAuth.fromJson(json.decode(str));
 
-String googleSignToJson(GoogleSign data) => json.encode(data.toJson());
+String googleSignToJson(SignAuth data) => json.encode(data.toJson());
 
-class GoogleSign {
+class SignAuth {
   final Data data;
   final int code;
   final String message;
 
-  GoogleSign({
+  SignAuth({
     required this.data,
     required this.code,
     required this.message,
   });
 
-  factory GoogleSign.fromJson(Map<String, dynamic> json) => GoogleSign(
+  factory SignAuth.fromJson(Map<String, dynamic> json) => SignAuth(
         data: Data.fromJson(json["data"]),
         code: json["code"],
         message: json["message"],

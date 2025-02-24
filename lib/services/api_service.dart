@@ -165,7 +165,7 @@ class ApiService {
     }
   }
 
-  Future<GoogleSign> getGoogleAuthLink({
+  Future<SignAuth> getGoogleAuthLink({
     required String userId,
   }) async {
     try {
@@ -176,9 +176,87 @@ class ApiService {
         },
       );
       if (response.statusCode == 200) {
-        return GoogleSign.fromJson(response.data as Map<String, dynamic>);
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
       } else {
-        throw Exception('Failed to fetch the dashbord!');
+        throw Exception('Failed to fetch google auth!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
+
+  Future<SignAuth> getDiscordAuthLink({
+    required String userId,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.discordEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch discord auth!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
+
+  Future<SignAuth> getTwitterAuthLink({
+    required String userId,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.twitterEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch twitter auth!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
+
+  Future<SignAuth> getFacebookAuthLink({
+    required String userId,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.facebookEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch facebook auth!');
       }
     } catch (e) {
       String errorMessage;

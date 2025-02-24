@@ -43,7 +43,7 @@ class SourcesViewMobile extends ViewModelWidget<SourcesViewModel> {
           ),
         ),
         body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 36.0.h),
+          padding: EdgeInsets.symmetric(vertical: 24.0.h),
           child: TabBarView(
             children: [
               GridView.count(
@@ -55,7 +55,8 @@ class SourcesViewMobile extends ViewModelWidget<SourcesViewModel> {
                   ConnectCard(
                     title: 'Google',
                     imagePath: Assets.icons.googleLogo.path,
-                    onConnect: () => viewModel.navigateToGoogleAuth(),
+                    onConnect: () => viewModel.connectToGoogle(),
+                    isConnected: viewModel.isConnected,
                   ),
                   ConnectCard(
                     title: 'Telegram',
@@ -66,12 +67,17 @@ class SourcesViewMobile extends ViewModelWidget<SourcesViewModel> {
                   ConnectCard(
                     title: 'X',
                     imagePath: Assets.icons.xLogo.path,
-                    onConnect: () {},
+                    onConnect: () => viewModel.connectToTwitter(),
                   ),
                   ConnectCard(
                     title: 'Discord',
                     imagePath: Assets.icons.discordLogo.path,
-                    onConnect: () {},
+                    onConnect: () => viewModel.connectToDiscord(),
+                  ),
+                  ConnectCard(
+                    title: 'Facebook',
+                    imagePath: Assets.icons.discordLogo.path,
+                    onConnect: () => viewModel.connectToFacebook(),
                   ),
                 ],
               ),

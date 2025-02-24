@@ -15,8 +15,8 @@ class GoogleAuthViewModel extends BaseViewModel {
   String? _authUrl;
   String? get authUrl => _authUrl;
 
-  GoogleSign? _googleSign;
-  GoogleSign? get googleSign => _googleSign;
+  SignAuth? _googleSign;
+  SignAuth? get googleSign => _googleSign;
 
   String? _errorMessage;
   String? get errorMessage => _errorMessage;

@@ -131,7 +131,7 @@ class _FakeUserRank_8 extends _i1.SmartFake implements _i8.UserRank {
         );
 }
 
-class _FakeGoogleSign_9 extends _i1.SmartFake implements _i9.GoogleSign {
+class _FakeGoogleSign_9 extends _i1.SmartFake implements _i9.SignAuth {
   _FakeGoogleSign_9(
     Object parent,
     Invocation parentInvocation,
@@ -908,14 +908,14 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i5.PostResponse>);
 
   @override
-  _i11.Future<_i9.GoogleSign> getGoogleAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getGoogleAuthLink({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
           #getGoogleAuthLink,
           [],
           {#userId: userId},
         ),
-        returnValue: _i11.Future<_i9.GoogleSign>.value(_FakeGoogleSign_9(
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeGoogleSign_9(
           this,
           Invocation.method(
             #getGoogleAuthLink,
@@ -924,7 +924,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i9.GoogleSign>.value(_FakeGoogleSign_9(
+            _i11.Future<_i9.SignAuth>.value(_FakeGoogleSign_9(
           this,
           Invocation.method(
             #getGoogleAuthLink,
@@ -932,7 +932,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             {#userId: userId},
           ),
         )),
-      ) as _i11.Future<_i9.GoogleSign>);
+      ) as _i11.Future<_i9.SignAuth>);
 }
 
 /// A class which mocks [HiveService].

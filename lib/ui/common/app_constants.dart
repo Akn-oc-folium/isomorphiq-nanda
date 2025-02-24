@@ -21,6 +21,9 @@ class AppConstants {
   static const String markTaskEndpoint = '/mark-task';
   static const String userLevelEndpoint = '/update-user-level';
   static const String googleEndpoint = '/google/login';
+  static const String discordEndpoint = '/discord/login';
+  static const String twitterEndpoint = '/twitter/login';
+  static const String facebookEndpoint = '/facebook/login';
 
   // Local Storage Constants
   static const String userBox = 'userBox';
