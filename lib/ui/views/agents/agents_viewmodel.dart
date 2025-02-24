@@ -1,4 +1,3 @@
-import 'package:flutter/widgets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/app/app.router.dart';
 import 'package:stacked/stacked.dart';
@@ -9,5 +8,13 @@ class AgentsViewModel extends BaseViewModel {
 
   void onTwitterPersonaPressed() {
     _routerService.navigateToAgentsTwitterPersonaView();
+  }
+
+  void onCryptoNewsPressed() {
+    _routerService.navigateToCryptoNewsAgentView();
+  }
+
+  void onPlanUpgradePressed() {
+    _routerService.navigateToChoosePlanView();
   }
 }

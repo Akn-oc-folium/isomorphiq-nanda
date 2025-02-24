@@ -17,6 +17,8 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
 import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
+import 'package:isomorph_iq/ui/views/crypto_news_agent/crypto_news_agent_view.dart';
+import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -31,6 +33,8 @@ import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_perso
     CustomRoute(page: GoogleAuthView),
     CustomRoute(page: AgentsView),
     CustomRoute(page: AgentsTwitterPersonaView),
+    CustomRoute(page: CryptoNewsAgentView),
+    CustomRoute(page: ChoosePlanView),
 // @stacked-route
 
     CustomRoute(page: UnknownView, path: '/404'),

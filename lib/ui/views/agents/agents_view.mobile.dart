@@ -67,7 +67,7 @@ class AgentsViewMobile extends ViewModelWidget<AgentsViewModel> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () => viewModel.onPlanUpgradePressed(),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent,
                           foregroundColor: Colors.white,
@@ -105,7 +105,7 @@ class AgentsViewMobile extends ViewModelWidget<AgentsViewModel> {
                   description:
                       'Monitor AI-curated news that matches your interests!',
                   imagePath: Assets.icons.xLogo.path,
-                  onPressed: () {},
+                  onPressed: () => viewModel.onCryptoNewsPressed(),
                 ),
                 const SizedBox(height: 20),
                 ConstrainedBox(
