@@ -5,10 +5,13 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:flutter/material.dart' as _i12;
-import 'package:stacked/stacked.dart' as _i11;
-import 'package:stacked_services/stacked_services.dart' as _i10;
+import 'package:flutter/material.dart' as _i14;
+import 'package:stacked/stacked.dart' as _i13;
+import 'package:stacked_services/stacked_services.dart' as _i12;
 
+import '../ui/views/agents/agents_view.dart' as _i9;
+import '../ui/views/agents_twitter_persona/agents_twitter_persona_view.dart'
+    as _i10;
 import '../ui/views/earn/earn_view.dart' as _i5;
 import '../ui/views/google_auth/google_auth_view.dart' as _i8;
 import '../ui/views/home/home_view.dart' as _i2;
@@ -17,19 +20,19 @@ import '../ui/views/onboarding/onboarding_view.dart' as _i3;
 import '../ui/views/play/play_view.dart' as _i7;
 import '../ui/views/sources/sources_view.dart' as _i4;
 import '../ui/views/startup/startup_view.dart' as _i1;
-import '../ui/views/unknown/unknown_view.dart' as _i9;
+import '../ui/views/unknown/unknown_view.dart' as _i11;
 
 final stackedRouter =
-    StackedRouterWeb(navigatorKey: _i10.StackedService.navigatorKey);
+    StackedRouterWeb(navigatorKey: _i12.StackedService.navigatorKey);
 
-class StackedRouterWeb extends _i11.RootStackRouter {
-  StackedRouterWeb({_i12.GlobalKey<_i12.NavigatorState>? navigatorKey})
+class StackedRouterWeb extends _i13.RootStackRouter {
+  StackedRouterWeb({_i14.GlobalKey<_i14.NavigatorState>? navigatorKey})
       : super(navigatorKey);
 
   @override
-  final Map<String, _i11.PageFactory> pagesMap = {
+  final Map<String, _i13.PageFactory> pagesMap = {
     StartupViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i1.StartupView(),
         opaque: true,
@@ -37,7 +40,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     HomeViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i2.HomeView(),
         opaque: true,
@@ -45,7 +48,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     OnboardingViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i3.OnboardingView(),
         opaque: true,
@@ -53,7 +56,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     SourcesViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i4.SourcesView(),
         opaque: true,
@@ -61,7 +64,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     EarnViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i5.EarnView(),
         opaque: true,
@@ -69,7 +72,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     JackpotViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i6.JackpotView(),
         opaque: true,
@@ -77,7 +80,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     PlayViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i7.PlayView(),
         opaque: true,
@@ -85,17 +88,33 @@ class StackedRouterWeb extends _i11.RootStackRouter {
       );
     },
     GoogleAuthViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
         child: const _i8.GoogleAuthView(),
         opaque: true,
         barrierDismissible: false,
       );
     },
-    UnknownViewRoute.name: (routeData) {
-      return _i11.CustomPage<dynamic>(
+    AgentsViewRoute.name: (routeData) {
+      return _i13.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i9.UnknownView(),
+        child: const _i9.AgentsView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    AgentsTwitterPersonaViewRoute.name: (routeData) {
+      return _i13.CustomPage<dynamic>(
+        routeData: routeData,
+        child: const _i10.AgentsTwitterPersonaView(),
+        opaque: true,
+        barrierDismissible: false,
+      );
+    },
+    UnknownViewRoute.name: (routeData) {
+      return _i13.CustomPage<dynamic>(
+        routeData: routeData,
+        child: const _i11.UnknownView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -103,44 +122,52 @@ class StackedRouterWeb extends _i11.RootStackRouter {
   };
 
   @override
-  List<_i11.RouteConfig> get routes => [
-        _i11.RouteConfig(
+  List<_i13.RouteConfig> get routes => [
+        _i13.RouteConfig(
           StartupViewRoute.name,
           path: '/',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           HomeViewRoute.name,
           path: '/home-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           OnboardingViewRoute.name,
           path: '/onboarding-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           SourcesViewRoute.name,
           path: '/sources-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           EarnViewRoute.name,
           path: '/earn-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           JackpotViewRoute.name,
           path: '/jackpot-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           PlayViewRoute.name,
           path: '/play-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           GoogleAuthViewRoute.name,
           path: '/google-auth-view',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
+          AgentsViewRoute.name,
+          path: '/agents-view',
+        ),
+        _i13.RouteConfig(
+          AgentsTwitterPersonaViewRoute.name,
+          path: '/agents-twitter-persona-view',
+        ),
+        _i13.RouteConfig(
           UnknownViewRoute.name,
           path: '/404',
         ),
-        _i11.RouteConfig(
+        _i13.RouteConfig(
           '*#redirect',
           path: '*',
           redirectTo: '/404',
@@ -151,7 +178,7 @@ class StackedRouterWeb extends _i11.RootStackRouter {
 
 /// generated route for
 /// [_i1.StartupView]
-class StartupViewRoute extends _i11.PageRouteInfo<void> {
+class StartupViewRoute extends _i13.PageRouteInfo<void> {
   const StartupViewRoute()
       : super(
           StartupViewRoute.name,
@@ -163,7 +190,7 @@ class StartupViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.HomeView]
-class HomeViewRoute extends _i11.PageRouteInfo<void> {
+class HomeViewRoute extends _i13.PageRouteInfo<void> {
   const HomeViewRoute()
       : super(
           HomeViewRoute.name,
@@ -175,7 +202,7 @@ class HomeViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.OnboardingView]
-class OnboardingViewRoute extends _i11.PageRouteInfo<void> {
+class OnboardingViewRoute extends _i13.PageRouteInfo<void> {
   const OnboardingViewRoute()
       : super(
           OnboardingViewRoute.name,
@@ -187,7 +214,7 @@ class OnboardingViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i4.SourcesView]
-class SourcesViewRoute extends _i11.PageRouteInfo<void> {
+class SourcesViewRoute extends _i13.PageRouteInfo<void> {
   const SourcesViewRoute()
       : super(
           SourcesViewRoute.name,
@@ -199,7 +226,7 @@ class SourcesViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.EarnView]
-class EarnViewRoute extends _i11.PageRouteInfo<void> {
+class EarnViewRoute extends _i13.PageRouteInfo<void> {
   const EarnViewRoute()
       : super(
           EarnViewRoute.name,
@@ -211,7 +238,7 @@ class EarnViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.JackpotView]
-class JackpotViewRoute extends _i11.PageRouteInfo<void> {
+class JackpotViewRoute extends _i13.PageRouteInfo<void> {
   const JackpotViewRoute()
       : super(
           JackpotViewRoute.name,
@@ -223,7 +250,7 @@ class JackpotViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.PlayView]
-class PlayViewRoute extends _i11.PageRouteInfo<void> {
+class PlayViewRoute extends _i13.PageRouteInfo<void> {
   const PlayViewRoute()
       : super(
           PlayViewRoute.name,
@@ -235,7 +262,7 @@ class PlayViewRoute extends _i11.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.GoogleAuthView]
-class GoogleAuthViewRoute extends _i11.PageRouteInfo<void> {
+class GoogleAuthViewRoute extends _i13.PageRouteInfo<void> {
   const GoogleAuthViewRoute()
       : super(
           GoogleAuthViewRoute.name,
@@ -246,8 +273,32 @@ class GoogleAuthViewRoute extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.UnknownView]
-class UnknownViewRoute extends _i11.PageRouteInfo<void> {
+/// [_i9.AgentsView]
+class AgentsViewRoute extends _i13.PageRouteInfo<void> {
+  const AgentsViewRoute()
+      : super(
+          AgentsViewRoute.name,
+          path: '/agents-view',
+        );
+
+  static const String name = 'AgentsView';
+}
+
+/// generated route for
+/// [_i10.AgentsTwitterPersonaView]
+class AgentsTwitterPersonaViewRoute extends _i13.PageRouteInfo<void> {
+  const AgentsTwitterPersonaViewRoute()
+      : super(
+          AgentsTwitterPersonaViewRoute.name,
+          path: '/agents-twitter-persona-view',
+        );
+
+  static const String name = 'AgentsTwitterPersonaView';
+}
+
+/// generated route for
+/// [_i11.UnknownView]
+class UnknownViewRoute extends _i13.PageRouteInfo<void> {
   const UnknownViewRoute()
       : super(
           UnknownViewRoute.name,
@@ -257,9 +308,9 @@ class UnknownViewRoute extends _i11.PageRouteInfo<void> {
   static const String name = 'UnknownView';
 }
 
-extension RouterStateExtension on _i10.RouterService {
+extension RouterStateExtension on _i12.RouterService {
   Future<dynamic> navigateToStartupView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const StartupViewRoute(),
       onFailure: onFailure,
@@ -267,7 +318,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToHomeView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const HomeViewRoute(),
       onFailure: onFailure,
@@ -275,7 +326,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToOnboardingView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const OnboardingViewRoute(),
       onFailure: onFailure,
@@ -283,7 +334,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToSourcesView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const SourcesViewRoute(),
       onFailure: onFailure,
@@ -291,7 +342,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToEarnView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const EarnViewRoute(),
       onFailure: onFailure,
@@ -299,7 +350,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToJackpotView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const JackpotViewRoute(),
       onFailure: onFailure,
@@ -307,7 +358,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToPlayView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const PlayViewRoute(),
       onFailure: onFailure,
@@ -315,15 +366,31 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> navigateToGoogleAuthView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const GoogleAuthViewRoute(),
       onFailure: onFailure,
     );
   }
 
+  Future<dynamic> navigateToAgentsView(
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
+    return navigateTo(
+      const AgentsViewRoute(),
+      onFailure: onFailure,
+    );
+  }
+
+  Future<dynamic> navigateToAgentsTwitterPersonaView(
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
+    return navigateTo(
+      const AgentsTwitterPersonaViewRoute(),
+      onFailure: onFailure,
+    );
+  }
+
   Future<dynamic> navigateToUnknownView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return navigateTo(
       const UnknownViewRoute(),
       onFailure: onFailure,
@@ -331,7 +398,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithStartupView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const StartupViewRoute(),
       onFailure: onFailure,
@@ -339,7 +406,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithHomeView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const HomeViewRoute(),
       onFailure: onFailure,
@@ -347,7 +414,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithOnboardingView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const OnboardingViewRoute(),
       onFailure: onFailure,
@@ -355,7 +422,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithSourcesView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const SourcesViewRoute(),
       onFailure: onFailure,
@@ -363,7 +430,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithEarnView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const EarnViewRoute(),
       onFailure: onFailure,
@@ -371,7 +438,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithJackpotView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const JackpotViewRoute(),
       onFailure: onFailure,
@@ -379,7 +446,7 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithPlayView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const PlayViewRoute(),
       onFailure: onFailure,
@@ -387,15 +454,31 @@ extension RouterStateExtension on _i10.RouterService {
   }
 
   Future<dynamic> replaceWithGoogleAuthView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const GoogleAuthViewRoute(),
       onFailure: onFailure,
     );
   }
 
+  Future<dynamic> replaceWithAgentsView(
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
+    return replaceWith(
+      const AgentsViewRoute(),
+      onFailure: onFailure,
+    );
+  }
+
+  Future<dynamic> replaceWithAgentsTwitterPersonaView(
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
+    return replaceWith(
+      const AgentsTwitterPersonaViewRoute(),
+      onFailure: onFailure,
+    );
+  }
+
   Future<dynamic> replaceWithUnknownView(
-      {void Function(_i11.NavigationFailure)? onFailure}) async {
+      {void Function(_i13.NavigationFailure)? onFailure}) async {
     return replaceWith(
       const UnknownViewRoute(),
       onFailure: onFailure,

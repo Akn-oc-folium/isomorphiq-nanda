@@ -4,6 +4,8 @@ import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/gen/fonts.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
+import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
+import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
 import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
 import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
 import 'package:isomorph_iq/ui/views/play/play_view.dart';
@@ -48,6 +50,12 @@ class HomeViewMobile extends StatelessWidget {
               selectedIndex: viewModel.currentIndex,
               iconPath: Assets.icons.jackpot,
               label: ksJackpotNavTitle,
+            ),
+            getCustomizedNavItem(
+              index: 4,
+              selectedIndex: viewModel.currentIndex,
+              iconPath: Assets.icons.jackpot,
+              label: ksAgentNavTitle,
             ),
           ],
         ),
@@ -133,6 +141,8 @@ class HomeViewMobile extends StatelessWidget {
         return const PlayView();
       case 3:
         return const JackpotView();
+      case 4:
+        return const AgentsView();
     }
     return const SourcesView();
   }

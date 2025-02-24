@@ -6,6 +6,7 @@ const String ksSourcesNavTitle = 'Sources';
 const String ksEarnNavTitle = 'Earn';
 const String ksPlayNavTitle = 'Play';
 const String ksJackpotNavTitle = 'Jackpot';
+const String ksAgentNavTitle = 'Agents';
 
 // Local Storage Constants
 const String kUserBox = 'userBox';

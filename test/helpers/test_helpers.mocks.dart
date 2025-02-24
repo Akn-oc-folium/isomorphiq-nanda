@@ -81,8 +81,8 @@ class _FakeApiClient_3 extends _i1.SmartFake implements _i3.ApiClient {
         );
 }
 
-class _FakeDashboard_4 extends _i1.SmartFake implements _i4.UserProfile {
-  _FakeDashboard_4(
+class _FakeUserProfile_4 extends _i1.SmartFake implements _i4.UserProfile {
+  _FakeUserProfile_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -702,7 +702,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
           [],
           {#username: username},
         ),
-        returnValue: _i11.Future<_i4.UserProfile>.value(_FakeDashboard_4(
+        returnValue: _i11.Future<_i4.UserProfile>.value(_FakeUserProfile_4(
           this,
           Invocation.method(
             #getDashboard,
@@ -711,7 +711,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i4.UserProfile>.value(_FakeDashboard_4(
+            _i11.Future<_i4.UserProfile>.value(_FakeUserProfile_4(
           this,
           Invocation.method(
             #getDashboard,
