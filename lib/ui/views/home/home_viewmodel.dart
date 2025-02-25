@@ -22,11 +22,11 @@ class HomeViewModel extends IndexTrackingViewModel {
 
   Future<void> _fetchUserProfile() async {
     setBusy(true);
-    _username = await _hiveService.retrieveData(kUserBox, usernameKey);
+    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     debugPrint('TG username is: $_username');
     try {
       _userProfile = await _apiService.getDashboard(username: username!);
-      await _hiveService.storeData(kUserBox, userIdKey, _userProfile!.data.id);
+      await _hiveService.storeData(kUserBox, kUserIdKey, _userProfile!.data.id);
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     }

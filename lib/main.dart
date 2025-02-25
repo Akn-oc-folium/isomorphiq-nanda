@@ -51,6 +51,7 @@ class MainApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 706),
       builder: (contet, _) => MaterialApp.router(
+        scrollBehavior: MaterialScrollBehavior(),
         theme: AppThemes.getTheme(),
         routerDelegate: stackedRouter.delegate(),
         routeInformationParser: stackedRouter.defaultRouteParser(),

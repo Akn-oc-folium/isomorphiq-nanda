@@ -10,7 +10,7 @@ import 'package:isomorph_iq/ui/widgets/inline_link_text.dart';
 import 'package:stacked/stacked.dart';
 
 class OnboardingViewMobile extends StatelessWidget {
-  const OnboardingViewMobile({Key? key}) : super(key: key);
+  const OnboardingViewMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class OnboardingViewMobile extends StatelessWidget {
 class _OnboardingView1 extends StatefulWidget {
   final OnboardingViewModel viewModel;
 
-  const _OnboardingView1({Key? key, required this.viewModel}) : super(key: key);
+  const _OnboardingView1({required this.viewModel});
 
   @override
   State<_OnboardingView1> createState() => __OnboardingView1State();
@@ -112,7 +112,7 @@ class __OnboardingView1State extends State<_OnboardingView1>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hi User2!',
+                      'Hi ${widget.viewModel.userFirstName}!',
                       style: TextStyles.titlePrimary
                           .copyWith(color: kcPrimaryColor),
                     ),
@@ -263,9 +263,8 @@ class _OnboardingView3 extends StatefulWidget {
   final OnboardingViewModel viewModel;
 
   const _OnboardingView3({
-    Key? key,
     required this.viewModel,
-  }) : super(key: key);
+  });
 
   @override
   State<_OnboardingView3> createState() => __OnboardingView3State();

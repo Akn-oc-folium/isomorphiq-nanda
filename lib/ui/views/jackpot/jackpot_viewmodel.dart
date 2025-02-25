@@ -25,7 +25,7 @@ class JackpotViewModel extends BaseViewModel {
 
   Future<void> fetchLeaderboard() async {
     setBusy(true);
-    _username = await _hiveService.retrieveData(kUserBox, usernameKey);
+    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     try {
       _leaderboard = await _apiService.getLeaderboard();
     } catch (e) {

@@ -75,7 +75,7 @@ class PlayViewModel extends BaseViewModel {
         notifyListeners();
       } else {
         debugPrint("Game Over! Total Points: $totalPoints");
-        var username = await _hiveService.retrieveData(kUserBox, usernameKey);
+        var username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
         await _apiService.postUserPoints(
             username: username, points: totalPoints);
         openRewardsSheet();

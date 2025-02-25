@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
-import 'package:isomorph_iq/ui/widgets/buttons.dart';
+import 'package:isomorph_iq/ui/common/ui_helpers.dart';
+import 'package:isomorph_iq/ui/widgets/task_card.dart';
 import 'package:stacked/stacked.dart';
 
 import 'agents_viewmodel.dart';
@@ -15,112 +16,70 @@ class AgentsViewMobile extends ViewModelWidget<AgentsViewModel> {
   Widget build(BuildContext context, AgentsViewModel viewModel) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        title: Text(
-          'AI Agents',
-          style: TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
-        ),
-        titleSpacing: 16.0,
-        backgroundColor: Colors.white,
-        elevation: 0,
-      ),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(24.0).r,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  'AI Agents',
+                  style:
+                      TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
+                ),
+                verticalSpace08,
                 Text(
                   'Use IsomorphIQ AI Personas that enhance your interactions with the world around you.',
                   style: TextStyles.titleTertiary
                       .copyWith(color: kcSecondaryColor),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFB43B18), Color(0xFFE05A2F)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 7,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Pro Agent Plan',
-                                style: TextStyles.titleSecondary
-                                    .copyWith(color: kcPrimaryColorLight)),
-                            const SizedBox(height: 4),
-                            Text(
-                              '3 day trial • 50 credits left',
-                              style: TextStyles.bodyPrimary
-                                  .copyWith(color: kcPrimaryColorLight),
-                            ),
-                          ],
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: () => viewModel.onPlanUpgradePressed(),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent,
-                          foregroundColor: Colors.white,
-                          elevation: 0,
-                          side: BorderSide(
-                              color: Colors.white.withOpacity(0.7), width: 1.5),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        child: Text('Upgrade',
-                            style: TextStyles.titleTertiary
-                                .copyWith(color: kcPrimaryColorLight)),
-                      ),
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 20),
-                _buildAgentOption(
+                verticalSpace04,
+                verticalSpace16,
+                _SubscriptionCard(),
+                verticalSpace04,
+                verticalSpace16,
+                TaskCard.description(
                   title: 'Twitter Persona',
                   description:
-                      'Create your own unique Twitter AI Persona that tweets for you!',
-                  imagePath: Assets.icons.xLogo.path,
-                  onPressed: () => viewModel.onTwitterPersonaPressed(),
+                      'Create a unique Twitter Clone that tweets for you!',
+                  imagePath: Assets.icons.xLogoOutline,
+                  onTap: () => viewModel.onTwitterPersonaPressed(),
                 ),
-                _buildAgentOption(
+                verticalSpace16,
+                TaskCard.description(
                   title: 'AI Persona',
                   description:
                       'Customize the tone and style of your AI Persona.',
-                  imagePath: Assets.icons.xLogo.path,
-                  onPressed: () {},
+                  imagePath: Assets.icons.aiPersona,
+                  onTap: () => viewModel.onTwitterPersonaPressed(),
                 ),
-                _buildAgentOption(
+                verticalSpace16,
+                TaskCard.description(
                   title: 'Crypto News',
                   description:
                       'Monitor AI-curated news that matches your interests!',
-                  imagePath: Assets.icons.xLogo.path,
-                  onPressed: () => viewModel.onCryptoNewsPressed(),
+                  imagePath: Assets.icons.news,
+                  onTap: () => viewModel.onCryptoNewsPressed(),
                 ),
-                const SizedBox(height: 20),
-                ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 400),
-                  child: Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(16),
-                    decoration: BoxDecoration(
-                      color: Colors.orange.shade50,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Center(
-                      child: Text('Many more agents coming soon!',
-                          style: TextStyles.bodyPrimary.copyWith(
-                              color: kcPrimaryColor, letterSpacing: -0.5)),
+                verticalSpace04,
+                verticalSpace16,
+                Container(
+                  width: double.infinity,
+                  height: 72.h,
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.orange.shade50,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Many more agents coming soon!',
+                      style: TextStyles.bodyPrimary.copyWith(
+                        color: kcPrimaryColor,
+                        fontWeight: FontWeight.w600,
+                        height: 1.1428.h,
+                      ),
                     ),
                   ),
                 ),
@@ -131,55 +90,65 @@ class AgentsViewMobile extends ViewModelWidget<AgentsViewModel> {
       ),
     );
   }
+}
 
-  Widget _buildAgentOption({
-    required String title,
-    required String description,
-    required String imagePath,
-    required VoidCallback onPressed,
-  }) {
+class _SubscriptionCard extends ViewModelWidget<AgentsViewModel> {
+  @override
+  Widget build(BuildContext context, AgentsViewModel viewModel) {
     return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(vertical: 8),
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 12).r,
       decoration: BoxDecoration(
-        color: kcPrimaryColorLight,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: const [
-          BoxShadow(
-            color: kcStrokePrimary,
-            blurRadius: 0,
-            offset: Offset(0, 1),
-          ),
-        ],
+        gradient: const LinearGradient(
+          colors: [Color(0xFF652C46), Color(0xFFDC4A26)],
+          begin: Alignment.centerLeft,
+          end: Alignment.centerRight,
+          stops: [0.55, 1.0],
+        ),
+        borderRadius: BorderRadius.circular(12).r,
       ),
       child: Row(
         children: [
-          PrimaryButton.icon(
-              icon: Image.asset(
-                imagePath,
-                height: 24,
-                width: 24,
-              ),
-              onPressed: () {}),
-          const SizedBox(width: 12),
+          horizontalSpace08,
           Expanded(
+            flex: 7,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(title, style: TextStyles.titleSecondary),
-                const SizedBox(height: 4),
-                Text(description, style: TextStyles.bodyPrimary),
+                Text(
+                  'Pro Agent Plan',
+                  style: TextStyles.titleSecondary
+                      .copyWith(color: kcPrimaryColorLight),
+                ),
+                verticalSpace04,
+                Text(
+                  '3 day trial • 50 credits left',
+                  style: TextStyles.titleTertiary.copyWith(
+                    color: kcPrimaryColorLight,
+                    fontSize: 12,
+                    height: 1.5,
+                  ),
+                ),
               ],
             ),
           ),
-          const SizedBox(width: 12),
-          PrimaryButton.icon(
-              icon: SvgPicture.asset(
-                Assets.icons.arrowRight,
-                height: 24,
-                width: 24,
+          FilledButton.tonal(
+            onPressed: () => viewModel.onPlanUpgradePressed(),
+            style: FilledButton.styleFrom(
+              backgroundColor: Colors.white.withValues(alpha: 0.16),
+              foregroundColor: Colors.white,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8).r,
               ),
-              onPressed: onPressed)
+              padding:
+                  const EdgeInsets.symmetric(vertical: 10, horizontal: 12).r,
+            ),
+            child: Text(
+              'Upgrade',
+              style:
+                  TextStyles.titleTertiary.copyWith(color: kcPrimaryColorLight),
+            ),
+          ),
         ],
       ),
     );

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/models/tweet_model.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
+import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
+import 'package:isomorph_iq/ui/widgets/custom_app_bar.dart';
 import 'package:stacked/stacked.dart';
 
 import 'agents_twitter_persona_viewmodel.dart';
@@ -24,45 +27,61 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
             builder: (context, viewModel, child) {
               return Scaffold(
                 backgroundColor: Colors.white,
-                appBar: AppBar(
-                  backgroundColor: kcWhite,
-                  elevation: 0,
-                  leading: IconButton(
-                    onPressed: viewModel.navigateBack,
-                    icon: Icon(Icons.arrow_back, color: Colors.black),
-                  ),
+                appBar: CustomAppBar(
+                  context: context,
                   actions: [
-                    IconButton(onPressed: () {}, icon: Icon(Icons.settings))
+                    IconButton(
+                      onPressed: () {},
+                      icon: SvgPicture.asset(
+                        Assets.icons.settingsOutline,
+                        height: 24.r,
+                      ),
+                      iconSize: 48.r,
+                    )
                   ],
                 ),
                 body: Padding(
-                  padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24).w,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         "Twitter Persona",
-                        style: TextStyles.titlePrimary,
+                        style: TextStyles.titlePrimary
+                            .copyWith(color: kcSecondaryColor),
                       ),
+                      verticalSpace08,
                       Text(
                         'Use your personal AI Twitter Persona to generate tweets and replies for you!',
-                        style: TextStyles.titleTertiary,
+                        style: TextStyles.titleTertiary
+                            .copyWith(color: kcSecondaryColor),
                       ),
-                      SizedBox(height: 20),
+                      verticalSpace04,
+                      verticalSpace08,
                       PrimaryButton(text: "Generate Tweet", onPressed: () {}),
-                      SizedBox(height: 20),
+                      verticalSpace04,
+                      verticalSpace16,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
                             'Generated Tweets',
-                            style: TextStyles.titleSecondary
-                                .copyWith(color: kcSecondaryColor),
+                            style: TextStyles.titleSecondary.copyWith(
+                              color: kcSecondaryColor,
+                              fontSize: 18.sp,
+                              height: 1.h,
+                            ),
                           ),
-                          Icon(Icons.filter_list, color: Colors.black54),
+                          SvgPicture.asset(
+                            Assets.icons.sort,
+                            height: 24.r,
+                            colorFilter: const ColorFilter.mode(
+                                kcSecondaryColor, BlendMode.srcIn),
+                          ),
                         ],
                       ),
-                      SizedBox(height: 10),
+                      verticalSpace04,
+                      verticalSpace08,
                       Expanded(
                         child: viewModel.isLoading
                             ? Center(child: CircularProgressIndicator())
@@ -85,11 +104,11 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
 
   Widget _buildTweetCard(Tweet tweet, AgentsTwitterPersonaViewModel viewModel) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
-      padding: EdgeInsets.all(12),
+      margin: const EdgeInsets.symmetric(vertical: 8).h,
+      padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12).r,
         boxShadow: [
           BoxShadow(
             color: Colors.black12,
@@ -103,27 +122,30 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
         children: [
           Text(
             '${tweet.type} #${tweet.id}',
-            style: TextStyles.titleSecondary,
+            style: TextStyles.buttonText.copyWith(color: kcSecondaryColor),
           ),
-          SizedBox(height: 6),
+          verticalSpace08,
           Text(
             tweet.content,
-            style: TextStyles.bodyPrimary,
+            style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
           ),
-          SizedBox(height: 12),
+          verticalSpace08,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               PrimaryButton.icon(
-                  icon: SvgPicture.asset(
-                    Assets.icons.arrowRight,
-                    height: 24,
-                    width: 24,
-                  ),
+                  icon: SvgPicture.asset(Assets.icons.trash,
+                      height: 24.r,
+                      colorFilter:
+                          const ColorFilter.mode(kcWhite, BlendMode.srcIn)),
                   onPressed: () {}),
-              const SizedBox(width: 20),
+              horizontalSpace16,
               Expanded(
-                  child: PrimaryButton(text: "Tweet Now", onPressed: () {}))
+                child: PrimaryButton(
+                  text: "Tweet Now",
+                  onPressed: () {},
+                ),
+              )
             ],
           ),
         ],

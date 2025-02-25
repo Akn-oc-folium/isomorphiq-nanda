@@ -31,9 +31,9 @@ class OnboardingViewModel extends BaseViewModel {
     } else {
       _userFirstName = telegramUser.firstName;
       await _hiveService.storeData(
-          kUserBox, userFirstNameKey, telegramUser.firstName);
+          kUserBox, kFirstNameKey, telegramUser.firstName);
       await _hiveService.storeData(
-          kUserBox, usernameKey, telegramUser.username);
+          kUserBox, kUsernameKey, telegramUser.username);
       debugPrint("User details: $telegramUser");
     }
   }

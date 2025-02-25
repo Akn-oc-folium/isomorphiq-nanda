@@ -268,4 +268,30 @@ class ApiService {
       throw errorMessage;
     }
   }
+
+  Future<SignAuth> getSpotifyAuthLink({
+    required String userId,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.spotifyEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch spotify auth!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
 }

@@ -131,8 +131,8 @@ class _FakeUserRank_8 extends _i1.SmartFake implements _i8.UserRank {
         );
 }
 
-class _FakeGoogleSign_9 extends _i1.SmartFake implements _i9.SignAuth {
-  _FakeGoogleSign_9(
+class _FakeSignAuth_9 extends _i1.SmartFake implements _i9.SignAuth {
+  _FakeSignAuth_9(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -915,7 +915,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
           [],
           {#userId: userId},
         ),
-        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeGoogleSign_9(
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
             #getGoogleAuthLink,
@@ -924,10 +924,118 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
           ),
         )),
         returnValueForMissingStub:
-            _i11.Future<_i9.SignAuth>.value(_FakeGoogleSign_9(
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
             #getGoogleAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+      ) as _i11.Future<_i9.SignAuth>);
+
+  @override
+  _i11.Future<_i9.SignAuth> getDiscordAuthLink({required String? userId}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getDiscordAuthLink,
+          [],
+          {#userId: userId},
+        ),
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getDiscordAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getDiscordAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+      ) as _i11.Future<_i9.SignAuth>);
+
+  @override
+  _i11.Future<_i9.SignAuth> getTwitterAuthLink({required String? userId}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getTwitterAuthLink,
+          [],
+          {#userId: userId},
+        ),
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getTwitterAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getTwitterAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+      ) as _i11.Future<_i9.SignAuth>);
+
+  @override
+  _i11.Future<_i9.SignAuth> getFacebookAuthLink({required String? userId}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getFacebookAuthLink,
+          [],
+          {#userId: userId},
+        ),
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getFacebookAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getFacebookAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+      ) as _i11.Future<_i9.SignAuth>);
+
+  @override
+  _i11.Future<_i9.SignAuth> getSpotifyAuthLink({required String? userId}) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getSpotifyAuthLink,
+          [],
+          {#userId: userId},
+        ),
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getSpotifyAuthLink,
+            [],
+            {#userId: userId},
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getSpotifyAuthLink,
             [],
             {#userId: userId},
           ),
@@ -991,4 +1099,14 @@ class MockHiveService extends _i1.Mock implements _i19.HiveService {
         returnValue: _i11.Future<bool>.value(false),
         returnValueForMissingStub: _i11.Future<bool>.value(false),
       ) as _i11.Future<bool>);
+
+  @override
+  _i11.Future<void> closeAllBoxes() => (super.noSuchMethod(
+        Invocation.method(
+          #closeAllBoxes,
+          [],
+        ),
+        returnValue: _i11.Future<void>.value(),
+        returnValueForMissingStub: _i11.Future<void>.value(),
+      ) as _i11.Future<void>);
 }

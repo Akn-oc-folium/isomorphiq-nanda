@@ -152,8 +152,8 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                     child: Column(
                       children: [
                         TaskCard(
-                          description: viewModel.userProfile!.data.appTasks
-                              .first.assignments.first.description,
+                          title: viewModel.userProfile!.data.appTasks.first
+                              .assignments.first.description,
                           isDone: viewModel.taskCompletionStatus[0],
                           onTap: viewModel.taskCompletionStatus[0]
                               ? null
@@ -161,8 +161,8 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                         ),
                         verticalSpace08,
                         TaskCard(
-                          description: viewModel.userProfile!.data.appTasks
-                              .first.assignments[1].description,
+                          title: viewModel.userProfile!.data.appTasks.first
+                              .assignments[1].description,
                           isDone: viewModel.taskCompletionStatus[1],
                           onTap: viewModel.taskCompletionStatus[1]
                               ? null
@@ -170,8 +170,8 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                         ),
                         verticalSpace08,
                         TaskCard(
-                          description: viewModel.userProfile!.data.appTasks
-                              .first.assignments.last.description,
+                          title: viewModel.userProfile!.data.appTasks.first
+                              .assignments.last.description,
                           isDone: viewModel.taskCompletionStatus[2],
                           onTap: viewModel.taskCompletionStatus[2]
                               ? null

@@ -9,13 +9,25 @@ import 'package:isomorph_iq/ui/widgets/buttons.dart';
 
 class TaskCard extends StatelessWidget {
   final VoidCallback? onTap;
-  final String description;
+  final String title;
+  final String? description;
+  final String? imagePath;
   final bool? isDone;
 
   const TaskCard({
     super.key,
     this.onTap,
+    required this.title,
+    this.isDone = false,
+  })  : description = null,
+        imagePath = null;
+
+  const TaskCard.description({
+    super.key,
+    this.onTap,
+    required this.title,
     required this.description,
+    required this.imagePath,
     this.isDone = false,
   });
 
@@ -24,7 +36,7 @@ class TaskCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
-        color: kcWhite,
+        color: description != null ? kcPrimaryColorLight : kcWhite,
         borderRadius: BorderRadius.circular(12).r,
         border: Border.all(
           color: kcStrokeSecondary,
@@ -38,14 +50,48 @@ class TaskCard extends StatelessWidget {
       ),
       child: Row(
         children: [
+          if (description != null) ...[
+            Container(
+              width: 64.w,
+              height: 64.w,
+              decoration: BoxDecoration(
+                color: kcWhite,
+                borderRadius: BorderRadius.circular(12).r,
+              ),
+              child: Center(
+                child: SvgPicture.asset(
+                  imagePath!,
+                  width: 36.w,
+                  height: 36.w,
+                  fit: BoxFit.contain,
+                  colorFilter:
+                      const ColorFilter.mode(kcPrimaryColor, BlendMode.srcIn),
+                ),
+              ),
+            ),
+            horizontalSpace08,
+          ],
           Expanded(
-            child: Text(
-              description,
-              style:
-                  TextStyles.titleSecondary.copyWith(color: kcSecondaryColor),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyles.titleSecondary
+                      .copyWith(color: kcSecondaryColor),
+                ),
+                if (description != null) ...[
+                  verticalSpace04,
+                  Text(
+                    description!,
+                    style: TextStyles.bodySecondary
+                        .copyWith(color: Color(0xFF636363)),
+                  ),
+                ],
+              ],
             ),
           ),
-          horizontalSpace16,
+          horizontalSpace08,
           PrimaryButton.icon(
             disabledColor: isDone! ? kcStrokeSecondary : kcPrimaryColor,
             icon: SvgPicture.asset(

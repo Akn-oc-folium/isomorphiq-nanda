@@ -4,8 +4,7 @@
 
 import 'dart:convert';
 
-SignAuth googleSignFromJson(String str) =>
-    SignAuth.fromJson(json.decode(str));
+SignAuth googleSignFromJson(String str) => SignAuth.fromJson(json.decode(str));
 
 String googleSignToJson(SignAuth data) => json.encode(data.toJson());
 

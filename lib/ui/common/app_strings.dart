@@ -4,7 +4,6 @@ const String ksHomeBottomSheetDescription =
 
 const String ksSourcesNavTitle = 'Sources';
 const String ksEarnNavTitle = 'Earn';
-const String ksPlayNavTitle = 'Play';
 const String ksJackpotNavTitle = 'Jackpot';
 const String ksAgentNavTitle = 'Agents';
 
@@ -12,6 +11,7 @@ const String ksAgentNavTitle = 'Agents';
 const String kUserBox = 'userBox';
 
 /// Local Storage Keys
-const String usernameKey = 'telegram_handle';
-const String userFirstNameKey = 'first_name';
-const String userIdKey = 'user_id';
+const String kUsernameKey = 'telegram_handle';
+const String kFirstNameKey = 'first_name';
+const String kUserIdKey = 'user_id';
+const String kAppsConnectionsKey = 'apps_connections';
