@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
+import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:stacked/stacked.dart';
 
@@ -28,10 +29,19 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Center(
-                  child:
-                      PrimaryButton.small(text: 'Monthly', onPressed: () {})),
-              SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                      child:
+                          SecondaryButton(text: 'Monthly', onPressed: () {})),
+                  horizontalSpace08,
+                  Expanded(
+                      child: PrimaryButton.small(
+                          text: 'Yearly -20% off', onPressed: () {}))
+                ],
+              ),
+              verticalSpace16,
               Expanded(
                 child: ListView(
                   children: [
@@ -94,7 +104,7 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
     required VoidCallback onPressed,
   }) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8),
+      margin: EdgeInsets.symmetric(vertical: 16),
       padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -114,28 +124,32 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(title,
-                  style: TextStyles.bodyPrimary.copyWith(
-                      color: kcSecondaryColor, fontWeight: FontWeight.bold)),
+                  style: TextStyles.titleSecondary.copyWith(
+                    color: kcSecondaryColor,
+                    fontWeight: FontWeight.bold,
+                  )),
               Text(price,
                   style: TextStyles.titleSecondary.copyWith(
-                      color: kcSecondaryColor, fontWeight: FontWeight.bold)),
+                      color: kcSecondaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24)),
             ],
           ),
-          SizedBox(height: 8),
+          verticalSpace04,
+          verticalSpace08,
           Text(credits,
-              style: TextStyles.bodyPrimary.copyWith(
+              style: TextStyles.titleSecondary.copyWith(
                   color: kcPrimaryColor, fontWeight: FontWeight.bold)),
-          SizedBox(height: 8),
+          verticalSpace08,
           isCurrentPlan
               ? SecondaryButton(text: buttonText)
               : PrimaryButton(text: buttonText, onPressed: onPressed),
-          SizedBox(height: 10),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: description
-                .map((text) => Text(text, style: TextStyles.bodySecondary))
-                .toList(),
-          ),
+          verticalSpace08,
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            ...description
+                .map((text) => Text(text, style: TextStyles.bodyPrimary)),
+            verticalSpace04
+          ]),
         ],
       ),
     );

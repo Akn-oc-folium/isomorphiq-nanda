@@ -52,7 +52,7 @@ class AgentsViewMobile extends ViewModelWidget<AgentsViewModel> {
                   description:
                       'Customize the tone and style of your AI Persona.',
                   imagePath: Assets.icons.aiPersona,
-                  onTap: () => viewModel.onTwitterPersonaPressed(),
+                  onTap: () => viewModel.onAIPersonaPressed(),
                 ),
                 verticalSpace16,
                 TaskCard.description(

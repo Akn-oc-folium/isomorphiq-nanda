@@ -6,15 +6,19 @@ import 'package:stacked_services/stacked_services.dart';
 class AgentsViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
 
+  void onPlanUpgradePressed() {
+    _routerService.navigateToChoosePlanView();
+  }
+
   void onTwitterPersonaPressed() {
     _routerService.navigateToAgentsTwitterPersonaView();
   }
 
-  void onCryptoNewsPressed() {
-    _routerService.navigateToCryptoNewsAgentView();
+  void onAIPersonaPressed() {
+    _routerService.navigateToAiPersonaView();
   }
 
-  void onPlanUpgradePressed() {
-    _routerService.navigateToChoosePlanView();
+  void onCryptoNewsPressed() {
+    _routerService.navigateToCryptoNewsAgentView();
   }
 }
