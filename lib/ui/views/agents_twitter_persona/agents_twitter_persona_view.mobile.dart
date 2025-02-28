@@ -18,88 +18,83 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<AgentsTwitterPersonaViewModel>.reactive(
-        viewModelBuilder: () => AgentsTwitterPersonaViewModel(),
-        onViewModelReady: (viewModel) => viewModel.fetchTweets(),
-        builder: (context, viewModel, child) {
-          return ViewModelBuilder<AgentsTwitterPersonaViewModel>.reactive(
-            viewModelBuilder: () => AgentsTwitterPersonaViewModel(),
-            onViewModelReady: (viewModel) => viewModel.fetchTweets(),
-            builder: (context, viewModel, child) {
-              return Scaffold(
-                backgroundColor: Colors.white,
-                appBar: CustomAppBar(
-                  context: context,
-                  actions: [
-                    IconButton(
-                      onPressed: () {},
-                      icon: SvgPicture.asset(
-                        Assets.icons.settingsOutline,
-                        height: 24.r,
+      viewModelBuilder: () => AgentsTwitterPersonaViewModel(),
+      onViewModelReady: (viewModel) => viewModel.fetchTweets(),
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          appBar: CustomAppBar(
+            context: context,
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: SvgPicture.asset(
+                  Assets.icons.settingsOutline,
+                  height: 24.r,
+                ),
+                iconSize: 48.r,
+              )
+            ],
+          ),
+          body: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24).w,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Twitter Persona",
+                  style:
+                      TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
+                ),
+                verticalSpace08,
+                Text(
+                  'Use your personal AI Twitter Persona to generate tweets and replies for you!',
+                  style: TextStyles.titleTertiary
+                      .copyWith(color: kcSecondaryColor),
+                ),
+                verticalSpace04,
+                verticalSpace08,
+                PrimaryButton(text: "Generate Tweet", onPressed: () {}),
+                verticalSpace04,
+                verticalSpace16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      'Generated Tweets',
+                      style: TextStyles.titleSecondary.copyWith(
+                        color: kcSecondaryColor,
+                        fontSize: 18.sp,
+                        height: 1.h,
                       ),
-                      iconSize: 48.r,
-                    )
+                    ),
+                    SvgPicture.asset(
+                      Assets.icons.sort,
+                      height: 24.r,
+                      colorFilter: const ColorFilter.mode(
+                          kcSecondaryColor, BlendMode.srcIn),
+                    ),
                   ],
                 ),
-                body: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24).w,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Twitter Persona",
-                        style: TextStyles.titlePrimary
-                            .copyWith(color: kcSecondaryColor),
-                      ),
-                      verticalSpace08,
-                      Text(
-                        'Use your personal AI Twitter Persona to generate tweets and replies for you!',
-                        style: TextStyles.titleTertiary
-                            .copyWith(color: kcSecondaryColor),
-                      ),
-                      verticalSpace04,
-                      verticalSpace08,
-                      PrimaryButton(text: "Generate Tweet", onPressed: () {}),
-                      verticalSpace04,
-                      verticalSpace16,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Generated Tweets',
-                            style: TextStyles.titleSecondary.copyWith(
-                              color: kcSecondaryColor,
-                              fontSize: 18.sp,
-                              height: 1.h,
-                            ),
-                          ),
-                          SvgPicture.asset(
-                            Assets.icons.sort,
-                            height: 24.r,
-                            colorFilter: const ColorFilter.mode(
-                                kcSecondaryColor, BlendMode.srcIn),
-                          ),
-                        ],
-                      ),
-                      verticalSpace04,
-                      verticalSpace08,
-                      Expanded(
-                        child: viewModel.isLoading
-                            ? Center(child: CircularProgressIndicator())
-                            : ListView.builder(
-                                itemCount: viewModel.tweets.length,
-                                itemBuilder: (context, index) {
-                                  final tweet = viewModel.tweets[index];
-                                  return _buildTweetCard(tweet, viewModel);
-                                },
-                              ),
-                      ),
-                    ],
-                  ),
+                verticalSpace04,
+                verticalSpace08,
+                Expanded(
+                  child: viewModel.isLoading
+                      ? Center(child: CircularProgressIndicator())
+                      : ListView.builder(
+                          itemCount: viewModel.tweets.length,
+                          itemBuilder: (context, index) {
+                            final tweet = viewModel.tweets[index];
+                            return _buildTweetCard(tweet, viewModel);
+                          },
+                        ),
                 ),
-              );
-            },
-          );
-        });
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildTweetCard(Tweet tweet, AgentsTwitterPersonaViewModel viewModel) {
