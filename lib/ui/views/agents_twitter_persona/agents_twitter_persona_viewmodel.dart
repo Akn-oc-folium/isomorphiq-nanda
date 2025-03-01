@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
+import 'package:isomorph_iq/app/app.router.dart';
 import 'package:isomorph_iq/models/tweet_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -7,6 +9,24 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   List<Tweet> tweets = [];
   bool isLoading = false;
+  bool isFilterDropdownVisible = false;
+
+  TextEditingController topicController = TextEditingController();
+
+  List<String> filterOptions = ["Pending", "Accepted", "Latest"];
+
+  String selectedFilter = "Pending";
+
+  void toggleFilterDropdown() {
+    isFilterDropdownVisible = !isFilterDropdownVisible;
+    notifyListeners();
+  }
+
+  void applyFilter(String option) {
+    selectedFilter = option;
+    isFilterDropdownVisible = false;
+    notifyListeners();
+  }
 
   Future<void> fetchTweets() async {
     isLoading = true;
@@ -48,6 +68,10 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
     isLoading = false;
     notifyListeners();
+  }
+
+  void navigateToSettings() {
+    _routerService.navigateToTweetSettingsView();
   }
 
   void navigateBack() {

@@ -20,6 +20,7 @@ import 'package:isomorph_iq/ui/views/startup/startup_view.dart';
 import 'package:isomorph_iq/ui/views/unknown/unknown_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:isomorph_iq/ui/views/tweet_settings/tweet_settings_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -36,6 +37,7 @@ import 'package:stacked_services/stacked_services.dart';
     CustomRoute(page: CryptoNewsAgentView),
     CustomRoute(page: ChoosePlanView),
     CustomRoute(page: AiPersonaView),
+    CustomRoute(page: TweetSettingsView),
 // @stacked-route
 
     CustomRoute(page: UnknownView, path: '/404'),

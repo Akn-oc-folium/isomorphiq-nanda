@@ -5,18 +5,26 @@ import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 
 class PersonaSlider extends StatelessWidget {
   final String title;
+  final double? minValue;
+  final double? maxValue;
   final String leftLabel;
   final String rightLabel;
   final double value;
   final ValueChanged<double> onChanged;
+  final int? divisions;
+  final String? label;
 
   const PersonaSlider({
     super.key,
+    this.minValue,
+    this.maxValue,
     required this.title,
     required this.leftLabel,
     required this.rightLabel,
     required this.value,
     required this.onChanged,
+    this.divisions,
+    this.label,
   });
 
   @override
@@ -28,18 +36,17 @@ class PersonaSlider extends StatelessWidget {
             style: TextStyles.titleSecondary.copyWith(color: kcSecondaryColor)),
         SliderTheme(
           data: SliderThemeData(
-            trackHeight: 1.0,
-            trackShape: CustomTrackShape(),
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
-            tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 2.0),
-            // padding: EdgeInsets.only(top: 0, bottom: 0),
-          ),
+              trackHeight: 1.0,
+              trackShape: CustomTrackShape(),
+              thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
+              tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 2.0),
+              padding: EdgeInsets.only(top: 0, bottom: 0)),
           child: Slider(
             value: value,
             onChanged: onChanged,
-            min: 0,
-            max: 1,
-            divisions: 5,
+            min: minValue ?? 0,
+            max: maxValue ?? 1,
+            divisions: divisions,
             activeColor: kcSecondaryColor,
             inactiveColor: kcPrimaryColorAccent,
           ),

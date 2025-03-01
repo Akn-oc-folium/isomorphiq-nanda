@@ -27,7 +27,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
             context: context,
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () => viewModel.navigateToSettings(),
                 icon: SvgPicture.asset(
                   Assets.icons.settingsOutline,
                   height: 24.r,
@@ -38,56 +38,159 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24).w,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: Stack(
+              clipBehavior: Clip.none,
               children: [
-                Text(
-                  "Twitter Persona",
-                  style:
-                      TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
-                ),
-                verticalSpace08,
-                Text(
-                  'Use your personal AI Twitter Persona to generate tweets and replies for you!',
-                  style: TextStyles.titleTertiary
-                      .copyWith(color: kcSecondaryColor),
-                ),
-                verticalSpace04,
-                verticalSpace08,
-                PrimaryButton(text: "Generate Tweet", onPressed: () {}),
-                verticalSpace04,
-                verticalSpace16,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Generated Tweets',
-                      style: TextStyles.titleSecondary.copyWith(
-                        color: kcSecondaryColor,
-                        fontSize: 18.sp,
-                        height: 1.h,
+                      "Twitter Persona",
+                      style: TextStyles.titlePrimary
+                          .copyWith(color: kcSecondaryColor),
+                    ),
+                    verticalSpace08,
+                    Text(
+                      'Use your personal AI Twitter Persona to generate tweets and replies for you!',
+                      style: TextStyles.titleTertiary
+                          .copyWith(color: kcSecondaryColor),
+                    ),
+                    verticalSpace04,
+                    verticalSpace08,
+                    Container(
+                      width: 312,
+                      height: 80,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(color: kcPrimaryColorAccent, width: 2),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: TextField(
+                        controller: viewModel.topicController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          hintText: "Input topic you want to talk about...",
+                          hintStyle: TextStyles.bodyPrimary
+                              .copyWith(color: kcPrimaryColor),
+                        ),
+                        style: TextStyles.bodyPrimary
+                            .copyWith(color: kcPrimaryColor),
                       ),
                     ),
-                    SvgPicture.asset(
-                      Assets.icons.sort,
-                      height: 24.r,
-                      colorFilter: const ColorFilter.mode(
-                          kcSecondaryColor, BlendMode.srcIn),
+                    verticalSpace04,
+                    verticalSpace08,
+                    PrimaryButton(text: "Generate Tweet", onPressed: () {}),
+                    verticalSpace04,
+                    verticalSpace16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Generated Tweets',
+                          style: TextStyles.titleSecondary.copyWith(
+                            color: kcSecondaryColor,
+                            fontSize: 18.sp,
+                            height: 1.h,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () => viewModel.toggleFilterDropdown(),
+                          child: SvgPicture.asset(
+                            Assets.icons.sort,
+                            height: 24.r,
+                            colorFilter: const ColorFilter.mode(
+                                kcSecondaryColor, BlendMode.srcIn),
+                          ),
+                        ),
+                      ],
+                    ),
+                    verticalSpace04,
+                    verticalSpace08,
+                    Expanded(
+                      child: viewModel.isLoading
+                          ? Center(child: CircularProgressIndicator())
+                          : ListView.builder(
+                              itemCount: viewModel.tweets.length,
+                              itemBuilder: (context, index) {
+                                final tweet = viewModel.tweets[index];
+                                return _buildTweetCard(tweet, viewModel);
+                              },
+                            ),
                     ),
                   ],
                 ),
-                verticalSpace04,
-                verticalSpace08,
-                Expanded(
-                  child: viewModel.isLoading
-                      ? Center(child: CircularProgressIndicator())
-                      : ListView.builder(
-                          itemCount: viewModel.tweets.length,
-                          itemBuilder: (context, index) {
-                            final tweet = viewModel.tweets[index];
-                            return _buildTweetCard(tweet, viewModel);
-                          },
-                        ),
+                Positioned(
+                  right: 0,
+                  top: 300,
+                  child: viewModel.isFilterDropdownVisible
+                      ? Material(
+                          elevation: 4,
+                          borderRadius: BorderRadius.circular(8),
+                          child: Container(
+                              width: 150,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 12, vertical: 8),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: Colors.white,
+                              ),
+                              child: ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: viewModel.filterOptions.length,
+                                  itemBuilder: (context, index) {
+                                    String option =
+                                        viewModel.filterOptions[index];
+                                    bool isSelected =
+                                        viewModel.selectedFilter == option;
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () =>
+                                              viewModel.applyFilter(option),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(option,
+                                                  style: TextStyles.bodyPrimary
+                                                      .copyWith(
+                                                          color:
+                                                              kcPrimaryColor)),
+                                              Container(
+                                                width: 15,
+                                                height: 15,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: kcPrimaryColor,
+                                                      width: 3),
+                                                  color: isSelected
+                                                      ? kcPrimaryColor
+                                                      : Colors.white,
+                                                ),
+                                                child: isSelected
+                                                    ? Icon(Icons.check,
+                                                        color: Colors.white,
+                                                        size: 8)
+                                                    : null,
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        if (index !=
+                                            viewModel.filterOptions.length - 1)
+                                          Divider(
+                                              color: kcPrimaryColorAccent
+                                                  .withOpacity(0.2),
+                                              thickness: 1),
+                                      ],
+                                    );
+                                  })),
+                        )
+                      : SizedBox(),
                 ),
               ],
             ),

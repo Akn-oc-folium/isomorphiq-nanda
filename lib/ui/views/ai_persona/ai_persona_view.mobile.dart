@@ -24,7 +24,8 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
             context: context,
             title: Text(
               "AI Persona",
-              style: TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
+              style: TextStyles.titlePrimary
+                  .copyWith(color: kcSecondaryColor, fontSize: 20.0),
             ),
           ),
           body: SafeArea(
@@ -49,6 +50,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
                         value: viewModel.sliderValues[slider["title"]] ?? 0.5,
                         onChanged: (value) =>
                             viewModel.updateSlider(slider["title"], value),
+                        divisions: 5,
                       );
                     }),
                     Text(
