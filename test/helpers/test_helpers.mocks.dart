@@ -909,6 +909,49 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i5.PostResponse>);
 
   @override
+  _i11.Future<_i9.SignAuth> getAppAuthUrl({
+    required String? appId,
+    required String? userId,
+    required String? urlEndPoint,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getAppAuthUrl,
+          [],
+          {
+            #appId: appId,
+            #userId: userId,
+            #urlEndPoint: urlEndPoint,
+          },
+        ),
+        returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getAppAuthUrl,
+            [],
+            {
+              #appId: appId,
+              #userId: userId,
+              #urlEndPoint: urlEndPoint,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
+          this,
+          Invocation.method(
+            #getAppAuthUrl,
+            [],
+            {
+              #appId: appId,
+              #userId: userId,
+              #urlEndPoint: urlEndPoint,
+            },
+          ),
+        )),
+      ) as _i11.Future<_i9.SignAuth>);
+
+  @override
   _i11.Future<_i9.SignAuth> getGoogleAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -1116,4 +1159,23 @@ class MockHiveService extends _i1.Mock implements _i19.HiveService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthorizationService extends _i1.Mock
-    implements _i20.AuthorizationService {}
+    implements _i20.AuthorizationService {
+  @override
+  set authWindow(_i20.WindowInstance? _authWindow) => super.noSuchMethod(
+        Invocation.setter(
+          #authWindow,
+          _authWindow,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i11.Future<bool> authenticate(String? authUrl) => (super.noSuchMethod(
+        Invocation.method(
+          #authenticate,
+          [authUrl],
+        ),
+        returnValue: _i11.Future<bool>.value(false),
+        returnValueForMissingStub: _i11.Future<bool>.value(false),
+      ) as _i11.Future<bool>);
+}

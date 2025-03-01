@@ -1,9 +1,15 @@
 import 'package:isomorph_iq/services/api_service.dart';
+import 'package:isomorph_iq/services/authorization_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/game_instruction/game_instruction_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/rewards/rewards_sheet.dart';
 import 'package:isomorph_iq/ui/dialogs/info_alert/info_alert_dialog.dart';
+import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
+import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
+import 'package:isomorph_iq/ui/views/ai_persona/ai_persona_view.dart';
+import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
+import 'package:isomorph_iq/ui/views/crypto_news_agent/crypto_news_agent_view.dart';
 import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
 import 'package:isomorph_iq/ui/views/home/home_view.dart';
 import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
@@ -14,11 +20,6 @@ import 'package:isomorph_iq/ui/views/startup/startup_view.dart';
 import 'package:isomorph_iq/ui/views/unknown/unknown_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
-import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
-import 'package:isomorph_iq/ui/views/crypto_news_agent/crypto_news_agent_view.dart';
-import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
-import 'package:isomorph_iq/services/authorization_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -34,6 +35,7 @@ import 'package:isomorph_iq/services/authorization_service.dart';
     CustomRoute(page: AgentsTwitterPersonaView),
     CustomRoute(page: CryptoNewsAgentView),
     CustomRoute(page: ChoosePlanView),
+    CustomRoute(page: AiPersonaView),
 // @stacked-route
 
     CustomRoute(page: UnknownView, path: '/404'),
