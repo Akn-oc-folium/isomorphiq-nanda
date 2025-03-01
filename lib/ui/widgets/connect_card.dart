@@ -10,6 +10,7 @@ class ConnectCard extends StatelessWidget {
   final VoidCallback? onConnect;
   final bool? isConnected;
   final bool? isComingSoon;
+  final bool isBusy;
 
   const ConnectCard({
     super.key,
@@ -17,6 +18,7 @@ class ConnectCard extends StatelessWidget {
     required this.title,
     required this.onConnect,
     this.isConnected = false,
+    this.isBusy = false,
   }) : isComingSoon = false;
 
   const ConnectCard.comingSoon({
@@ -25,7 +27,8 @@ class ConnectCard extends StatelessWidget {
     required this.title,
     required this.onConnect,
     this.isConnected = false,
-  }) : isComingSoon = true;
+  })  : isComingSoon = true,
+        isBusy = false;
 
   @override
   Widget build(BuildContext context) {
@@ -79,6 +82,7 @@ class ConnectCard extends StatelessWidget {
             PrimaryButton.small(
               text: 'Connect',
               onPressed: onConnect,
+              isBusy: isBusy,
             ),
         ],
       ),

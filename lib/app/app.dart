@@ -5,7 +5,6 @@ import 'package:isomorph_iq/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/rewards/rewards_sheet.dart';
 import 'package:isomorph_iq/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
-import 'package:isomorph_iq/ui/views/google_auth/google_auth_view.dart';
 import 'package:isomorph_iq/ui/views/home/home_view.dart';
 import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
 import 'package:isomorph_iq/ui/views/onboarding/onboarding_view.dart';
@@ -19,6 +18,7 @@ import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
 import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
 import 'package:isomorph_iq/ui/views/crypto_news_agent/crypto_news_agent_view.dart';
 import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
+import 'package:isomorph_iq/services/authorization_service.dart';
 // @stacked-import
 
 @StackedApp(
@@ -30,7 +30,6 @@ import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
     CustomRoute(page: EarnView),
     CustomRoute(page: JackpotView),
     CustomRoute(page: PlayView),
-    CustomRoute(page: GoogleAuthView),
     CustomRoute(page: AgentsView),
     CustomRoute(page: AgentsTwitterPersonaView),
     CustomRoute(page: CryptoNewsAgentView),
@@ -48,6 +47,7 @@ import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
     LazySingleton(classType: RouterService),
     LazySingleton(classType: ApiService),
     LazySingleton(classType: HiveService),
+    LazySingleton(classType: AuthorizationService),
 // @stacked-service
   ],
   bottomsheets: [

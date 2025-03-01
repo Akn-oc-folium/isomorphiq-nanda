@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:isomorph_iq/models/dashboard_model.dart';
+import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
 import 'package:isomorph_iq/models/post_model.dart';
@@ -165,7 +165,35 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getGoogleAuthLink({
+  Future<SignAuth> getAppAuthUrl({
+    required String appId,
+    required String userId,
+    required String urlEndPoint,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        urlEndPoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return SignAuth.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to $appId auth!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
+
+  Future<SignAuth> getGoogleAuthUrl({
     required String userId,
   }) async {
     try {
@@ -191,7 +219,7 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getDiscordAuthLink({
+  Future<SignAuth> getDiscordAuthUrl({
     required String userId,
   }) async {
     try {
@@ -217,12 +245,12 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getTwitterAuthLink({
+  Future<SignAuth> getXAuthUrl({
     required String userId,
   }) async {
     try {
       final Response<dynamic> response = await apiClient.get(
-        AppConstants.twitterEndpoint,
+        AppConstants.xEndpoint,
         queryParameters: {
           'user_id': userId,
         },
@@ -243,7 +271,7 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getFacebookAuthLink({
+  Future<SignAuth> getFacebookAuthUrl({
     required String userId,
   }) async {
     try {
@@ -269,7 +297,7 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getSpotifyAuthLink({
+  Future<SignAuth> getSpotifyAuthUrl({
     required String userId,
   }) async {
     try {

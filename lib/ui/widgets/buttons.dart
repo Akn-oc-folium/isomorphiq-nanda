@@ -9,11 +9,13 @@ class PrimaryButton extends StatelessWidget {
   final Widget? icon;
   final Color? disabledColor;
   final bool isSmall;
+  final bool isBusy;
 
   const PrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.isBusy = false,
   })  : icon = null,
         disabledColor = null,
         isSmall = false;
@@ -23,6 +25,7 @@ class PrimaryButton extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.disabledColor,
+    this.isBusy = false,
   })  : text = null,
         isSmall = false;
 
@@ -30,6 +33,7 @@ class PrimaryButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.isBusy = false,
   })  : icon = null,
         disabledColor = null,
         isSmall = true;
@@ -74,13 +78,29 @@ class PrimaryButton extends StatelessWidget {
                   : EdgeInsets.symmetric(vertical: 16.h),
         ),
         onPressed: onPressed,
-        child: icon ??
-            Text(
-              text!,
-              style: isSmall
-                  ? TextStyles.buttonText.copyWith(height: 1.125.h)
-                  : TextStyles.buttonText,
-            ),
+        child: isBusy
+            ? Center(
+                child: SizedBox(
+                  height: 20.r,
+                  width: 20.r,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: isBusy
+                        ? kcWhite
+                        : kcPrimaryColor.withValues(alpha: 0.5),
+                    strokeWidth: 2.0.w,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      kcWhite,
+                    ),
+                  ),
+                ),
+              )
+            : icon ??
+                Text(
+                  text!,
+                  style: isSmall
+                      ? TextStyles.buttonText.copyWith(height: 1.125.h)
+                      : TextStyles.buttonText,
+                ),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/models/dashboard_model.dart';
+import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/user_rank_model.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';

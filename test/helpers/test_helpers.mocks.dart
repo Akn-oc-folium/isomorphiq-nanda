@@ -7,14 +7,15 @@ import 'dart:async' as _i11;
 import 'dart:ui' as _i15;
 
 import 'package:flutter/material.dart' as _i12;
-import 'package:isomorph_iq/models/dashboard_model.dart' as _i4;
 import 'package:isomorph_iq/models/google_sign.dart' as _i9;
 import 'package:isomorph_iq/models/leaderboard_model.dart' as _i7;
 import 'package:isomorph_iq/models/post_model.dart' as _i5;
+import 'package:isomorph_iq/models/profile_model.dart' as _i4;
 import 'package:isomorph_iq/models/user_points.dart' as _i6;
 import 'package:isomorph_iq/models/user_rank_model.dart' as _i8;
 import 'package:isomorph_iq/services/api_client.dart' as _i3;
 import 'package:isomorph_iq/services/api_service.dart' as _i18;
+import 'package:isomorph_iq/services/authorization_service.dart' as _i20;
 import 'package:isomorph_iq/services/hive_service.dart' as _i19;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:stacked/stacked.dart' as _i2;
@@ -908,17 +909,17 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i5.PostResponse>);
 
   @override
-  _i11.Future<_i9.SignAuth> getGoogleAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getGoogleAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getGoogleAuthLink,
+          #getGoogleAuthUrl,
           [],
           {#userId: userId},
         ),
         returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getGoogleAuthLink,
+            #getGoogleAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -927,7 +928,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getGoogleAuthLink,
+            #getGoogleAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -935,17 +936,17 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i9.SignAuth>);
 
   @override
-  _i11.Future<_i9.SignAuth> getDiscordAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getDiscordAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getDiscordAuthLink,
+          #getDiscordAuthUrl,
           [],
           {#userId: userId},
         ),
         returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getDiscordAuthLink,
+            #getDiscordAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -954,7 +955,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getDiscordAuthLink,
+            #getDiscordAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -962,17 +963,17 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i9.SignAuth>);
 
   @override
-  _i11.Future<_i9.SignAuth> getTwitterAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getXAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getTwitterAuthLink,
+          #getXAuthUrl,
           [],
           {#userId: userId},
         ),
         returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getTwitterAuthLink,
+            #getXAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -981,7 +982,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getTwitterAuthLink,
+            #getXAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -989,17 +990,17 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i9.SignAuth>);
 
   @override
-  _i11.Future<_i9.SignAuth> getFacebookAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getFacebookAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getFacebookAuthLink,
+          #getFacebookAuthUrl,
           [],
           {#userId: userId},
         ),
         returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getFacebookAuthLink,
+            #getFacebookAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -1008,7 +1009,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getFacebookAuthLink,
+            #getFacebookAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -1016,17 +1017,17 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
       ) as _i11.Future<_i9.SignAuth>);
 
   @override
-  _i11.Future<_i9.SignAuth> getSpotifyAuthLink({required String? userId}) =>
+  _i11.Future<_i9.SignAuth> getSpotifyAuthUrl({required String? userId}) =>
       (super.noSuchMethod(
         Invocation.method(
-          #getSpotifyAuthLink,
+          #getSpotifyAuthUrl,
           [],
           {#userId: userId},
         ),
         returnValue: _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getSpotifyAuthLink,
+            #getSpotifyAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -1035,7 +1036,7 @@ class MockApiService extends _i1.Mock implements _i18.ApiService {
             _i11.Future<_i9.SignAuth>.value(_FakeSignAuth_9(
           this,
           Invocation.method(
-            #getSpotifyAuthLink,
+            #getSpotifyAuthUrl,
             [],
             {#userId: userId},
           ),
@@ -1110,3 +1111,9 @@ class MockHiveService extends _i1.Mock implements _i19.HiveService {
         returnValueForMissingStub: _i11.Future<void>.value(),
       ) as _i11.Future<void>);
 }
+
+/// A class which mocks [AuthorizationService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockAuthorizationService extends _i1.Mock
+    implements _i20.AuthorizationService {}

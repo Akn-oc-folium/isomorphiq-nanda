@@ -22,13 +22,15 @@ class AppConstants {
   static const String userLevelEndpoint = '/update-user-level';
   static const String googleEndpoint = '/google/login';
   static const String discordEndpoint = '/discord/login';
-  static const String twitterEndpoint = '/x/oauth2/login';
+  static const String xEndpoint = '/x/oauth2/login';
   static const String facebookEndpoint = '/facebook/login';
   static const String spotifyEndpoint = '/spotify/login';
+  static const String redditEndpoint = '/reddit/login';
 
-  // Local Storage Constants
+  // Local Storage Boxes
   static const String userBox = 'userBox';
   static const String walletsBox = 'walletsBox';
+  static const String authBox = 'walletsBox';
 
   /// Local Storage Keys
   static const String passwordKey = 'password';
@@ -42,4 +44,5 @@ class AppConstants {
   static const String walletsKey = 'wallets';
   static const String firstNameKey = 'firstName';
   static const String lastNameKey = 'lastName';
+  static const String authKey = 'authState';
 }

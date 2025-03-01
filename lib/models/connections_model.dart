@@ -32,6 +32,7 @@ class Apps {
   final bool? x;
   final bool? facebook;
   final bool? spotify;
+  final bool? reddit;
 
   Apps({
     this.google,
@@ -40,6 +41,7 @@ class Apps {
     this.x,
     this.facebook,
     this.spotify,
+    this.reddit,
   });
 
   factory Apps.fromJson(Map<String, dynamic> json) => Apps(
@@ -49,6 +51,7 @@ class Apps {
         x: json["x"],
         facebook: json["facebook"],
         spotify: json["spotify"],
+        reddit: json["reddit"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -58,5 +61,6 @@ class Apps {
         "x": x,
         "facebook": facebook,
         "spotify": spotify,
+        "reddit": reddit,
       };
 }
