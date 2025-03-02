@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/models/fetch_user_personality.dart';
 import 'package:isomorph_iq/models/generate_tweet.dart';
 import 'package:isomorph_iq/models/news_article_model.dart';
 import 'package:isomorph_iq/models/profile_model.dart';
@@ -7,6 +8,7 @@ import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
 import 'package:isomorph_iq/models/post_model.dart';
 import 'package:isomorph_iq/models/save_generated_tweet.dart';
+import 'package:isomorph_iq/models/upsert_user_personality.dart';
 import 'package:isomorph_iq/models/user_points.dart';
 import 'package:isomorph_iq/models/user_rank_model.dart';
 import 'package:isomorph_iq/services/api_client.dart';
@@ -288,7 +290,7 @@ class ApiService {
         return SaveGeneratedTweet.fromJson(
             response.data as Map<String, dynamic>);
       } else {
-        throw Exception('Failed to save generated tweet');
+        throw Exception('Failed to update generated tweet status');
       }
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
@@ -339,6 +341,55 @@ class ApiService {
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw errorMessage;
+    }
+  }
+
+  Future<FetchUserPersonality> fetchUserPersonality({
+    required String userId,
+  }) async {
+    try {
+      final Response response = await apiClient.get(
+        AppConstants.upsertUserPersonality,
+        queryParameters: {
+          "user_id": userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return FetchUserPersonality.fromJson(
+            response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch user personality');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<UpsertUserPersonality> upsertUserPersonality(
+      {required String userId,
+      required Map<String, double> sliderValues}) async {
+    try {
+      Map<String, dynamic> apiBody = {};
+      sliderValues.forEach((key, value) {
+        apiBody[key.toLowerCase()] = value;
+      });
+      final Response response = await apiClient.post(
+        AppConstants.upsertUserPersonality,
+        queryParameters: {
+          "user_id": userId,
+        },
+        data: apiBody,
+      );
+      if (response.statusCode == 200) {
+        return UpsertUserPersonality.fromJson(
+            response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to upsert user personality');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
     }
   }
 }

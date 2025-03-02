@@ -25,12 +25,7 @@ class TweetSettingsViewModel extends BaseViewModel {
     sliderValues[title] = value;
     notifyListeners();
 
-    debugPrint('$title; $value');
-    // _debounceTimer?.cancel();
-
-    // _debounceTimer = Timer(Duration(milliseconds: 500), () {
-    //   sendSliderDataToAPI(title, value);
-    // });
+    print('$title; $value');
   }
 
   void toggleRandomize(bool value) {

@@ -17,6 +17,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
   Widget build(BuildContext context, AiPersonaViewModel viewModel) {
     return ViewModelBuilder<AiPersonaViewModel>.reactive(
       viewModelBuilder: () => AiPersonaViewModel(),
+      onViewModelReady: (viewModel) => viewModel.fetchSliderValues(),
       builder: (context, viewModel, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -50,7 +51,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
                         value: viewModel.sliderValues[slider["title"]] ?? 0.5,
                         onChanged: (value) =>
                             viewModel.updateSlider(slider["title"], value),
-                        divisions: 5,
+                        divisions: 4,
                       );
                     }),
                     Text(
