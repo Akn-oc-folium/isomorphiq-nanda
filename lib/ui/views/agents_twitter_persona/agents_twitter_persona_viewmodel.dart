@@ -54,11 +54,11 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   void generateTweetForTwitterPersona() async {
     setBusy(true);
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-            userId: "cc23fa3d-beca-49db-8f04-1f0c6a8cbfec",
-            topic: topicController.text.trim());
+            userId: userId, topic: topicController.text.trim());
 
         generatedTweet = response.data.content;
         debugPrint("Generate tweet : $generatedTweet");
@@ -82,11 +82,10 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
   }
 
   void updateTweetStatus(String tweetId, String tweetStatus) async {
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       final response = await _apiService.updateTweetStatus(
-          userId: 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
-          tweetId: tweetId,
-          tweetStatus: tweetStatus);
+          userId: userId, tweetId: tweetId, tweetStatus: tweetStatus);
       if (response.code == 200) {
         fetchTweets();
         notifyListeners();
