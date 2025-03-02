@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
+import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/models/generate_tweet.dart';
 import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
 import 'package:isomorph_iq/models/post_model.dart';
+import 'package:isomorph_iq/models/save_generated_tweet.dart';
 import 'package:isomorph_iq/models/user_points.dart';
 import 'package:isomorph_iq/models/user_rank_model.dart';
 import 'package:isomorph_iq/services/api_client.dart';
@@ -320,6 +323,105 @@ class ApiService {
         errorMessage = 'An unexpected error occurred: ${e.toString()}';
       }
       throw errorMessage;
+    }
+  }
+
+  Future<GenerateTweet> postGenerateTweet({
+    required String userId,
+    required String topic,
+  }) async {
+    try {
+      final Response response = await apiClient.post(
+        AppConstants.generateTweetEndpoint,
+        queryParameters: {
+          "user_id": userId,
+        },
+        data: {
+          "topic": topic,
+        },
+      );
+      if (response.statusCode == 200) {
+        return GenerateTweet.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to generate tweet');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<SaveGeneratedTweet> saveGeneratedTweet(
+      {required String userId,
+      required String content,
+      required String tweetStatus}) async {
+    try {
+      final Response response = await apiClient.post(
+        AppConstants.saveGeneratedTweet,
+        queryParameters: {
+          "user_id": userId,
+        },
+        data: {"content": content, "tweet_status": tweetStatus},
+      );
+      if (response.statusCode == 200) {
+        return SaveGeneratedTweet.fromJson(
+            response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to save generated tweet');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<FetchTweets> fetchTweets({
+    required String userId,
+    required String tweetStatus,
+  }) async {
+    try {
+      final Response response = await apiClient.post(
+        AppConstants.fetchTweets,
+        data: {
+          "user_id": userId,
+          "tweet_status": tweetStatus,
+          "order_by": "created_at",
+          "order_option": "asc",
+          "page_size": 10
+        },
+      );
+      if (response.statusCode == 200) {
+        return FetchTweets.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch tweets');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
+    }
+  }
+
+  Future<SaveGeneratedTweet> updateTweetStatus(
+      {required String userId,
+      required String tweetId,
+      required String tweetStatus}) async {
+    try {
+      final Response response = await apiClient.post(
+        AppConstants.saveGeneratedTweet,
+        queryParameters: {
+          "user_id": userId,
+        },
+        data: {"tweet_id": tweetId, "tweet_status": tweetStatus},
+      );
+      if (response.statusCode == 200) {
+        return SaveGeneratedTweet.fromJson(
+            response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to save generated tweet');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw Exception(errorMessage);
     }
   }
 }

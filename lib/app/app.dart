@@ -21,6 +21,7 @@ import 'package:isomorph_iq/ui/views/unknown/unknown_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:isomorph_iq/ui/views/tweet_settings/tweet_settings_view.dart';
+import 'package:isomorph_iq/ui/bottom_sheets/generated_tweet/generated_tweet_sheet.dart';
 // @stacked-import
 
 @StackedApp(
@@ -58,6 +59,7 @@ import 'package:isomorph_iq/ui/views/tweet_settings/tweet_settings_view.dart';
     StackedBottomsheet(classType: NoticeSheet),
     StackedBottomsheet(classType: RewardsSheet),
     StackedBottomsheet(classType: GameInstructionSheet),
+    StackedBottomsheet(classType: GeneratedTweetSheet),
 // @stacked-bottom-sheet
   ],
   dialogs: [

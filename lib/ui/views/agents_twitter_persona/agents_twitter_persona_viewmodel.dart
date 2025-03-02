@@ -1,21 +1,27 @@
 import 'package:flutter/widgets.dart';
+import 'package:isomorph_iq/app/app.bottomsheets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/app/app.router.dart';
-import 'package:isomorph_iq/models/tweet_model.dart';
+import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/services/api_service.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class AgentsTwitterPersonaViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
+  final _bottomSheetService = locator<BottomSheetService>();
+  final _apiService = locator<ApiService>();
   List<Tweet> tweets = [];
   bool isLoading = false;
   bool isFilterDropdownVisible = false;
 
   TextEditingController topicController = TextEditingController();
 
-  List<String> filterOptions = ["Pending", "Accepted", "Latest"];
+  List<String> filterOptions = ["Pending", "Approved", "Latest"];
 
   String selectedFilter = "Pending";
+
+  late String generatedTweet;
 
   void toggleFilterDropdown() {
     isFilterDropdownVisible = !isFilterDropdownVisible;
@@ -26,48 +32,71 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
     selectedFilter = option;
     isFilterDropdownVisible = false;
     notifyListeners();
+    fetchTweets();
   }
 
-  Future<void> fetchTweets() async {
+  void fetchTweets() async {
     isLoading = true;
     notifyListeners();
 
     try {
-      //final response = await _dio.get('');
-      //tweets = Tweet.fromJsonList(response.data);
-      tweets = [
-        Tweet(
-            id: 26,
-            type: "Tweet",
-            content: "Pi Network has launched its mainnet today!",
-            creditCost: 5),
-        Tweet(
-            id: 13,
-            type: "Reply",
-            content: "This is a great milestone for Pi Network!",
-            creditCost: 3),
-        Tweet(
-            id: 12,
-            type: "Reply",
-            content: "Excited to see what comes next!",
-            creditCost: 2),
-        Tweet(
-            id: 11,
-            type: "Tweet",
-            content: "Big news! Bitcoin just hit \$60,000 again!",
-            creditCost: 4),
-        Tweet(
-            id: 10,
-            type: "Reply",
-            content: "This market is insane! 🚀",
-            creditCost: 2),
-      ];
+      final response = await _apiService.fetchTweets(
+          userId: 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+          tweetStatus: selectedFilter.toUpperCase());
+      tweets = response.data;
     } catch (e) {
       print('Error fetching tweets: $e');
     }
 
     isLoading = false;
     notifyListeners();
+  }
+
+  void generateTweetForTwitterPersona() async {
+    isLoading = true;
+    notifyListeners();
+    if (topicController.text.isNotEmpty) {
+      try {
+        final response = await _apiService.postGenerateTweet(
+            userId: "cc23fa3d-beca-49db-8f04-1f0c6a8cbfec",
+            topic: topicController.text.trim());
+
+        generatedTweet = response.data.content;
+        print("Generate tweet : $generatedTweet");
+        topicController.clear();
+        openGeneratedTweetModal();
+      } catch (e) {
+        debugPrint("Error fetching news: $e");
+      }
+    }
+
+    isLoading = false;
+    notifyListeners();
+  }
+
+  void openGeneratedTweetModal() {
+    _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.generatedTweet,
+      barrierDismissible: false,
+      title: 'Tweet you just generated',
+      description: generatedTweet,
+      isScrollControlled: true,
+    );
+  }
+
+  void updateTweetStatus(String tweetId, String tweetStatus) async {
+    try {
+      final response = await _apiService.updateTweetStatus(
+          userId: 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+          tweetId: tweetId,
+          tweetStatus: tweetStatus);
+      if (response.code == 200) {
+        fetchTweets();
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error fetching tweets: $e');
+    }
   }
 
   void navigateToSettings() {

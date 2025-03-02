@@ -26,6 +26,10 @@ class AppConstants {
   static const String facebookEndpoint = '/facebook/login';
   static const String spotifyEndpoint = '/spotify/login';
   static const String redditEndpoint = '/reddit/login';
+  static const String generateTweetEndpoint = '/tweet/generate';
+  static const String saveGeneratedTweet = '/tweet/save';
+  static const String fetchTweets = '/tweet/fetch';
+  static const String updateTweetStatus = '/tweet/status-update';
 
   // Local Storage Boxes
   static const String userBox = 'userBox';

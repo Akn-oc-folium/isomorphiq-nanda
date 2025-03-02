@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/models/tweet_model.dart';
+import 'package:isomorph_iq/models/fetch_tweets.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
@@ -69,6 +69,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                       ),
                       child: TextField(
                         controller: viewModel.topicController,
+                        readOnly: viewModel.isLoading ? true : false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Input topic you want to talk about...",
@@ -81,7 +82,10 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                     ),
                     verticalSpace04,
                     verticalSpace08,
-                    PrimaryButton(text: "Generate Tweet", onPressed: () {}),
+                    PrimaryButton(
+                        text: "Generate Tweet",
+                        onPressed: () =>
+                            viewModel.generateTweetForTwitterPersona()),
                     verticalSpace04,
                     verticalSpace16,
                     Row(
@@ -110,7 +114,10 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                     verticalSpace08,
                     Expanded(
                       child: viewModel.isLoading
-                          ? Center(child: CircularProgressIndicator())
+                          ? Center(
+                              child: CircularProgressIndicator(
+                              color: kcPrimaryColor,
+                            ))
                           : ListView.builder(
                               itemCount: viewModel.tweets.length,
                               itemBuilder: (context, index) {
@@ -219,12 +226,13 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '${tweet.type} #${tweet.id}',
+            'Generated #${tweet.id}',
+            maxLines: 1,
             style: TextStyles.buttonText.copyWith(color: kcSecondaryColor),
           ),
           verticalSpace08,
           Text(
-            tweet.content,
+            tweet.tweetContent,
             style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
           ),
           verticalSpace08,
@@ -236,12 +244,14 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                       height: 24.r,
                       colorFilter:
                           const ColorFilter.mode(kcWhite, BlendMode.srcIn)),
-                  onPressed: () {}),
+                  onPressed: () =>
+                      viewModel.updateTweetStatus(tweet.id, 'REJECTED')),
               horizontalSpace16,
               Expanded(
                 child: PrimaryButton(
                   text: "Tweet Now",
-                  onPressed: () {},
+                  onPressed: () =>
+                      viewModel.updateTweetStatus(tweet.id, 'APPROVED'),
                 ),
               )
             ],
