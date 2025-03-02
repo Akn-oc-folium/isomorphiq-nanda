@@ -30,6 +30,7 @@ class AppConstants {
   static const String saveGeneratedTweet = '/tweet/save';
   static const String fetchTweets = '/tweet/fetch';
   static const String updateTweetStatus = '/tweet/status-update';
+  static const String cryptoNewsEndpoint = '/news';
 
   // Local Storage Boxes
   static const String userBox = 'userBox';

@@ -28,7 +28,7 @@ class EarnViewModel extends BaseViewModel {
   bool get areAllTasksDone => taskCompletionStatus.every((status) => status);
 
   Future<void> initialise() async {
-    await _fetchDashboard();
+    await _fetchProfile();
     await _fetchUserRank();
   }
 
@@ -41,7 +41,7 @@ class EarnViewModel extends BaseViewModel {
 
   bool onClickStreakRedeem() => true;
 
-  Future<void> _fetchDashboard() async {
+  Future<void> _fetchProfile() async {
     setBusy(true);
     _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     try {

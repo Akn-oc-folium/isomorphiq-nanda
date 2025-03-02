@@ -39,8 +39,9 @@ class PersonaSlider extends StatelessWidget {
               trackHeight: 1.0,
               trackShape: CustomTrackShape(),
               thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
-              tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 2.0),
-              padding: EdgeInsets.only(top: 0, bottom: 0)),
+              tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 12.0),
+              // padding: EdgeInsets.only(top: 0, bottom: 0),
+              ),
           child: Slider(
             value: value,
             onChanged: onChanged,

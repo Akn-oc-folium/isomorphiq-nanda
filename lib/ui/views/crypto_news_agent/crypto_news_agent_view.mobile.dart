@@ -39,7 +39,7 @@ class CryptoNewsAgentViewMobile
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              viewModel.currentNews?.source ??
+                              viewModel.currentNews!.data!.source ??
                                   'Source goes here!',
                               style: TextStyles.titleTertiary
                                   .copyWith(color: kcSecondaryColor),
@@ -47,49 +47,51 @@ class CryptoNewsAgentViewMobile
                             verticalSpace08,
                             ClipRRect(
                               borderRadius: BorderRadius.circular(12),
-                              child: viewModel.currentNews!.imageUrl != null
-                                  ? Image.network(
-                                      viewModel.currentNews!.imageUrl!,
-                                      height: 150,
-                                      width: double.infinity,
-                                      fit: BoxFit.cover,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        }
-                                        return Center(
-                                            child: CircularProgressIndicator());
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return Container(
-                                          height: 150,
-                                          width: double.infinity,
-                                          color: kcPrimaryColorAccent,
-                                          child: Icon(Icons.image,
-                                              size: 50, color: kcWhite),
-                                        );
-                                      },
-                                    )
-                                  : Container(
-                                      height: 150,
-                                      width: double.infinity,
-                                      color: kcPrimaryColorAccent,
-                                      child: Icon(Icons.image,
-                                          size: 50, color: kcWhite),
-                                    ),
+                              child:
+                                  // viewModel.currentNews!.imageUrl != null
+                                  //     ? Image.network(
+                                  //         viewModel.currentNews!.imageUrl!,
+                                  //         height: 150,
+                                  //         width: double.infinity,
+                                  //         fit: BoxFit.cover,
+                                  //         loadingBuilder:
+                                  //             (context, child, loadingProgress) {
+                                  //           if (loadingProgress == null) {
+                                  //             return child;
+                                  //           }
+                                  //           return Center(
+                                  //               child: CircularProgressIndicator());
+                                  //         },
+                                  //         errorBuilder:
+                                  //             (context, error, stackTrace) {
+                                  //           return Container(
+                                  //             height: 150,
+                                  //             width: double.infinity,
+                                  //             color: kcPrimaryColorAccent,
+                                  //             child: Icon(Icons.image,
+                                  //                 size: 50, color: kcWhite),
+                                  //           );
+                                  //         },
+                                  //       )
+                                  // :
+                                  Container(
+                                height: 150,
+                                width: double.infinity,
+                                color: kcPrimaryColorAccent,
+                                child:
+                                    Icon(Icons.image, size: 50, color: kcWhite),
+                              ),
                             ),
                             verticalSpace04,
                             verticalSpace16,
                             Text(
-                                viewModel.currentNews?.title ??
+                                viewModel.currentNews!.data!.headline ??
                                     'Title goes here!',
                                 style: TextStyles.titleSecondary
                                     .copyWith(color: kcSecondaryColor)),
                             verticalSpace08,
                             Text(
-                              viewModel.currentNews!.content ??
+                              viewModel.currentNews!.data!.summary ??
                                   'Content goes here!',
                               style: TextStyles.bodyPrimary
                                   .copyWith(color: kcSecondaryColor),
@@ -97,7 +99,8 @@ class CryptoNewsAgentViewMobile
                             Spacer(),
                             SecondaryButton(
                                 text: 'Read More',
-                                onPressed: viewModel.readMore),
+                                onPressed: () {} // viewModel.readMore,
+                                ),
                             verticalSpace04,
                             verticalSpace08,
                             Row(
@@ -106,13 +109,18 @@ class CryptoNewsAgentViewMobile
                                 Expanded(
                                   child: SecondaryButton(
                                       text: "Previous",
-                                      onPressed: viewModel.previousNews),
+                                      onPressed:
+                                          () {} // viewModel.previousNews,
+                                      ),
                                 ),
                                 horizontalSpace16,
                                 Expanded(
-                                    child: PrimaryButton(
-                                        text: "Next",
-                                        onPressed: viewModel.nextNews)),
+                                  child: PrimaryButton(
+                                    text: "Next",
+                                    onPressed: () {} // viewModel.nextNews
+                                    ,
+                                  ),
+                                ),
                               ],
                             ),
                           ],

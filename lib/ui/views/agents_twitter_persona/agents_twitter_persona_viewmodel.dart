@@ -4,6 +4,8 @@ import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/app/app.router.dart';
 import 'package:isomorph_iq/models/fetch_tweets.dart';
 import 'package:isomorph_iq/services/api_service.dart';
+import 'package:isomorph_iq/services/hive_service.dart';
+import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -11,8 +13,9 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _apiService = locator<ApiService>();
+  final _hiveService = locator<HiveService>();
+
   List<Tweet> tweets = [];
-  bool isLoading = false;
   bool isFilterDropdownVisible = false;
 
   TextEditingController topicController = TextEditingController();
@@ -36,25 +39,21 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
   }
 
   void fetchTweets() async {
-    isLoading = true;
-    notifyListeners();
-
+    setBusy(true);
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       final response = await _apiService.fetchTweets(
-          userId: 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
-          tweetStatus: selectedFilter.toUpperCase());
+          userId: userId, tweetStatus: selectedFilter.toUpperCase());
       tweets = response.data;
     } catch (e) {
-      print('Error fetching tweets: $e');
+      debugPrint('Error fetching tweets: $e');
     }
 
-    isLoading = false;
-    notifyListeners();
+    setBusy(false);
   }
 
   void generateTweetForTwitterPersona() async {
-    isLoading = true;
-    notifyListeners();
+    setBusy(true);
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
@@ -62,16 +61,14 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
             topic: topicController.text.trim());
 
         generatedTweet = response.data.content;
-        print("Generate tweet : $generatedTweet");
+        debugPrint("Generate tweet : $generatedTweet");
         topicController.clear();
         openGeneratedTweetModal();
       } catch (e) {
         debugPrint("Error fetching news: $e");
       }
     }
-
-    isLoading = false;
-    notifyListeners();
+    setBusy(false);
   }
 
   void openGeneratedTweetModal() {
@@ -95,7 +92,7 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
         notifyListeners();
       }
     } catch (e) {
-      print('Error fetching tweets: $e');
+      debugPrint('Error fetching tweets: $e');
     }
   }
 

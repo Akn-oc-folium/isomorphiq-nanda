@@ -4,39 +4,54 @@
 
 import 'dart:convert';
 
-NewsArticle newsArticleFromJson(String str) =>
-    NewsArticle.fromJson(json.decode(str));
+NewsArticle newsArticleFromJson(String str) => NewsArticle.fromJson(json.decode(str));
 
 String newsArticleToJson(NewsArticle data) => json.encode(data.toJson());
 
 class NewsArticle {
-  final String? title;
-  final String? source;
-  final String? content;
-  final String? imageUrl;
-  final String? url;
+    final Data? data;
+    final int? code;
+    final String? message;
 
-  NewsArticle({
-    this.title,
-    this.source,
-    this.content,
-    this.url,
-    this.imageUrl,
-  });
+    NewsArticle({
+        this.data,
+        this.code,
+        this.message,
+    });
 
-  factory NewsArticle.fromJson(Map<String, dynamic> json) => NewsArticle(
-        title: json["title"] ?? "No title",
-        source: json["source"] ?? "Unknown Source",
-        content: json["content"] ?? "No content available",
-        imageUrl: json["imageUrl"],
-        url: json["url"] ?? "",
-      );
+    factory NewsArticle.fromJson(Map<String, dynamic> json) => NewsArticle(
+        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+        code: json["code"],
+        message: json["message"],
+    );
 
-  Map<String, dynamic> toJson() => {
-        "title": title,
+    Map<String, dynamic> toJson() => {
+        "data": data?.toJson(),
+        "code": code,
+        "message": message,
+    };
+}
+
+class Data {
+    final String? headline;
+    final String? source;
+    final String? summary;
+
+    Data({
+        this.headline,
+        this.source,
+        this.summary,
+    });
+
+    factory Data.fromJson(Map<String, dynamic> json) => Data(
+        headline: json["headline"],
+        source: json["source"],
+        summary: json["summary"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "headline": headline,
         "source": source,
-        "content": content,
-        "imageUrl": imageUrl,
-        "url": url,
-      };
+        "summary": summary,
+    };
 }

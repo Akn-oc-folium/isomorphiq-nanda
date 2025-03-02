@@ -107,47 +107,60 @@ class PrimaryButton extends StatelessWidget {
 }
 
 class SecondaryButton extends StatelessWidget {
-  final String text;
+  final String? text;
   final VoidCallback? onPressed;
   final bool isSmall;
+  final Widget? icon;
 
   const SecondaryButton({
     super.key,
     required this.text,
     this.onPressed,
-  }) : isSmall = false;
+  })  : isSmall = false,
+        icon = null;
 
   const SecondaryButton.small({
     super.key,
     required this.text,
     required this.onPressed,
-  }) : isSmall = true;
+  })  : isSmall = true,
+        icon = null;
+
+  const SecondaryButton.icon({
+    super.key,
+    required this.icon,
+    required this.onPressed,
+  })  : text = null,
+        isSmall = false;
 
   @override
   Widget build(BuildContext context) {
     final borderRadius = BorderRadius.circular(12).r;
 
     return Container(
-      width: double.infinity,
+      width: icon != null ? 52.w : double.infinity,
       height: isSmall ? 44.h : 52.h,
       decoration: BoxDecoration(
-        // Match the button’s corners so the shadow lines up
-        borderRadius: borderRadius,
-        boxShadow: [
-          BoxShadow(
-            color: isSmall ? kcStrokePrimary : kcSecondaryColor,
-            offset: Offset(0, isSmall ? 1 : 4), // Position of the shadow
-            blurRadius: 0, // No blur => hard edge
-          ),
-        ],
-      ),
+          // Match the button’s corners so the shadow lines up
+          borderRadius: borderRadius,
+          boxShadow: [
+            BoxShadow(
+              color: kcPrimaryColor,
+              offset: Offset(0, isSmall ? 1 : 4), // Position of the shadow
+              blurRadius: 0, // No blur => hard edge
+            ),
+          ],
+          border: Border.all(
+            color: kcPrimaryColor,
+            width: 1,
+          )),
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor: kcPrimaryColorAccent,
           disabledForegroundColor: const Color(0xFFE86124),
           minimumSize: Size.fromHeight(isSmall ? 44.h : 52.h),
-          backgroundColor: kcPrimaryColorAccent,
-          foregroundColor: kcPrimaryColor,
+          backgroundColor: kcPrimaryColorLight,
+          foregroundColor: kcSecondaryColor,
           shape: RoundedRectangleBorder(
             borderRadius: borderRadius,
           ),
@@ -156,12 +169,13 @@ class SecondaryButton extends StatelessWidget {
               : EdgeInsets.symmetric(vertical: 16.h),
         ),
         onPressed: onPressed,
-        child: Text(
-          text,
-          style: isSmall
-              ? TextStyles.buttonText.copyWith(height: 1.125.h)
-              : TextStyles.buttonText,
-        ),
+        child: icon ??
+            Text(
+              text ?? '',
+              style: isSmall
+                  ? TextStyles.buttonText.copyWith(height: 1.125.h)
+                  : TextStyles.buttonText,
+            ),
       ),
     );
   }

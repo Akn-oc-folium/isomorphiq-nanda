@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:isomorph_iq/models/fetch_tweets.dart';
 import 'package:isomorph_iq/models/generate_tweet.dart';
+import 'package:isomorph_iq/models/news_article_model.dart';
 import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
@@ -196,136 +197,6 @@ class ApiService {
     }
   }
 
-  Future<SignAuth> getGoogleAuthUrl({
-    required String userId,
-  }) async {
-    try {
-      final Response<dynamic> response = await apiClient.get(
-        AppConstants.googleEndpoint,
-        queryParameters: {
-          'user_id': userId,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SignAuth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to fetch google auth!');
-      }
-    } catch (e) {
-      String errorMessage;
-      if (e is DioException) {
-        errorMessage = DioExceptions.fromDioError(e).toString();
-      } else {
-        errorMessage = 'An unexpected error occurred: ${e.toString()}';
-      }
-      throw errorMessage;
-    }
-  }
-
-  Future<SignAuth> getDiscordAuthUrl({
-    required String userId,
-  }) async {
-    try {
-      final Response<dynamic> response = await apiClient.get(
-        AppConstants.discordEndpoint,
-        queryParameters: {
-          'user_id': userId,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SignAuth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to fetch discord auth!');
-      }
-    } catch (e) {
-      String errorMessage;
-      if (e is DioException) {
-        errorMessage = DioExceptions.fromDioError(e).toString();
-      } else {
-        errorMessage = 'An unexpected error occurred: ${e.toString()}';
-      }
-      throw errorMessage;
-    }
-  }
-
-  Future<SignAuth> getXAuthUrl({
-    required String userId,
-  }) async {
-    try {
-      final Response<dynamic> response = await apiClient.get(
-        AppConstants.xEndpoint,
-        queryParameters: {
-          'user_id': userId,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SignAuth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to fetch twitter auth!');
-      }
-    } catch (e) {
-      String errorMessage;
-      if (e is DioException) {
-        errorMessage = DioExceptions.fromDioError(e).toString();
-      } else {
-        errorMessage = 'An unexpected error occurred: ${e.toString()}';
-      }
-      throw errorMessage;
-    }
-  }
-
-  Future<SignAuth> getFacebookAuthUrl({
-    required String userId,
-  }) async {
-    try {
-      final Response<dynamic> response = await apiClient.get(
-        AppConstants.facebookEndpoint,
-        queryParameters: {
-          'user_id': userId,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SignAuth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to fetch facebook auth!');
-      }
-    } catch (e) {
-      String errorMessage;
-      if (e is DioException) {
-        errorMessage = DioExceptions.fromDioError(e).toString();
-      } else {
-        errorMessage = 'An unexpected error occurred: ${e.toString()}';
-      }
-      throw errorMessage;
-    }
-  }
-
-  Future<SignAuth> getSpotifyAuthUrl({
-    required String userId,
-  }) async {
-    try {
-      final Response<dynamic> response = await apiClient.get(
-        AppConstants.spotifyEndpoint,
-        queryParameters: {
-          'user_id': userId,
-        },
-      );
-      if (response.statusCode == 200) {
-        return SignAuth.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to fetch spotify auth!');
-      }
-    } catch (e) {
-      String errorMessage;
-      if (e is DioException) {
-        errorMessage = DioExceptions.fromDioError(e).toString();
-      } else {
-        errorMessage = 'An unexpected error occurred: ${e.toString()}';
-      }
-      throw errorMessage;
-    }
-  }
-
   Future<GenerateTweet> postGenerateTweet({
     required String userId,
     required String topic,
@@ -422,6 +293,52 @@ class ApiService {
     } on DioException catch (e) {
       final errorMessage = DioExceptions.fromDioError(e).toString();
       throw Exception(errorMessage);
+    }
+  }
+
+  Future<NewsArticle> getCryptoNews({
+    required String userId,
+  }) async {
+    try {
+      final Response response = await apiClient.get(
+        AppConstants.cryptoNewsEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return NewsArticle.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch the crypto news!');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
+    }
+  }
+
+  Future<PostResponse> postAiPersona({
+    required String username,
+    required String level,
+    required String assignmentType,
+  }) async {
+    try {
+      final Response response = await apiClient.post(
+        AppConstants.markTaskEndpoint,
+        data: {
+          "name": username,
+          "level": level,
+          "assignment_type": assignmentType,
+        },
+      );
+      if (response.statusCode == 200) {
+        return PostResponse.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to mark task!');
+      }
+    } on DioException catch (e) {
+      final errorMessage = DioExceptions.fromDioError(e).toString();
+      throw errorMessage;
     }
   }
 }

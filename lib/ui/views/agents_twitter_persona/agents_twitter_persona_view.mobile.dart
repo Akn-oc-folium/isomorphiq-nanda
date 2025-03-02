@@ -69,7 +69,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                       ),
                       child: TextField(
                         controller: viewModel.topicController,
-                        readOnly: viewModel.isLoading ? true : false,
+                        readOnly: viewModel.isBusy ? true : false,
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Input topic you want to talk about...",
@@ -113,7 +113,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                     verticalSpace04,
                     verticalSpace08,
                     Expanded(
-                      child: viewModel.isLoading
+                      child: viewModel.isBusy
                           ? Center(
                               child: CircularProgressIndicator(
                               color: kcPrimaryColor,
@@ -239,13 +239,14 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              PrimaryButton.icon(
-                  icon: SvgPicture.asset(Assets.icons.trash,
-                      height: 24.r,
-                      colorFilter:
-                          const ColorFilter.mode(kcWhite, BlendMode.srcIn)),
-                  onPressed: () =>
-                      viewModel.updateTweetStatus(tweet.id, 'REJECTED')),
+              SecondaryButton.icon(
+                icon: SvgPicture.asset(Assets.icons.trash,
+                    height: 24.r,
+                    colorFilter: const ColorFilter.mode(
+                        kcSecondaryColor, BlendMode.srcIn)),
+                onPressed: () =>
+                    viewModel.updateTweetStatus(tweet.id, 'REJECTED'),
+              ),
               horizontalSpace16,
               Expanded(
                 child: PrimaryButton(

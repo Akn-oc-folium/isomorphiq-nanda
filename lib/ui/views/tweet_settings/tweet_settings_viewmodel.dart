@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -24,7 +25,7 @@ class TweetSettingsViewModel extends BaseViewModel {
     sliderValues[title] = value;
     notifyListeners();
 
-    print('$title; $value');
+    debugPrint('$title; $value');
     // _debounceTimer?.cancel();
 
     // _debounceTimer = Timer(Duration(milliseconds: 500), () {
@@ -38,7 +39,7 @@ class TweetSettingsViewModel extends BaseViewModel {
   }
 
   void confirmChanges() {
-    print("Confirm Changes Clicked!");
+    debugPrint("Confirm Changes Clicked!");
   }
 
   void navigateBack() {
