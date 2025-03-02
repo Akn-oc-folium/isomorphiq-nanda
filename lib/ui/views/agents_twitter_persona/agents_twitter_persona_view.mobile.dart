@@ -51,15 +51,15 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                     ),
                     verticalSpace08,
                     Text(
-                      'Use your personal AI Twitter Persona to generate tweets and replies for you!',
+                      'Use IQ to interact with AI Agents, and level up your personal AI',
                       style: TextStyles.titleTertiary
                           .copyWith(color: kcSecondaryColor),
                     ),
                     verticalSpace04,
                     verticalSpace08,
                     Container(
-                      width: 312,
-                      height: 80,
+                      width: double.infinity,
+                      height: 80.h,
                       padding:
                           EdgeInsets.symmetric(horizontal: 16, vertical: 10),
                       decoration: BoxDecoration(
@@ -136,66 +136,67 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                           elevation: 4,
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
-                              width: 150,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 8),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                                color: Colors.white,
-                              ),
-                              child: ListView.builder(
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: viewModel.filterOptions.length,
-                                  itemBuilder: (context, index) {
-                                    String option =
-                                        viewModel.filterOptions[index];
-                                    bool isSelected =
-                                        viewModel.selectedFilter == option;
-                                    return Column(
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () =>
-                                              viewModel.applyFilter(option),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(option,
-                                                  style: TextStyles.bodyPrimary
-                                                      .copyWith(
-                                                          color:
-                                                              kcPrimaryColor)),
-                                              Container(
-                                                width: 15,
-                                                height: 15,
-                                                decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  border: Border.all(
-                                                      color: kcPrimaryColor,
-                                                      width: 3),
-                                                  color: isSelected
-                                                      ? kcPrimaryColor
-                                                      : Colors.white,
-                                                ),
-                                                child: isSelected
-                                                    ? Icon(Icons.check,
-                                                        color: Colors.white,
-                                                        size: 8)
-                                                    : null,
-                                              ),
-                                            ],
+                            width: 150,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8),
+                              color: Colors.white,
+                            ),
+                            child: ListView.builder(
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: viewModel.filterOptions.length,
+                              itemBuilder: (context, index) {
+                                String option = viewModel.filterOptions[index];
+                                bool isSelected =
+                                    viewModel.selectedFilter == option;
+                                return Column(
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () =>
+                                          viewModel.applyFilter(option),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(option,
+                                              style: TextStyles.bodyPrimary
+                                                  .copyWith(
+                                                      color: kcPrimaryColor)),
+                                          Container(
+                                            width: 15,
+                                            height: 15,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: kcPrimaryColor,
+                                                  width: 3),
+                                              color: isSelected
+                                                  ? kcPrimaryColor
+                                                  : Colors.white,
+                                            ),
+                                            child: isSelected
+                                                ? Icon(Icons.check,
+                                                    color: Colors.white,
+                                                    size: 8)
+                                                : null,
                                           ),
-                                        ),
-                                        if (index !=
-                                            viewModel.filterOptions.length - 1)
-                                          Divider(
-                                              color: kcPrimaryColorAccent
-                                                  .withOpacity(0.2),
-                                              thickness: 1),
-                                      ],
-                                    );
-                                  })),
+                                        ],
+                                      ),
+                                    ),
+                                    if (index !=
+                                        viewModel.filterOptions.length - 1)
+                                      Divider(
+                                        color: kcPrimaryColorAccent.withValues(
+                                            alpha: 0.2),
+                                        thickness: 1,
+                                      ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ),
                         )
                       : SizedBox(),
                 ),
@@ -209,18 +210,12 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
 
   Widget _buildTweetCard(Tweet tweet, AgentsTwitterPersonaViewModel viewModel) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8).h,
+      margin: const EdgeInsets.only(bottom: 16).h,
       padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12).r,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 5,
-            offset: Offset(0, 2),
-          ),
-        ],
+        border: Border.all(color: kcStrokeSecondary),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
