@@ -97,9 +97,31 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                     ],
                   ),
                 ),
-
                 verticalSpace16,
+                verticalSpace04,
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                  child: Stack(
+                    clipBehavior: Clip.none,
+                    alignment: Alignment.centerLeft,
+                    children: [
+                      PrimaryButton(
+                          text: "Play Game",
+                          onPressed: () => viewModel.enterPlayMode()),
+                      Positioned(
+                          child: Padding(
+                        padding: const EdgeInsets.only(left: 24),
+                        child: SvgPicture.asset(Assets.icons.lock),
+                      ))
+                    ],
+                  ),
+                ),
                 verticalSpace08,
+                Text(
+                  'Level up to unlock game and start playing to earn!',
+                  style:
+                      TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+                ),
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),

@@ -10,6 +10,7 @@ import 'app.locator.dart';
 import '../ui/bottom_sheets/game_instruction/game_instruction_sheet.dart';
 import '../ui/bottom_sheets/generated_tweet/generated_tweet_sheet.dart';
 import '../ui/bottom_sheets/notice/notice_sheet.dart';
+import '../ui/bottom_sheets/play_instructions/play_instructions_sheet.dart';
 import '../ui/bottom_sheets/rewards/rewards_sheet.dart';
 
 enum BottomSheetType {
@@ -17,6 +18,7 @@ enum BottomSheetType {
   rewards,
   gameInstruction,
   generatedTweet,
+  playInstructions,
 }
 
 void setupBottomSheetUi() {
@@ -31,6 +33,8 @@ void setupBottomSheetUi() {
         GameInstructionSheet(request: request, completer: completer),
     BottomSheetType.generatedTweet: (context, request, completer) =>
         GeneratedTweetSheet(request: request, completer: completer),
+    BottomSheetType.playInstructions: (context, request, completer) =>
+        PlayInstructionsSheet(request: request, completer: completer),
   };
 
   bottomsheetService.setCustomSheetBuilders(builders);

@@ -36,10 +36,11 @@ class PersonaSlider extends StatelessWidget {
             style: TextStyles.titleSecondary.copyWith(color: kcSecondaryColor)),
         SliderTheme(
           data: SliderThemeData(
-            trackHeight: 1.0,
+            trackHeight: 2.0,
             trackShape: CustomTrackShape(),
             thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
             tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 3.0),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 16.0),
             padding: EdgeInsets.only(top: 0, bottom: 0),
           ),
           child: Slider(

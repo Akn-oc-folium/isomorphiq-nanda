@@ -67,7 +67,7 @@ class AiPersonaViewModel extends BaseViewModel {
       debugPrint("Success");
       notifyListeners();
     } catch (e) {
-      debugPrint('Error fetching tweets: $e');
+      debugPrint('Error fetching slider values in ai_persona: $e');
     }
   }
 
@@ -88,7 +88,7 @@ class AiPersonaViewModel extends BaseViewModel {
           userId: userId, sliderValues: sliderValues);
       debugPrint("Success");
     } catch (e) {
-      debugPrint('Error fetching tweets: $e');
+      debugPrint('Error confirming changes in ai_persona: $e');
     } finally {
       setBusyForObject('personaUpdating', false);
     }

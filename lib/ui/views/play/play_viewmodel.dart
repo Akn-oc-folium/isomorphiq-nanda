@@ -34,6 +34,33 @@ class PlayViewModel extends BaseViewModel {
     kLEGENDARY: 2000,
   };
 
+  void playInstructions() {
+    _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.gameInstruction,
+      barrierDismissible: false,
+      title: 'Ready to Play?',
+      mainButtonTitle: 'Find New Tasks',
+      isScrollControlled: true,
+      data: [
+        {
+          "icon": Assets.icons.dollarCoin.path,
+          "content":
+              "You’ll play 5 rounds per game – each round, pick 1 of 5 cards to find chests."
+        },
+        {
+          "icon": Assets.icons.dollarCoin.path,
+          "content":
+              "Common, Rare, and Legendary chests hold different rewards!"
+        },
+        {
+          "icon": Assets.icons.dollarCoin.path,
+          "content":
+              "After 5 rounds, the total points from all chests will be added to your balance."
+        },
+      ],
+    );
+  }
+
   // Generate chests based on level
   void generateChests() {
     chestPool.clear();

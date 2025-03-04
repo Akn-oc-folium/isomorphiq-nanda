@@ -6,6 +6,7 @@ import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:isomorph_iq/ui/widgets/chest_box.dart';
+import 'package:isomorph_iq/ui/widgets/custom_app_bar.dart';
 import 'package:stacked/stacked.dart';
 
 import 'play_viewmodel.dart';
@@ -16,15 +17,17 @@ class PlayViewMobile extends StackedView<PlayViewModel> {
   @override
   Widget builder(BuildContext context, PlayViewModel viewModel, child) {
     return Scaffold(
+      appBar: CustomAppBar(
+        context: context,
+        title: Text(
+          'Round ${viewModel.round}',
+          style: TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
+        ),
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0).r,
         child: Column(
           children: [
-            Text(
-              'Round ${viewModel.round}',
-              style: TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
-            ),
-            verticalSpace08,
             Text(
               'Choose Your Card!',
               style:

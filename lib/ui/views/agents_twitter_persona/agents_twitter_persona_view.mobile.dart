@@ -105,41 +105,43 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                         ),
                       ),
                     ] else ...[
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Generated Tweets',
+                            style: TextStyles.titleSecondary.copyWith(
+                              color: kcSecondaryColor,
+                              fontSize: 18.sp,
+                              height: 1.h,
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () => viewModel.toggleFilterDropdown(),
+                            child: SvgPicture.asset(
+                              Assets.icons.sort,
+                              height: 24.r,
+                              colorFilter: const ColorFilter.mode(
+                                  kcSecondaryColor, BlendMode.srcIn),
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpace04,
+                      verticalSpace08,
                       if (viewModel.tweets == null) ...[
-                        Center(
-                          child: Text(
-                            "No Tweets Generated",
-                            style: TextStyles.bodyPrimary.copyWith(
-                              color: kcPrimaryColor,
-                              fontSize: 16.sp,
+                        Expanded(
+                          child: Center(
+                            child: Text(
+                              "No Tweets Generated",
+                              style: TextStyles.bodyPrimary.copyWith(
+                                color: kcPrimaryColor,
+                                fontSize: 16.sp,
+                              ),
                             ),
                           ),
                         ),
                       ] else ...[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Generated Tweets',
-                              style: TextStyles.titleSecondary.copyWith(
-                                color: kcSecondaryColor,
-                                fontSize: 18.sp,
-                                height: 1.h,
-                              ),
-                            ),
-                            GestureDetector(
-                              onTap: () => viewModel.toggleFilterDropdown(),
-                              child: SvgPicture.asset(
-                                Assets.icons.sort,
-                                height: 24.r,
-                                colorFilter: const ColorFilter.mode(
-                                    kcSecondaryColor, BlendMode.srcIn),
-                              ),
-                            ),
-                          ],
-                        ),
-                        verticalSpace04,
-                        verticalSpace08,
                         Expanded(
                           child: ListView.builder(
                             itemCount: viewModel.tweets!.data.length,
@@ -179,6 +181,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                                 return Column(
                                   children: [
                                     GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
                                       onTap: () =>
                                           viewModel.applyFilter(option),
                                       child: Row(

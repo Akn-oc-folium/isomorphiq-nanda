@@ -29,8 +29,7 @@ class GeneratedTweetSheetModel extends BaseViewModel {
       if (response.code == 200) {
         _bottomSheetService.completeSheet(SheetResponse(confirmed: true));
         rebuildUi();
-      }
-      else if (response.code == 429) {
+      } else if (response.code == 429) {
         _dialogService.showDialog(
           title: 'Error',
           description: 'You have reached the limit of posting tweets per day.',

@@ -99,6 +99,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/jackpot.svg
   String get jackpot => 'assets/icons/jackpot.svg';
 
+  /// File path: assets/icons/lock.svg
+  String get lock => 'assets/icons/lock.svg';
+
   /// File path: assets/icons/logo-static.png
   AssetGenImage get logoStatic =>
       const AssetGenImage('assets/icons/logo-static.png');
@@ -180,6 +183,7 @@ class $AssetsIconsGen {
         foodOrder,
         googleLogo,
         jackpot,
+        lock,
         logoStatic,
         metamaskLogo,
         news,
