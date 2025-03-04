@@ -41,7 +41,7 @@ class AuthorizationService {
     _completer = Completer<bool>();
 
     // Open the authentication popup
-    authWindow = window.open(authUrl, '_blank', 'width=500,height=600');
+    authWindow = window.open(authUrl, '_blank', 'width=500,height=700');
 
     // Start checking if the window is closed manually
     _pollWindowClosed();

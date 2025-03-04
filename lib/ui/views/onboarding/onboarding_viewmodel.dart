@@ -53,8 +53,9 @@ class OnboardingViewModel extends BaseViewModel {
     setBusy(true);
     try {
       _userProfile = await _apiService.getDashboard(username: username!);
-      debugPrint("User id: ${_userProfile!.data.id}");
-      await _hiveService.storeData(kUserBox, kUserIdKey, _userProfile!.data.id);
+      debugPrint("User id: ${_userProfile!.data!.id}");
+      await _hiveService.storeData(
+          kUserBox, kUserIdKey, _userProfile!.data!.id);
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     }

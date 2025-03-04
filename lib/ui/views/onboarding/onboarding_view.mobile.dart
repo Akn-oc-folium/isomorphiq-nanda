@@ -112,7 +112,7 @@ class __OnboardingView1State extends State<_OnboardingView1>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hi ${widget.viewModel.userFirstName}3!',
+                      'Hi ${widget.viewModel.userFirstName}!',
                       style: TextStyles.titlePrimary
                           .copyWith(color: kcPrimaryColor),
                     ),

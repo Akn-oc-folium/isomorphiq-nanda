@@ -12,7 +12,7 @@ class AppConstants {
 
   // API Constants
   static const int receiveTimeout = 10000;
-  static const int connectionTimeout = 10000;
+  static const int connectionTimeout = 30000;
   static const String baseUrl = 'https://api.isomorphiq.com';
   static const String dashboardEndpoint = '/user';
   static const String userPointsEndpoint = '/points';
@@ -20,6 +20,7 @@ class AppConstants {
   static const String userRankEndpoint = '/rank';
   static const String markTaskEndpoint = '/mark-task';
   static const String userLevelEndpoint = '/update-user-level';
+  static const String connectionsEndpoint = '/user/connections';
   static const String googleEndpoint = '/google/login';
   static const String discordEndpoint = '/discord/login';
   static const String xEndpoint = '/x/oauth2/login';
@@ -27,12 +28,13 @@ class AppConstants {
   static const String spotifyEndpoint = '/spotify/login';
   static const String redditEndpoint = '/reddit/login';
   static const String generateTweetEndpoint = '/tweet/generate';
-  static const String saveGeneratedTweet = '/tweet/save';
-  static const String fetchTweets = '/tweet/fetch';
-  static const String updateTweetStatus = '/tweet/status-update';
+  static const String saveTweetEndpoint = '/tweet/save';
+  static const String fetchTweetsEndpoint = '/tweet/fetch';
+  static const String updateTweetStatusEndpoint = '/tweet/status-update';
   static const String cryptoNewsEndpoint = '/news';
-  static const String upsertUserPersonality = '/user/personality/upsert';
-  static const String fetchUserPersonality = '/user/personality/fetch';
+  static const String upsertUserPersonalityEndpoint =
+      '/user/personality/upsert';
+  static const String fetchUserPersonalityEndpoint = '/user/personality/fetch';
 
   // Local Storage Boxes
   static const String userBox = 'userBox';

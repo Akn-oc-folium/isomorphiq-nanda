@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
-import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/models/app_connections_model.dart';
 import 'package:isomorph_iq/models/fetch_user_personality.dart';
 import 'package:isomorph_iq/models/generate_tweet.dart';
-import 'package:isomorph_iq/models/news_article_model.dart';
-import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
+import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/models/post_model.dart';
+import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/save_generated_tweet.dart';
+import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/models/upsert_user_personality.dart';
 import 'package:isomorph_iq/models/user_points.dart';
 import 'package:isomorph_iq/models/user_rank_model.dart';
@@ -171,6 +172,32 @@ class ApiService {
     }
   }
 
+  Future<AppConnections> getAppConnections({
+    required String userId,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.connectionsEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
+      );
+      if (response.statusCode == 200) {
+        return AppConnections.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch the dashbord!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
+
   Future<SignAuth> getAppAuthUrl({
     required String appId,
     required String userId,
@@ -224,13 +251,14 @@ class ApiService {
     }
   }
 
-  Future<SaveGeneratedTweet> saveGeneratedTweet(
-      {required String userId,
-      required String content,
-      required String tweetStatus}) async {
+  Future<SaveGeneratedTweet> postSaveGeneratedTweet({
+    required String userId,
+    required String content,
+    required String tweetStatus,
+  }) async {
     try {
       final Response response = await apiClient.post(
-        AppConstants.saveGeneratedTweet,
+        AppConstants.saveTweetEndpoint,
         queryParameters: {
           "user_id": userId,
         },
@@ -248,23 +276,23 @@ class ApiService {
     }
   }
 
-  Future<FetchTweets> fetchTweets({
+  Future<Tweets> getTweets({
     required String userId,
     required String tweetStatus,
   }) async {
     try {
       final Response response = await apiClient.post(
-        AppConstants.fetchTweets,
+        AppConstants.fetchTweetsEndpoint,
         data: {
           "user_id": userId,
           "tweet_status": tweetStatus,
           "order_by": "created_at",
-          "order_option": "asc",
+          "order_option": "desc",
           "page_size": 10
         },
       );
       if (response.statusCode == 200) {
-        return FetchTweets.fromJson(response.data as Map<String, dynamic>);
+        return Tweets.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception('Failed to fetch tweets');
       }
@@ -274,13 +302,13 @@ class ApiService {
     }
   }
 
-  Future<SaveGeneratedTweet> updateTweetStatus(
+  Future<SaveGeneratedTweet> postUpdateTweetStatus(
       {required String userId,
       required String tweetId,
       required String tweetStatus}) async {
     try {
       final Response response = await apiClient.post(
-        AppConstants.saveGeneratedTweet,
+        AppConstants.updateTweetStatusEndpoint,
         queryParameters: {
           "user_id": userId,
         },
@@ -298,7 +326,7 @@ class ApiService {
     }
   }
 
-  Future<NewsArticle> getCryptoNews({
+  Future<CryptoNews> getCryptoNews({
     required String userId,
   }) async {
     try {
@@ -309,7 +337,7 @@ class ApiService {
         },
       );
       if (response.statusCode == 200) {
-        return NewsArticle.fromJson(response.data as Map<String, dynamic>);
+        return CryptoNews.fromJson(response.data as Map<String, dynamic>);
       } else {
         throw Exception('Failed to fetch the crypto news!');
       }
@@ -319,37 +347,12 @@ class ApiService {
     }
   }
 
-  Future<PostResponse> postAiPersona({
-    required String username,
-    required String level,
-    required String assignmentType,
-  }) async {
-    try {
-      final Response response = await apiClient.post(
-        AppConstants.markTaskEndpoint,
-        data: {
-          "name": username,
-          "level": level,
-          "assignment_type": assignmentType,
-        },
-      );
-      if (response.statusCode == 200) {
-        return PostResponse.fromJson(response.data as Map<String, dynamic>);
-      } else {
-        throw Exception('Failed to mark task!');
-      }
-    } on DioException catch (e) {
-      final errorMessage = DioExceptions.fromDioError(e).toString();
-      throw errorMessage;
-    }
-  }
-
-  Future<FetchUserPersonality> fetchUserPersonality({
+  Future<FetchUserPersonality> getUserPersonality({
     required String userId,
   }) async {
     try {
       final Response response = await apiClient.get(
-        AppConstants.upsertUserPersonality,
+        AppConstants.fetchUserPersonalityEndpoint,
         queryParameters: {
           "user_id": userId,
         },
@@ -366,7 +369,7 @@ class ApiService {
     }
   }
 
-  Future<UpsertUserPersonality> upsertUserPersonality(
+  Future<UpsertUserPersonality> postUserPersonality(
       {required String userId,
       required Map<String, double> sliderValues}) async {
     try {
@@ -375,7 +378,7 @@ class ApiService {
         apiBody[key.toLowerCase()] = value;
       });
       final Response response = await apiClient.post(
-        AppConstants.upsertUserPersonality,
+        AppConstants.upsertUserPersonalityEndpoint,
         queryParameters: {
           "user_id": userId,
         },

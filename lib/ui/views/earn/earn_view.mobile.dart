@@ -7,7 +7,6 @@ import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:isomorph_iq/ui/widgets/streak_redeem_card.dart';
-import 'package:isomorph_iq/ui/widgets/task_card.dart';
 import 'package:isomorph_iq/ui/widgets/user_status_card.dart';
 import 'package:stacked/stacked.dart';
 
@@ -54,7 +53,8 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                           ),
                         )
                       : UserStatusCard(
-                          name: viewModel.userProfile!.data.telegramHandle,
+                          name: viewModel.userProfile!.data!.telegramHandle ??
+                              'User',
                           rank: viewModel.userRank!.data.rank,
                         ),
                   verticalSpace08,
@@ -115,7 +115,7 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                       horizontalSpace08,
                       horizontalSpace04,
                       Text(
-                        viewModel.userProfile!.data.points.toString(),
+                        viewModel.userProfile!.data!.points.toString(),
                         style: TextStyle(
                           fontSize: 44.r,
                           fontWeight: FontWeight.w600,
@@ -150,34 +150,7 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                       color: kcPrimaryColorLight,
                     ),
                     child: Column(
-                      children: [
-                        TaskCard(
-                          title: viewModel.userProfile!.data.appTasks.first
-                              .assignments.first.description,
-                          isDone: viewModel.taskCompletionStatus[0],
-                          onTap: viewModel.taskCompletionStatus[0]
-                              ? null
-                              : () => viewModel.markTaskAsDone(0),
-                        ),
-                        verticalSpace08,
-                        TaskCard(
-                          title: viewModel.userProfile!.data.appTasks.first
-                              .assignments[1].description,
-                          isDone: viewModel.taskCompletionStatus[1],
-                          onTap: viewModel.taskCompletionStatus[1]
-                              ? null
-                              : () => viewModel.markTaskAsDone(1),
-                        ),
-                        verticalSpace08,
-                        TaskCard(
-                          title: viewModel.userProfile!.data.appTasks.first
-                              .assignments.last.description,
-                          isDone: viewModel.taskCompletionStatus[2],
-                          onTap: viewModel.taskCompletionStatus[2]
-                              ? null
-                              : () => viewModel.markTaskAsDone(2),
-                        ),
-                      ],
+                      children: [],
                     ),
                   ),
                   verticalSpace16,

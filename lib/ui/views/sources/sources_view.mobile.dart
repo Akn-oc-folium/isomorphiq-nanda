@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
+import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/widgets/connect_card.dart';
 import 'package:stacked/stacked.dart';
 
@@ -42,105 +43,141 @@ class SourcesViewMobile extends StackedView<SourcesViewModel> {
             ],
           ),
         ),
-        body: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24.0.h),
-          child: TabBarView(
-            children: [
-              GridView.count(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
-                mainAxisSpacing: 16.h,
-                crossAxisSpacing: 12.w,
-                crossAxisCount: 2,
-                children: [
-                  ConnectCard(
-                    title: 'Google',
-                    imagePath: Assets.icons.googleLogo.path,
-                    onConnect: () => viewModel.connectApp(AuthProvider.google),
-                    isConnected: viewModel.connectedApps[AuthProvider.google],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.google] ?? false,
+        body: viewModel.isBusy || viewModel.appConnections == null
+            ? Center(
+                child: SizedBox(
+                  height: 40.r,
+                  width: 40.r,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
+                    strokeWidth: 2.0.w,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      kcPrimaryColor,
+                    ),
                   ),
-                  ConnectCard(
-                    title: 'Telegram',
-                    imagePath: Assets.icons.telegramLogo.path,
-                    onConnect: () {},
-                    isConnected: viewModel.connectedApps[AuthProvider.telegram],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.telegram] ?? false,
-                  ),
-                  ConnectCard(
-                    title: 'X',
-                    imagePath: Assets.icons.xLogo.path,
-                    onConnect: () => viewModel.connectApp(AuthProvider.x),
-                    isConnected: viewModel.connectedApps[AuthProvider.x],
-                    isBusy: viewModel.loadingState[AuthProvider.x] ?? false,
-                  ),
-                  ConnectCard(
-                    title: 'Discord',
-                    imagePath: Assets.icons.discordLogo.path,
-                    onConnect: () => viewModel.connectApp(AuthProvider.discord),
-                    isConnected: viewModel.connectedApps[AuthProvider.discord],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.discord] ?? false,
-                  ),
-                  ConnectCard(
-                    title: 'Facebook',
-                    imagePath: Assets.icons.facebookLogo.path,
-                    onConnect: () =>
-                        viewModel.connectApp(AuthProvider.facebook),
-                    isConnected: viewModel.connectedApps[AuthProvider.facebook],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.facebook] ?? false,
-                  ),
-                  ConnectCard(
-                    title: 'Spotify',
-                    imagePath: Assets.icons.spotifyLogo.path,
-                    onConnect: () => viewModel.connectApp(AuthProvider.spotify),
-                    isConnected: viewModel.connectedApps[AuthProvider.spotify],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.spotify] ?? false,
-                  ),
-                  ConnectCard(
-                    title: 'Reddit',
-                    imagePath: Assets.icons.spotifyLogo.path,
-                    onConnect: () => viewModel.connectApp(AuthProvider.reddit),
-                    isConnected: viewModel.connectedApps[AuthProvider.reddit],
-                    isBusy:
-                        viewModel.loadingState[AuthProvider.reddit] ?? false,
-                  ),
-                ],
+                ),
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(vertical: 24.0.h),
+                child: TabBarView(
+                  children: [
+                    GridView.count(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
+                      mainAxisSpacing: 16.h,
+                      crossAxisSpacing: 12.w,
+                      crossAxisCount: 2,
+                      children: [
+                        ConnectCard(
+                          title: 'Google',
+                          imagePath: Assets.icons.googleLogo.path,
+                          onConnect: () =>
+                              viewModel.connectApp(AuthProvider.google),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.google]! ||
+                                  viewModel.appConnections!.data!.gmail,
+                          isBusy: viewModel.loadingState[AuthProvider.google] ??
+                              false,
+                        ),
+                        ConnectCard(
+                          title: 'Telegram',
+                          imagePath: Assets.icons.telegramLogo.path,
+                          onConnect: () {},
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.telegram],
+                          isBusy:
+                              viewModel.loadingState[AuthProvider.telegram] ??
+                                  false,
+                        ),
+                        ConnectCard(
+                          title: 'X',
+                          imagePath: Assets.icons.xLogo.path,
+                          onConnect: () => viewModel.connectApp(AuthProvider.x),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.x]! ||
+                                  viewModel.appConnections!.data!.twitter,
+                          isBusy:
+                              viewModel.loadingState[AuthProvider.x] ?? false,
+                        ),
+                        ConnectCard(
+                          title: 'Discord',
+                          imagePath: Assets.icons.discordLogo.path,
+                          onConnect: () =>
+                              viewModel.connectApp(AuthProvider.discord),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.discord]! ||
+                                  viewModel.appConnections!.data!.discord,
+                          isBusy:
+                              viewModel.loadingState[AuthProvider.discord] ??
+                                  false,
+                        ),
+                        ConnectCard(
+                          title: 'Facebook',
+                          imagePath: Assets.icons.facebookLogo.path,
+                          onConnect: () =>
+                              viewModel.connectApp(AuthProvider.facebook),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.facebook]! ||
+                                  viewModel.appConnections!.data!.facebook,
+                          isBusy:
+                              viewModel.loadingState[AuthProvider.facebook] ??
+                                  false,
+                        ),
+                        ConnectCard(
+                          title: 'Spotify',
+                          imagePath: Assets.icons.spotifyLogo.path,
+                          onConnect: () =>
+                              viewModel.connectApp(AuthProvider.spotify),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.spotify]! ||
+                                  viewModel.appConnections!.data!.spotify,
+                          isBusy:
+                              viewModel.loadingState[AuthProvider.spotify] ??
+                                  false,
+                        ),
+                        ConnectCard(
+                          title: 'Reddit',
+                          imagePath: Assets.icons.redditLogo.path,
+                          onConnect: () =>
+                              viewModel.connectApp(AuthProvider.reddit),
+                          isConnected:
+                              viewModel.connectedApps[AuthProvider.reddit]! ||
+                                  viewModel.appConnections!.data!.reddit,
+                          isBusy: viewModel.loadingState[AuthProvider.reddit] ??
+                              false,
+                        ),
+                      ],
+                    ),
+                    GridView.count(
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
+                      mainAxisSpacing: 16.h,
+                      crossAxisSpacing: 12.w,
+                      crossAxisCount: 2,
+                      children: [
+                        ConnectCard(
+                          title: 'Metamask',
+                          imagePath: Assets.icons.metamaskLogo.path,
+                          onConnect: () {},
+                        ),
+                        ConnectCard(
+                          title: 'Binance',
+                          imagePath: Assets.icons.binanceLogo.path,
+                          onConnect: () {},
+                        ),
+                        ConnectCard(
+                          title: 'Uniswap',
+                          imagePath: Assets.icons.uniswapLogo.path,
+                          onConnect: () {},
+                        ),
+                        ConnectCard(
+                          title: 'Warpcast',
+                          imagePath: Assets.icons.warpcastLogo.path,
+                          onConnect: () {},
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              GridView.count(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
-                mainAxisSpacing: 16.h,
-                crossAxisSpacing: 12.w,
-                crossAxisCount: 2,
-                children: [
-                  ConnectCard(
-                    title: 'Metamask',
-                    imagePath: Assets.icons.metamaskLogo.path,
-                    onConnect: () {},
-                  ),
-                  ConnectCard(
-                    title: 'Binance',
-                    imagePath: Assets.icons.binanceLogo.path,
-                    onConnect: () {},
-                  ),
-                  ConnectCard(
-                    title: 'Uniswap',
-                    imagePath: Assets.icons.uniswapLogo.path,
-                    onConnect: () {},
-                  ),
-                  ConnectCard(
-                    title: 'Warpcast',
-                    imagePath: Assets.icons.warpcastLogo.path,
-                    onConnect: () {},
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
       ),
     );
   }

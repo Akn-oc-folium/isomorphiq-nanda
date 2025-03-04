@@ -1,31 +1,45 @@
+import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/services/api_service.dart';
+import 'package:isomorph_iq/services/hive_service.dart';
+import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class GeneratedTweetSheetModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
+  final _dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
+  final _hiveService = locator<HiveService>();
 
-  final String generatedTweetContent;
+  GeneratedTweetSheetModel({required this.generatedTweet});
 
-  GeneratedTweetSheetModel({required this.generatedTweetContent});
+  late String generatedTweet;
 
-  void saveTweet(String tweetStatus) async {
+  Future<void> sendGeneratedTweet(String tweetStatus) async {
+    setBusyForObject('tweetNow', true);
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      if (generatedTweetContent != '') {
-        print('saving, $generatedTweetContent');
-        final response = await _apiService.saveGeneratedTweet(
-            userId: 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
-            content: generatedTweetContent,
-            tweetStatus: tweetStatus);
-        if (response.code == 200) {
-          _bottomSheetService.completeSheet(SheetResponse(confirmed: true));
-          rebuildUi();
-        }
+      debugPrint('saving, $generatedTweet');
+      final response = await _apiService.postSaveGeneratedTweet(
+        userId: userId, //'ff8bbd4e-6221-48a4-910f-b88c4978c5d5',
+        content: generatedTweet,
+        tweetStatus: tweetStatus,
+      );
+      if (response.code == 200) {
+        _bottomSheetService.completeSheet(SheetResponse(confirmed: true));
+        rebuildUi();
+      }
+      else if (response.code == 429) {
+        _dialogService.showDialog(
+          title: 'Error',
+          description: 'You have reached the limit of posting tweets per day.',
+        );
       }
     } catch (e) {
-      print('Error fetching tweets: $e');
+      debugPrint('Error fetching tweets: $e');
+    } finally {
+      setBusyForObject('tweetNow', false);
     }
   }
 }

@@ -4,23 +4,22 @@
 
 import 'dart:convert';
 
-FetchTweets fetchTweetsFromJson(String str) =>
-    FetchTweets.fromJson(json.decode(str));
+Tweets fetchTweetsFromJson(String str) => Tweets.fromJson(json.decode(str));
 
-String fetchTweetsToJson(FetchTweets data) => json.encode(data.toJson());
+String fetchTweetsToJson(Tweets data) => json.encode(data.toJson());
 
-class FetchTweets {
+class Tweets {
   final List<Tweet> data;
   final int code;
   final String message;
 
-  FetchTweets({
+  Tweets({
     required this.data,
     required this.code,
     required this.message,
   });
 
-  factory FetchTweets.fromJson(Map<String, dynamic> json) => FetchTweets(
+  factory Tweets.fromJson(Map<String, dynamic> json) => Tweets(
         data: List<Tweet>.from(json["data"].map((x) => Tweet.fromJson(x))),
         code: json["code"],
         message: json["message"],

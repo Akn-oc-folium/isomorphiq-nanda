@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/models/news_article_model.dart';
+import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
@@ -14,15 +14,18 @@ class CryptoNewsAgentViewModel extends BaseViewModel {
 
   int _currentIndex = 0;
 
-  NewsArticle? _newsArticles;
-  NewsArticle? get currentNews => _newsArticles;
+  List<News> _newsList = [];
+  News? get currentNews =>
+      _newsList.isNotEmpty ? _newsList[_currentIndex] : null;
 
   Future<void> fetchNews() async {
     setBusy(true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.getCryptoNews(userId: userId);
-      _newsArticles = response;
+      final response = await _apiService.getCryptoNews(
+          userId: userId // "ff8bbd4e-6221-48a4-910f-b88c4978c5d5"
+          );
+      _newsList = response.data!.toList();
       _currentIndex = 0;
     } catch (e) {
       debugPrint("Error fetching news: $e");
@@ -31,25 +34,25 @@ class CryptoNewsAgentViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  // void readMore() {
-  //   if (currentNews?.url != null) {
-  //     //_routerService.navigateToExternalWebPage(currentNews!.url);
-  //   }
-  // }
+  void readMore() {
+    if (currentNews?.source != null) {
+      //_routerService.navigateToExternalWebPage(currentNews!.url);
+    }
+  }
 
-  // void previousNews() {
-  //   if (_currentIndex > 0) {
-  //     _currentIndex--;
-  //     notifyListeners();
-  //   }
-  // }
+  void previousNews() {
+    if (_currentIndex > 0) {
+      _currentIndex--;
+      notifyListeners();
+    }
+  }
 
-  // void nextNews() {
-  //   if (_currentIndex < _newsArticles.length - 1) {
-  //     _currentIndex++;
-  //     notifyListeners();
-  //   }
-  // }
+  void nextNews() {
+    if (_currentIndex < _newsList.length - 1) {
+      _currentIndex++;
+      notifyListeners();
+    }
+  }
 
   void navigateBack() {
     _routerService.back();

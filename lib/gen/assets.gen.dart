@@ -110,6 +110,13 @@ class $AssetsIconsGen {
   /// File path: assets/icons/news.svg
   String get news => 'assets/icons/news.svg';
 
+  /// File path: assets/icons/reddit-logo.png
+  AssetGenImage get redditLogo =>
+      const AssetGenImage('assets/icons/reddit-logo.png');
+
+  /// File path: assets/icons/save.svg
+  String get save => 'assets/icons/save.svg';
+
   /// File path: assets/icons/settings-outline.svg
   String get settingsOutline => 'assets/icons/settings-outline.svg';
 
@@ -176,6 +183,8 @@ class $AssetsIconsGen {
         logoStatic,
         metamaskLogo,
         news,
+        redditLogo,
+        save,
         settingsOutline,
         sort,
         spotifyLogo,

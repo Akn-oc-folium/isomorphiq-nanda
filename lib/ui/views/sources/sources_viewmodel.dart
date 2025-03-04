@@ -1,10 +1,12 @@
 import 'package:flutter/widgets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
+import 'package:isomorph_iq/models/app_connections_model.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/authorization_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_constants.dart';
+import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 
 enum AuthProvider { google, telegram, x, discord, facebook, spotify, reddit }
@@ -36,42 +38,49 @@ class SourcesViewModel extends BaseViewModel {
     AuthProvider.reddit: false,
   };
 
+  String? _userId;
+  String? get userId => _userId;
+
+  AppConnections? _appConnections;
+  AppConnections? get appConnections => _appConnections;
+
   Future<void> initialise() async {
     final savedState = await _hiveService.retrieveData(
         AppConstants.authBox, AppConstants.authKey);
     if (savedState != null) {
-      connectedApps = Map<String, dynamic>.from(savedState).map((key, value) =>
-          MapEntry(AuthProvider.values.firstWhere((e) => e.toString() == key),
-              value));
+      connectedApps = Map<String, dynamic>.from(savedState).map(
+        (key, value) => MapEntry(
+            AuthProvider.values.firstWhere((e) => e.toString() == key), value),
+      );
       notifyListeners();
     }
+
+    _userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    await _fetchConnections();
   }
 
-  /// Saves authentication state
   Future<void> _saveAuthState() async {
-    await _hiveService.storeData(AppConstants.authBox, AppConstants.authKey,
-        connectedApps.map((key, value) => MapEntry(key.toString(), value)));
+    await _hiveService.storeData(
+      AppConstants.authBox,
+      AppConstants.authKey,
+      connectedApps.map((key, value) => MapEntry(key.toString(), value)),
+    );
   }
 
-  // Fetches the authentication URL and initiates the authentication flow.
   Future<void> connectApp(AuthProvider provider) async {
     String appId = provider.name;
     String urlEndPoint = _getAuthUrlEndpoint(provider);
 
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-    // debugPrint("User id is: $userId");
     try {
       loadingState[provider] = true;
       notifyListeners();
 
-      // Fetch authentication URL from API
       SignAuth signAuth = await _apiService.getAppAuthUrl(
         appId: appId,
-        userId: "5e906707-e316-40ab-8c17-b80b88167662",
+        userId: userId!, // "ff8bbd4e-6221-48a4-910f-b88c4978c5d5",
         urlEndPoint: urlEndPoint,
       );
 
-      // Initiate authentication process
       bool success = await _authService.authenticate(signAuth.data.link);
 
       if (success) {
@@ -107,139 +116,15 @@ class SourcesViewModel extends BaseViewModel {
     }
   }
 
-  // Future<void> connectToGoogle() async {
-  //   setBusy(true);
-  //   final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-  //   debugPrint("User id is: $userId");
-  //   try {
-  //     debugPrint("User id inside try is: $userId");
-  //     final authUrl = await _apiService.getGoogleAuthUrl(userId: userId);
-  //     debugPrint("Auth link is: ${authUrl.data.link}");
-  //     final popup = web.window.open(authUrl.data.link, 'GoogleAuth',
-  //         'width=600,height=800,toolbar=no,location=no,status=no');
-
-  //     // Listen for messages from the popup
-  //     web.window.addEventListener('message', _handleMessage.toJS);
-
-  //     // Fallback check if popup closed without completing
-  //     Future.delayed(const Duration(minutes: 2), () {
-  //       if (popup!.closed) {
-  //         debugPrint('Authentication timed out');
-  //         rebuildUi();
-  //       }
-  //     });
-  //   } catch (e) {
-  //     debugPrint('Connection error: $e');
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
-
-  // Future<void> connectToDiscord() async {
-  //   setBusy(true);
-  //   final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-  //   try {
-  //     debugPrint("User id inside try is: $userId");
-  //     final authUrl = await _apiService.getDiscordAuthUrl(userId: userId);
-  //     debugPrint("Auth link is: ${authUrl.data.link}");
-  //     final popup = web.window.open(authUrl.data.link, 'DiscordAuth',
-  //         'width=600,height=800,toolbar=no,location=no,status=no');
-
-  //     // Listen for messages from the popup
-  //     web.window.addEventListener('message', _handleMessage.toJS);
-
-  //     // Fallback check if popup closed without completing
-  //     Future.delayed(const Duration(minutes: 2), () {
-  //       if (popup!.closed) {
-  //         debugPrint('Authentication timed out');
-  //         rebuildUi();
-  //       }
-  //     });
-  //   } catch (e) {
-  //     debugPrint('Connection error: $e');
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
-
-  // Future<void> connectToX() async {
-  //   setBusy(true);
-  //   final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-  //   try {
-  //     debugPrint("User id inside try is: $userId");
-  //     final authUrl = await _apiService.getXAuthUrl(userId: userId);
-  //     debugPrint("Auth link is: ${authUrl.data.link}");
-  //     final popup = web.window.open(authUrl.data.link, 'TwitterAuth',
-  //         'width=600,height=800,toolbar=no,location=no,status=no');
-
-  //     // Listen for messages from the popup
-  //     web.window.addEventListener('message', _handleMessage.toJS);
-
-  //     // Fallback check if popup closed without completing
-  //     Future.delayed(const Duration(minutes: 2), () {
-  //       if (popup!.closed) {
-  //         debugPrint('Authentication timed out');
-  //         rebuildUi();
-  //       }
-  //     });
-  //   } catch (e) {
-  //     debugPrint('Connection error: $e');
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
-
-  // Future<void> connectToFacebook() async {
-  //   setBusy(true);
-  //   final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-  //   try {
-  //     debugPrint("User id inside try is: $userId");
-  //     final authUrl = await _apiService.getFacebookAuthUrl(userId: userId);
-  //     debugPrint("Auth link is: ${authUrl.data.link}");
-  //     final popup = web.window.open(authUrl.data.link, 'FacebookAuth',
-  //         'width=600,height=800,toolbar=no,location=no,status=no');
-
-  //     // Listen for messages from the popup
-  //     web.window.addEventListener('message', _handleMessage.toJS);
-
-  //     // Fallback check if popup closed without completing
-  //     Future.delayed(const Duration(minutes: 2), () {
-  //       if (popup!.closed) {
-  //         debugPrint('Authentication timed out');
-  //         rebuildUi();
-  //       }
-  //     });
-  //   } catch (e) {
-  //     debugPrint('Connection error: $e');
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
-
-  // Future<void> connectToSpotify() async {
-  //   setBusy(true);
-  //   final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
-  //   try {
-  //     debugPrint("User id inside try is: $userId");
-  //     final authUrl = await _apiService.getSpotifyAuthUrl(userId: userId);
-  //     debugPrint("Auth link is: ${authUrl.data.link}");
-  //     final popup = web.window.open(authUrl.data.link, 'SpotifyAuth',
-  //         'width=600,height=800,toolbar=no,location=no,status=no');
-
-  //     // Listen for messages from the popup
-  //     web.window.addEventListener('message', _handleMessage.toJS);
-
-  //     // Fallback check if popup closed without completing
-  //     Future.delayed(const Duration(minutes: 2), () {
-  //       if (popup!.closed) {
-  //         debugPrint('Authentication timed out');
-  //         rebuildUi();
-  //       }
-  //     });
-  //   } catch (e) {
-  //     debugPrint('Connection error: $e');
-  //   } finally {
-  //     setBusy(false);
-  //   }
-  // }
+  Future<void> _fetchConnections() async {
+    setBusy(true);
+    try {
+      _appConnections = await _apiService.getAppConnections(userId: userId!);
+      notifyListeners();
+    } catch (e) {
+      debugPrint('Error fetching dashboard: $e');
+    } finally {
+      setBusy(false);
+    }
+  }
 }

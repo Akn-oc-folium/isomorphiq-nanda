@@ -49,7 +49,7 @@ class AiPersonaViewModel extends BaseViewModel {
   void fetchSliderValues() async {
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.fetchUserPersonality(userId: userId);
+      final response = await _apiService.getUserPersonality(userId: userId);
       final responseMap = response.data.toJson();
       responseMap.forEach((key, value) {
         String capitalizedKey = key[0].toUpperCase() + key.substring(1);
@@ -64,9 +64,10 @@ class AiPersonaViewModel extends BaseViewModel {
       storytellingValue = sliderValues["Storytelling"]!;
       optimismValue = sliderValues["Optimism"]!;
       enthusiasmValue = sliderValues["Enthusiasm"]!;
-      print("Success");
+      debugPrint("Success");
+      notifyListeners();
     } catch (e) {
-      print('Error fetching tweets: $e');
+      debugPrint('Error fetching tweets: $e');
     }
   }
 
@@ -76,17 +77,20 @@ class AiPersonaViewModel extends BaseViewModel {
   }
 
   void changeTopics() {
-    print("Change Topics Clicked!");
+    debugPrint("Change Topics Clicked!");
   }
 
   void confirmChanges() async {
+    setBusyForObject('personaUpdating', true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      await _apiService.upsertUserPersonality(
+      await _apiService.postUserPersonality(
           userId: userId, sliderValues: sliderValues);
-      print("Success");
+      debugPrint("Success");
     } catch (e) {
-      print('Error fetching tweets: $e');
+      debugPrint('Error fetching tweets: $e');
+    } finally {
+      setBusyForObject('personaUpdating', false);
     }
   }
 }

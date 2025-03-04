@@ -45,8 +45,9 @@ class EarnViewModel extends BaseViewModel {
     setBusy(true);
     _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     try {
-      _userProfile = await _apiService.getDashboard(username: username!);
-      await _hiveService.storeData(kUserBox, kUserIdKey, _userProfile!.data.id);
+      _userProfile = await _apiService.getDashboard(username: _username!);
+      await _hiveService.storeData(
+          kUserBox, kUserIdKey, _userProfile!.data!.id);
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     }
@@ -54,7 +55,7 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> _fetchUserRank() async {
     try {
-      _userRank = await _apiService.getUserRank(username: username!);
+      _userRank = await _apiService.getUserRank(username: 'techsatya5');
     } catch (e) {
       debugPrint('Error fetching user rank: $e');
     }

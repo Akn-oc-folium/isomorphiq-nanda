@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
@@ -60,72 +60,97 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       height: 80.h,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 16.h, vertical: 10.h),
                       decoration: BoxDecoration(
-                        border:
-                            Border.all(color: kcPrimaryColorAccent, width: 2),
-                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: kcStrokePrimary, width: 1.w),
+                        borderRadius: BorderRadius.circular(8).r,
                       ),
                       child: TextField(
                         controller: viewModel.topicController,
                         readOnly: viewModel.isBusy ? true : false,
                         decoration: InputDecoration(
+                          isDense: true,
+                          isCollapsed: true,
                           border: InputBorder.none,
                           hintText: "Input topic you want to talk about...",
                           hintStyle: TextStyles.bodyPrimary
                               .copyWith(color: kcPrimaryColor),
                         ),
+                        textAlignVertical: TextAlignVertical.top,
+                        cursorColor: kcSecondaryColor,
+                        cursorHeight: 16.h,
                         style: TextStyles.bodyPrimary
-                            .copyWith(color: kcPrimaryColor),
+                            .copyWith(color: kcSecondaryColor),
+                        onChanged: (value) => viewModel.notifyListeners(),
                       ),
                     ),
                     verticalSpace04,
                     verticalSpace08,
                     PrimaryButton(
-                        text: "Generate Tweet",
-                        onPressed: () =>
-                            viewModel.generateTweetForTwitterPersona()),
+                      text: "Generate Tweet",
+                      onPressed: viewModel.topicController.text.isEmpty
+                          ? null
+                          : viewModel.generateTweet,
+                      isBusy: viewModel.busy('generatingTweet'),
+                    ),
                     verticalSpace04,
                     verticalSpace16,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Generated Tweets',
-                          style: TextStyles.titleSecondary.copyWith(
-                            color: kcSecondaryColor,
-                            fontSize: 18.sp,
-                            height: 1.h,
+                    if (viewModel.busy(viewModel.tweets)) ...[
+                      Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: kcPrimaryColor,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () => viewModel.toggleFilterDropdown(),
-                          child: SvgPicture.asset(
-                            Assets.icons.sort,
-                            height: 24.r,
-                            colorFilter: const ColorFilter.mode(
-                                kcSecondaryColor, BlendMode.srcIn),
+                      ),
+                    ] else ...[
+                      if (viewModel.tweets == null) ...[
+                        Center(
+                          child: Text(
+                            "No Tweets Generated",
+                            style: TextStyles.bodyPrimary.copyWith(
+                              color: kcPrimaryColor,
+                              fontSize: 16.sp,
+                            ),
+                          ),
+                        ),
+                      ] else ...[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Generated Tweets',
+                              style: TextStyles.titleSecondary.copyWith(
+                                color: kcSecondaryColor,
+                                fontSize: 18.sp,
+                                height: 1.h,
+                              ),
+                            ),
+                            GestureDetector(
+                              onTap: () => viewModel.toggleFilterDropdown(),
+                              child: SvgPicture.asset(
+                                Assets.icons.sort,
+                                height: 24.r,
+                                colorFilter: const ColorFilter.mode(
+                                    kcSecondaryColor, BlendMode.srcIn),
+                              ),
+                            ),
+                          ],
+                        ),
+                        verticalSpace04,
+                        verticalSpace08,
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: viewModel.tweets!.data.length,
+                            itemBuilder: (context, index) {
+                              final tweet = viewModel.tweets!.data[index];
+                              return _buildTweetCard(tweet, viewModel);
+                            },
                           ),
                         ),
                       ],
-                    ),
-                    verticalSpace04,
-                    verticalSpace08,
-                    Expanded(
-                      child: viewModel.isBusy
-                          ? Center(
-                              child: CircularProgressIndicator(
-                              color: kcPrimaryColor,
-                            ))
-                          : ListView.builder(
-                              itemCount: viewModel.tweets.length,
-                              itemBuilder: (context, index) {
-                                final tweet = viewModel.tweets[index];
-                                return _buildTweetCard(tweet, viewModel);
-                              },
-                            ),
-                    ),
+                    ],
                   ],
                 ),
                 Positioned(
@@ -221,7 +246,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Generated #${tweet.id}',
+            'Tweet #${tweet.id}',
             maxLines: 1,
             style: TextStyles.buttonText.copyWith(color: kcSecondaryColor),
           ),
@@ -235,10 +260,12 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SecondaryButton.icon(
-                icon: SvgPicture.asset(Assets.icons.trash,
-                    height: 24.r,
-                    colorFilter: const ColorFilter.mode(
-                        kcSecondaryColor, BlendMode.srcIn)),
+                icon: SvgPicture.asset(
+                  Assets.icons.trash,
+                  height: 24.r,
+                  colorFilter:
+                      const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
+                ),
                 onPressed: () =>
                     viewModel.updateTweetStatus(tweet.id, 'REJECTED'),
               ),
@@ -248,6 +275,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                   text: "Tweet Now",
                   onPressed: () =>
                       viewModel.updateTweetStatus(tweet.id, 'APPROVED'),
+                  isBusy: viewModel.busy('updatingTweetStatus'),
                 ),
               )
             ],

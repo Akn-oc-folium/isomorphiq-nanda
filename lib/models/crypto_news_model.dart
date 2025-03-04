@@ -1,49 +1,49 @@
 // To parse this JSON data, do
 //
-//     final newsArticle = newsArticleFromJson(jsonString);
+//     final cryptoNews = cryptoNewsFromJson(jsonString);
 
 import 'dart:convert';
 
-NewsArticle newsArticleFromJson(String str) => NewsArticle.fromJson(json.decode(str));
+CryptoNews cryptoNewsFromJson(String str) => CryptoNews.fromJson(json.decode(str));
 
-String newsArticleToJson(NewsArticle data) => json.encode(data.toJson());
+String cryptoNewsToJson(CryptoNews data) => json.encode(data.toJson());
 
-class NewsArticle {
-    final Data? data;
+class CryptoNews {
+    final List<News>? data;
     final int? code;
     final String? message;
 
-    NewsArticle({
+    CryptoNews({
         this.data,
         this.code,
         this.message,
     });
 
-    factory NewsArticle.fromJson(Map<String, dynamic> json) => NewsArticle(
-        data: json["data"] == null ? null : Data.fromJson(json["data"]),
+    factory CryptoNews.fromJson(Map<String, dynamic> json) => CryptoNews(
+        data: json["data"] == null ? [] : List<News>.from(json["data"]!.map((x) => News.fromJson(x))),
         code: json["code"],
         message: json["message"],
     );
 
     Map<String, dynamic> toJson() => {
-        "data": data?.toJson(),
+        "data": data == null ? [] : List<dynamic>.from(data!.map((x) => x.toJson())),
         "code": code,
         "message": message,
     };
 }
 
-class Data {
+class News {
     final String? headline;
     final String? source;
     final String? summary;
 
-    Data({
+    News({
         this.headline,
         this.source,
         this.summary,
     });
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory News.fromJson(Map<String, dynamic> json) => News(
         headline: json["headline"],
         source: json["source"],
         summary: json["summary"],

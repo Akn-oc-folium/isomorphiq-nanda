@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:isomorph_iq/app/app.bottomsheets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/app/app.router.dart';
-import 'package:isomorph_iq/models/fetch_tweets.dart';
+import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
@@ -12,19 +12,23 @@ import 'package:stacked_services/stacked_services.dart';
 class AgentsTwitterPersonaViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _bottomSheetService = locator<BottomSheetService>();
+  final _dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
 
-  List<Tweet> tweets = [];
-  bool isFilterDropdownVisible = false;
-
   TextEditingController topicController = TextEditingController();
+
+  Tweets? _tweets;
+  Tweets? get tweets => _tweets;
+
+  bool isFilterDropdownVisible = false;
 
   List<String> filterOptions = ["Pending", "Approved", "Latest"];
 
   String selectedFilter = "Pending";
 
-  late String generatedTweet;
+  String? _generatedTweet;
+  String? get generatedTweet => _generatedTweet;
 
   void toggleFilterDropdown() {
     isFilterDropdownVisible = !isFilterDropdownVisible;
@@ -38,37 +42,49 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
     fetchTweets();
   }
 
-  void fetchTweets() async {
-    setBusy(true);
+  Future<void> fetchTweets() async {
+    setBusyForObject(_tweets, true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.fetchTweets(
-          userId: userId, tweetStatus: selectedFilter.toUpperCase());
-      tweets = response.data;
+      _tweets = await _apiService.getTweets(
+        userId: userId, // 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+        tweetStatus: selectedFilter.toUpperCase(),
+      );
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
+    } finally {
+      setBusyForObject(_tweets, false);
     }
-
-    setBusy(false);
   }
 
-  void generateTweetForTwitterPersona() async {
-    setBusy(true);
+  Future<void> generateTweet() async {
+    setBusyForObject('generatingTweet', true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-            userId: userId, topic: topicController.text.trim());
+          userId: userId, //'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+          topic: topicController.text.trim(),
+        );
 
-        generatedTweet = response.data.content;
-        debugPrint("Generate tweet : $generatedTweet");
+        _generatedTweet = response.data.content;
         topicController.clear();
-        openGeneratedTweetModal();
+
+        if (generatedTweet != null) {
+          openGeneratedTweetModal();
+        } else {
+          debugPrint("Tweet is empty");
+          _dialogService.showDialog(
+            title: 'Error',
+            description: 'Could not generate tweet. Please try again.',
+          );
+        }
       } catch (e) {
         debugPrint("Error fetching news: $e");
+      } finally {
+        setBusyForObject('generatingTweet', false);
       }
     }
-    setBusy(false);
   }
 
   void openGeneratedTweetModal() {
@@ -76,22 +92,26 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
       variant: BottomSheetType.generatedTweet,
       barrierDismissible: false,
       title: 'Tweet you just generated',
-      description: generatedTweet,
+      description: _generatedTweet,
       isScrollControlled: true,
     );
   }
 
-  void updateTweetStatus(String tweetId, String tweetStatus) async {
+  Future<void> updateTweetStatus(String tweetId, String tweetStatus) async {
+    setBusyForObject('updatingTweetStatus', true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.updateTweetStatus(
-          userId: userId, tweetId: tweetId, tweetStatus: tweetStatus);
-      if (response.code == 200) {
-        fetchTweets();
-        notifyListeners();
-      }
+      await _apiService.postUpdateTweetStatus(
+        userId: userId, //'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+        tweetId: tweetId,
+        tweetStatus: tweetStatus,
+      );
+      await fetchTweets();
+      rebuildUi();
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
+    } finally {
+      setBusyForObject('updatingTweetStatus', false);
     }
   }
 
@@ -99,7 +119,5 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
     _routerService.navigateToTweetSettingsView();
   }
 
-  void navigateBack() {
-    _routerService.back();
-  }
+  void navigateBack() => _routerService.back();
 }

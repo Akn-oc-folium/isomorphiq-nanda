@@ -39,23 +39,22 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Row(
-            children: [
-              Spacer(),
-              GestureDetector(
-                onTap: () => completer!(SheetResponse()),
-                child: SvgPicture.asset(
-                  Assets.icons.close,
-                  width: 24,
-                  height: 24,
-                  colorFilter:
-                      const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
-                ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: IconButton(
+              onPressed: () => completer!(SheetResponse()),
+              icon: SvgPicture.asset(
+                Assets.icons.close,
+                width: 24.r,
+                height: 24.r,
+                colorFilter:
+                    const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
               ),
-            ],
+              iconSize: 24.r,
+            ),
           ),
           Text(
-            request.title ?? 'Hello Stacked Sheet!!',
+            request.title!,
             style: TextStyles.titleSecondary.copyWith(color: kcPrimaryColor),
           ),
           if (request.description != null) ...[
@@ -68,25 +67,24 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
             verticalSpace16,
             Row(
               children: [
-                PrimaryButton.icon(
-                    icon: SvgPicture.asset(Assets.icons.trash,
-                        height: 24.r,
-                        colorFilter:
-                            const ColorFilter.mode(kcWhite, BlendMode.srcIn)),
-                    onPressed: () => completer!(SheetResponse())),
-                horizontalSpace16,
-                PrimaryButton.icon(
-                    icon: SvgPicture.asset(Assets.icons.trash,
-                        height: 24.r,
-                        colorFilter:
-                            const ColorFilter.mode(kcWhite, BlendMode.srcIn)),
-                    onPressed: () => viewModel.saveTweet('PENDING')),
+                SecondaryButton.icon(
+                  icon: SvgPicture.asset(
+                    Assets.icons.save,
+                    height: 24.r,
+                    colorFilter: const ColorFilter.mode(
+                        kcSecondaryColor, BlendMode.srcIn),
+                  ),
+                  onPressed: () => viewModel.sendGeneratedTweet('PENDING'),
+                ),
                 horizontalSpace16,
                 Expanded(
-                    flex: 2,
-                    child: PrimaryButton(
-                        text: "Tweet Now",
-                        onPressed: () => viewModel.saveTweet('APPROVED')))
+                  flex: 2,
+                  child: PrimaryButton(
+                    text: "Tweet Now",
+                    onPressed: () => viewModel.sendGeneratedTweet('APPROVED'),
+                    isBusy: viewModel.busy('tweetNow'),
+                  ),
+                ),
               ],
             )
           ],
@@ -98,6 +96,5 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
 
   @override
   GeneratedTweetSheetModel viewModelBuilder(BuildContext context) =>
-      GeneratedTweetSheetModel(
-          generatedTweetContent: request.description ?? '');
+      GeneratedTweetSheetModel(generatedTweet: request.description ?? '');
 }

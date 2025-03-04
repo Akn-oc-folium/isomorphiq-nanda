@@ -94,8 +94,10 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
                     TagList(tags: viewModel.selectedTopics),
                     verticalSpace16,
                     PrimaryButton(
-                        text: 'Confirm Changes',
-                        onPressed: viewModel.confirmChanges),
+                      text: 'Confirm Changes',
+                      onPressed: viewModel.confirmChanges,
+                      isBusy: viewModel.busy('personaUpdating'),
+                    ),
                     verticalSpace16
                   ],
                 ),
