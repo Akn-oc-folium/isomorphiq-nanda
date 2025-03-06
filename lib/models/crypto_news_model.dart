@@ -39,24 +39,48 @@ class CryptoNews {
 
 class News {
   final String? headline;
-  final String? source;
   final String? summary;
+  final Source? source;
+  final String? imageUrl;
 
   News({
     this.headline,
-    this.source,
     this.summary,
+    this.source,
+    this.imageUrl,
   });
 
   factory News.fromJson(Map<String, dynamic> json) => News(
         headline: json["headline"],
-        source: json["source"],
         summary: json["summary"],
+        source: json["source"] == null ? null : Source.fromJson(json["source"]),
+        imageUrl: json["image_url"],
       );
 
   Map<String, dynamic> toJson() => {
         "headline": headline,
-        "source": source,
         "summary": summary,
+        "source": source?.toJson(),
+        "image_url": imageUrl,
+      };
+}
+
+class Source {
+  final String? domain;
+  final String? url;
+
+  Source({
+    this.domain,
+    this.url,
+  });
+
+  factory Source.fromJson(Map<String, dynamic> json) => Source(
+        domain: json["domain"],
+        url: json["url"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "domain": domain,
+        "url": url,
       };
 }

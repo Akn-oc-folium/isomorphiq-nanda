@@ -23,12 +23,16 @@ class JackpotViewModel extends BaseViewModel {
   String? _username;
   String get username => _username!;
 
+  final int _userLevel = 2;
+  int? get userLevel => _userLevel;
+
   Leaderboard? _leaderboard;
   Leaderboard get leaderboard => _leaderboard!;
 
   Future<void> fetchLeaderboard() async {
     setBusy(true);
     _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
+    // _userLevel = await _hiveService.retrieveData(kUserBox, kUserLevelKey);
     try {
       _leaderboard = await _apiService.getLeaderboard();
     } catch (e) {

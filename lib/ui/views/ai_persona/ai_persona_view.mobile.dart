@@ -23,11 +23,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
           backgroundColor: Colors.white,
           appBar: CustomAppBar(
             context: context,
-            title: Text(
-              "AI Persona",
-              style: TextStyles.titlePrimary
-                  .copyWith(color: kcSecondaryColor, fontSize: 20.0),
-            ),
+            title: Text("AI Persona"),
           ),
           body: SafeArea(
             child: SingleChildScrollView(

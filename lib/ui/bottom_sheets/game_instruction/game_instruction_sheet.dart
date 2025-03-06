@@ -9,11 +9,12 @@ import 'game_instruction_sheet_model.dart';
 class GameInstructionSheet extends StackedView<GameInstructionSheetModel> {
   final Function(SheetResponse response)? completer;
   final SheetRequest request;
+
   const GameInstructionSheet({
-    Key? key,
+    super.key,
     required this.completer,
     required this.request,
-  }) : super(key: key);
+  });
 
   @override
   Widget builder(

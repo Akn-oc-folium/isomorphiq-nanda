@@ -35,22 +35,14 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
             )
           : Column(
               children: [
-                verticalSpace(24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Center(
-                    child: Assets.images.chestLevel2Opened.image(
-                      height: 130,
-                      width: 130,
-                    ),
-                  ),
-                ),
-                verticalSpace08,
+                verticalSpace16,
 
                 // Invite Friends Card
                 Container(
                   margin: const EdgeInsets.symmetric(horizontal: 24),
-                  padding: const EdgeInsets.all(12),
+                  padding: const EdgeInsets.symmetric(
+                          horizontal: 8.0, vertical: 10.0)
+                      .r,
                   decoration: BoxDecoration(
                     color: kcPrimaryColorLight,
                     borderRadius: BorderRadius.circular(12),
@@ -65,7 +57,8 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Image.asset(Assets.icons.atTheRate.path,
-                          width: 62, height: 67),
+                          width: 62.w, height: 67.h),
+                      horizontalSpace08,
                       Expanded(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -78,12 +71,15 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                             verticalSpace04,
                             Text(
                               'The more users chat, the bigger the jackpot grows!',
-                              style: TextStyles.bodyPrimary.copyWith(
-                                  color: kcPrimaryColor, letterSpacing: -0.5),
+                              style: TextStyles.bodySecondary.copyWith(
+                                color: kcSecondaryColor,
+                                height: 1.33.h,
+                              ),
                             ),
                           ],
                         ),
                       ),
+                      horizontalSpace08,
                       PrimaryButton.icon(
                         icon: SvgPicture.asset(
                           Assets.icons.arrowRight,
@@ -106,22 +102,33 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                     alignment: Alignment.centerLeft,
                     children: [
                       PrimaryButton(
-                          text: "Play Game",
-                          onPressed: () => viewModel.enterPlayMode()),
-                      Positioned(
+                        text: "Play Game",
+                        onPressed: viewModel.userLevel == null ||
+                                viewModel.userLevel == 1
+                            ? null
+                            : viewModel.enterPlayMode,
+                      ),
+                      if (viewModel.userLevel == null ||
+                          viewModel.userLevel == 1) ...[
+                        Positioned(
                           child: Padding(
-                        padding: const EdgeInsets.only(left: 24),
-                        child: SvgPicture.asset(Assets.icons.lock),
-                      ))
+                            padding: const EdgeInsets.only(left: 24),
+                            child: SvgPicture.asset(Assets.icons.lock),
+                          ),
+                        ),
+                      ],
                     ],
                   ),
                 ),
-                verticalSpace08,
-                Text(
-                  'Level up to unlock game and start playing to earn!',
-                  style:
-                      TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
-                ),
+                verticalSpace(10),
+                if (viewModel.userLevel == null || viewModel.userLevel == 1)
+                  Text(
+                    'Level up to unlock game and start playing to earn!',
+                    style: TextStyles.bodyPrimary
+                        .copyWith(color: kcSecondaryColor),
+                  ),
+                verticalSpace16,
+                verticalSpace04,
                 Expanded(
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 24),

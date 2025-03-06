@@ -7,7 +7,6 @@ import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
 import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
 import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
-import 'package:isomorph_iq/ui/views/sources/sources_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
@@ -28,23 +27,17 @@ class HomeViewMobile extends StatelessWidget {
             getCustomizedNavItem(
               index: 0,
               selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.book,
-              label: ksSourcesNavTitle,
+              iconPath: Assets.icons.home,
+              label: ksHomeNavTitle,
             ),
             getCustomizedNavItem(
               index: 1,
-              selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.wallet,
-              label: ksEarnNavTitle,
-            ),
-            getCustomizedNavItem(
-              index: 2,
               selectedIndex: viewModel.currentIndex,
               iconPath: Assets.icons.logoStatic.path,
               label: ksAgentNavTitle,
             ),
             getCustomizedNavItem(
-              index: 3,
+              index: 2,
               selectedIndex: viewModel.currentIndex,
               iconPath: Assets.icons.jackpot,
               label: ksJackpotNavTitle,
@@ -126,12 +119,10 @@ class HomeViewMobile extends StatelessWidget {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return const SourcesView();
-      case 1:
         return const EarnView();
-      case 2:
+      case 1:
         return const AgentsView();
-      case 3:
+      case 2:
         return const JackpotView();
     }
     return const EarnView();

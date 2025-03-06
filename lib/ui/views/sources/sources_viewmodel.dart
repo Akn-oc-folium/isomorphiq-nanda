@@ -38,7 +38,7 @@ class SourcesViewModel extends BaseViewModel {
     AuthProvider.reddit: false,
   };
 
-  String? _userId;
+  String? _userId; // = "93855c25-2eb4-49db-98fb-250810934b13";
   String? get userId => _userId;
 
   AppConnections? _appConnections;
@@ -77,19 +77,28 @@ class SourcesViewModel extends BaseViewModel {
 
       SignAuth signAuth = await _apiService.getAppAuthUrl(
         appId: appId,
-        userId: userId!, // "ff8bbd4e-6221-48a4-910f-b88c4978c5d5",
+        userId: userId!,
         urlEndPoint: urlEndPoint,
       );
 
-      bool success = await _authService.authenticate(signAuth.data.link);
+      Map<String, dynamic> authResult =
+          await _authService.authenticate(signAuth.data.link);
 
-      if (success) {
+      String message = authResult["message"] as String;
+      int statusCode = authResult["statusCode"] as int;
+
+      if (statusCode == 200) {
         connectedApps[provider] = true;
         await _saveAuthState();
-        notifyListeners();
+        rebuildUi();
+      } else {
+        // Optionally log or display the error message.
+        connectedApps[provider] = false;
+        debugPrint("Authentication failed: $message (code: $statusCode)");
       }
     } catch (e) {
-      debugPrint("Error: $e"); // Replace with error UI handling
+      debugPrint(
+          "Error during authentication: $e"); // Replace with error UI handling
     } finally {
       loadingState[provider] = false; // Stop loading
       notifyListeners();
@@ -120,11 +129,32 @@ class SourcesViewModel extends BaseViewModel {
     setBusy(true);
     try {
       _appConnections = await _apiService.getAppConnections(userId: userId!);
-      notifyListeners();
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     } finally {
       setBusy(false);
     }
   }
+
+  // void _listenToPostMessage() {
+  //   web.window.addEventListener("message", (event) {
+  //     final e = event as web.MessageEvent;
+  //     if (e.origin == "https://isomorph-iq.web.app") {
+  //       setState(() {
+  //         _message = (e.data as JSObject)["message"] as String?;
+  //         _statusCode = (e.data as JSObject)["statusCode"] as int?;
+  //       });
+  //       _handleVerificationSuccess();
+  //     } else {
+  //       print("Received message from unauthorized origin: ${e.origin}");
+  //     }
+  //   });
+  // }
+
+  // void _handleVerificationSuccess() {
+  //   if (_statusCode == 200) {
+  //     // Perform actions upon successful verification
+  //     print("Twitter Verification Successful: $_message");
+  //   }
+  // }
 }

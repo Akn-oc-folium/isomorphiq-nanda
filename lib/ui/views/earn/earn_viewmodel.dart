@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
+import 'package:isomorph_iq/app/app.router.dart';
+import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/user_rank_model.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class EarnViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
-
-  final int _points = 1000;
-  int get points => _points;
+  final _routerService = locator<RouterService>();
 
   UserProfile? _userProfile;
   UserProfile? get userProfile => _userProfile;
@@ -20,34 +21,37 @@ class EarnViewModel extends BaseViewModel {
   UserRank? _userRank;
   UserRank? get userRank => _userRank;
 
-  String? _username;
+  bool _xAuthTokenExists = false;
+  bool get xAuthTokenExists => _xAuthTokenExists;
+
+  final String _username = 'techsatya5';
   String? get username => _username;
 
-  List<bool> taskCompletionStatus = [false, false, false];
+  int? _tweetCount;
+  int? get tweetCount => _tweetCount;
 
-  bool get areAllTasksDone => taskCompletionStatus.every((status) => status);
+  List<News>? _newsList;
+  List<News>? get newsList => _newsList;
 
   Future<void> initialise() async {
+    setBusy(true);
+    // _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     await _fetchProfile();
     await _fetchUserRank();
-  }
-
-  void markTaskAsDone(int index) {
-    if (index >= 0 && index < taskCompletionStatus.length) {
-      taskCompletionStatus[index] = true;
-      notifyListeners();
-    }
+    setBusy(false);
+    await fetchNews();
   }
 
   bool onClickStreakRedeem() => true;
 
   Future<void> _fetchProfile() async {
-    setBusy(true);
-    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     try {
-      _userProfile = await _apiService.getDashboard(username: _username!);
+      _userProfile = await _apiService.getDashboard(username: _username);
       await _hiveService.storeData(
           kUserBox, kUserIdKey, _userProfile!.data!.id);
+      if (_userProfile!.data!.twitterAuthToken != "") {
+        _xAuthTokenExists = true;
+      }
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     }
@@ -55,10 +59,32 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> _fetchUserRank() async {
     try {
-      _userRank = await _apiService.getUserRank(username: 'techsatya5');
+      _userRank = await _apiService.getUserRank(username: _username);
+      if (_xAuthTokenExists) {
+        _tweetCount =
+            await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
+      }
     } catch (e) {
       debugPrint('Error fetching user rank: $e');
     }
-    setBusy(false);
   }
+
+  Future<void> fetchNews() async {
+    setBusyForObject('fetchingNews', true);
+    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    try {
+      final response = await _apiService.getCryptoNews(
+          userId: '93855c25-2eb4-49db-98fb-250810934b13');
+      _newsList = response.data;
+    } catch (e) {
+      debugPrint("Error fetching news: $e");
+    }
+    setBusyForObject('fetchingNews', false);
+  }
+
+  void navigateToSources() => _routerService.navigateToSourcesView();
+  void navigateToAiPersona() => _routerService.navigateToAiPersonaView();
+  void navigateToTweetPersona() =>
+      _routerService.navigateToAgentsTwitterPersonaView();
+  void navigateToCryptoNews() => _routerService.navigateToCryptoNewsAgentView();
 }

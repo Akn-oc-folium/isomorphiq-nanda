@@ -56,12 +56,14 @@ class PersonaSlider extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(leftLabel,
-                style:
-                    TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor)),
-            Text(rightLabel,
-                style:
-                    TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor)),
+            Text(
+              leftLabel,
+              style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+            ),
+            Text(
+              rightLabel,
+              style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+            ),
           ],
         ),
         verticalSpace08,

@@ -5,7 +5,10 @@ import 'package:isomorph_iq/gen/fonts.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
-import 'package:isomorph_iq/ui/widgets/buttons.dart';
+import 'package:isomorph_iq/ui/widgets/action_banner.dart';
+import 'package:isomorph_iq/ui/widgets/level_card.dart';
+import 'package:isomorph_iq/ui/widgets/news_card.dart';
+import 'package:isomorph_iq/ui/widgets/section_card.dart';
 import 'package:isomorph_iq/ui/widgets/streak_redeem_card.dart';
 import 'package:isomorph_iq/ui/widgets/user_status_card.dart';
 import 'package:stacked/stacked.dart';
@@ -32,133 +35,160 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
                 ),
               ),
             )
-          : Padding(
-              padding: const EdgeInsets.only(
-                      left: 24.0, right: 24.0, top: 14.0, bottom: 18.0)
-                  .r,
-              child: Column(
-                children: [
-                  viewModel.userRank == null ||
-                          viewModel.userRank!.data.rank == 0
-                      ? SizedBox(
-                          height: 20.r,
-                          width: 20.r,
-                          child: CircularProgressIndicator.adaptive(
-                            backgroundColor:
-                                kcPrimaryColor.withValues(alpha: 0.5),
-                            strokeWidth: 2.0.w,
-                            valueColor: const AlwaysStoppedAnimation<Color>(
-                              kcPrimaryColor,
-                            ),
-                          ),
-                        )
-                      : UserStatusCard(
-                          name: viewModel.userProfile!.data!.telegramHandle ??
-                              'User',
-                          rank: viewModel.userRank!.data.rank,
-                        ),
-                  verticalSpace08,
-                  verticalSpace04,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      StreakRedeemCard(
-                        onRedeem: (tap) => viewModel.onClickStreakRedeem(),
-                      ),
-                      Row(
-                        children: [
-                          Container(
-                            alignment: Alignment.center,
-                            height: 38.r,
-                            width: 38.r,
-                            decoration: BoxDecoration(
-                              color: Colors.transparent,
-                              image: DecorationImage(
-                                image: AssetImage(Assets.icons.starLevel.path),
-                                fit: BoxFit.cover,
+          : SingleChildScrollView(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16.0)
+                        .r,
+                child: Column(
+                  children: [
+                    viewModel.userRank == null ||
+                            viewModel.userRank!.data.rank == 0
+                        ? SizedBox(
+                            height: 20.r,
+                            width: 20.r,
+                            child: CircularProgressIndicator.adaptive(
+                              backgroundColor:
+                                  kcPrimaryColor.withValues(alpha: 0.5),
+                              strokeWidth: 2.0.w,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                kcPrimaryColor,
                               ),
                             ),
-                            child: Text(
-                              '1',
-                              style: TextStyles.titleTertiary.copyWith(
-                                color: kcWhite,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
+                          )
+                        : UserStatusCard(
+                            name: viewModel.userProfile!.data!.telegramHandle ??
+                                'User',
+                            rank: viewModel.userRank!.data.rank,
                           ),
-                          horizontalSpace04,
-                          Text(
-                            'Level',
-                            style: TextStyles.titleTertiary.copyWith(
-                              color: const Color(0xFF6F53FD),
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
-                  Text(
-                    'Total Points Earned',
-                    style: TextStyles.titleSecondary
-                        .copyWith(color: kcSecondaryColor),
-                  ),
-                  verticalSpace08,
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset(
-                        Assets.icons.coin.path,
-                        height: 62.h,
-                      ),
-                      horizontalSpace08,
-                      horizontalSpace04,
-                      Text(
-                        viewModel.userProfile!.data!.points.toString(),
-                        style: TextStyle(
-                          fontSize: 44.r,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: FontFamily.sora,
-                          height: 1.8.h,
+                    verticalSpace08,
+                    verticalSpace04,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        StreakRedeemCard(
+                          onRedeem: (tap) => viewModel.onClickStreakRedeem(),
                         ),
-                      ),
-                    ],
-                  ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: [
-                  //     ChestBox(
-                  //       imagePath: Assets.images.chestLevel1Closed.path,
-                  //       onTap: viewModel.openRewardsSheet,
-                  //     ),
-                  //     const ChestBox(
-                  //       imagePath: null,
-                  //     ),
-                  //     const ChestBox(
-                  //       imagePath: null,
-                  //     ),
-                  //   ],
-                  // ),
-                  const Spacer(),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 16)
-                            .r,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12).r,
-                      color: kcPrimaryColorLight,
+                        LevelCard(
+                            level: viewModel.userProfile!.data!.level ?? 1),
+                      ],
                     ),
-                    child: Column(
-                      children: [],
+                    verticalSpace08,
+                    verticalSpace16,
+                    Text(
+                      'Total Points Earned',
+                      style: TextStyles.titleSecondary
+                          .copyWith(color: kcSecondaryColor),
                     ),
-                  ),
-                  verticalSpace16,
-                  PrimaryButton(
-                    text: 'Level Up to Play Game',
-                    onPressed: viewModel.areAllTasksDone ? () {} : null,
-                  ),
-                ],
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          Assets.icons.coin.path,
+                          width: 56.r,
+                        ),
+                        horizontalSpace04,
+                        Text(
+                          viewModel.userProfile!.data!.points.toString(),
+                          style: TextStyle(
+                            color: kcSecondaryColor,
+                            fontSize: 44.r,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: FontFamily.sora,
+                            height: 1.8.h,
+                          ),
+                        ),
+                      ],
+                    ),
+                    verticalSpace08,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SectionCard(
+                          title: 'Data Sources',
+                          description: 'Connect & disconnect your data sources',
+                          onTap: viewModel.navigateToSources,
+                        ),
+                        SectionCard(
+                          title: 'AI Persona',
+                          description:
+                              'Customise the tone and style of your AI.',
+                          onTap: viewModel.navigateToAiPersona,
+                        ),
+                      ],
+                    ),
+                    verticalSpace08,
+                    verticalSpace16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Crypto News',
+                          style: TextStyles.titleSecondary
+                              .copyWith(color: kcSecondaryColor),
+                        ),
+                        TextButton(
+                          onPressed: viewModel.navigateToCryptoNews,
+                          child: Text(
+                            'View All',
+                            style: TextStyles.bodyPrimary
+                                .copyWith(color: kcPrimaryColor),
+                          ),
+                        ),
+                      ],
+                    ),
+                    verticalSpace08,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        NewsCard(
+                          headline: viewModel.busy('fetchingNews')
+                              ? ''
+                              : viewModel.newsList![0].headline!,
+                          isLoading: viewModel.busy('fetchingNews'),
+                        ),
+                        NewsCard(
+                          headline: viewModel.busy('fetchingNews')
+                              ? ''
+                              : viewModel.newsList![1].headline!,
+                          isLoading: viewModel.busy('fetchingNews'),
+                        ),
+                      ],
+                    ),
+                    verticalSpace08,
+                    verticalSpace16,
+                    if (viewModel.xAuthTokenExists)
+                      ActionBanner(
+                        leading: Text(
+                          (viewModel.tweetCount ?? 0).toString(),
+                          style: TextStyles.titlePrimary
+                              .copyWith(color: kcPrimaryColor),
+                        ),
+                        text: Text(
+                          'Tweets Waiting for Your Review',
+                          style: TextStyles.titleSecondary
+                              .copyWith(color: kcSecondaryColor),
+                        ),
+                        buttonLabel: 'View All',
+                        onButtonPressed: viewModel.navigateToTweetPersona,
+                      )
+                    else
+                      ActionBanner(
+                        leading: Image.asset(
+                          Assets.icons.xLogo.path,
+                          height: 40.r,
+                          width: 40.r,
+                        ),
+                        text: Text(
+                          'Connect your X account to activate the AI Agent',
+                          style: TextStyles.bodySecondary
+                              .copyWith(color: kcSecondaryColor),
+                        ),
+                        buttonLabel: 'Connect',
+                        onButtonPressed: viewModel.navigateToSources,
+                      )
+                  ],
+                ),
               ),
             ),
     );

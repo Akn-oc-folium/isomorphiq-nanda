@@ -47,51 +47,111 @@ class CryptoNewsAgentViewMobile
                 : viewModel.currentNews == null
                     ? Center(child: Text("No news available"))
                     : Padding(
-                        padding: const EdgeInsets.all(16.0),
+                        padding: const EdgeInsets.all(16.0).r,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              viewModel.currentNews!.source ??
-                                  'Source goes here!',
-                              style: TextStyles.titleTertiary
-                                  .copyWith(color: kcSecondaryColor),
-                            ),
-                            verticalSpace08,
-                            verticalSpace04,
-                            verticalSpace16,
-                            Text(
-                                viewModel.currentNews!.headline ??
-                                    'Title goes here!',
-                                style: TextStyles.titleSecondary
-                                    .copyWith(color: kcSecondaryColor)),
-                            verticalSpace08,
-                            Text(
-                              viewModel.currentNews!.summary ??
-                                  'Content goes here!',
-                              style: TextStyles.bodyPrimary
-                                  .copyWith(color: kcSecondaryColor),
-                            ),
-                            Spacer(),
-                            SecondaryButton(
-                              text: 'Read More',
-                              onPressed: viewModel.readMore,
-                            ),
-                            verticalSpace04,
-                            verticalSpace08,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: SecondaryButton(
-                                      text: "Previous",
-                                      onPressed: viewModel.previousNews),
+                            Expanded(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      viewModel.currentNews!.source!.domain ??
+                                          'Source goes here!',
+                                      style: TextStyles.titleTertiary
+                                          .copyWith(color: kcSecondaryColor),
+                                    ),
+                                    verticalSpace08,
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(12).r,
+                                      child: viewModel.currentNews!.imageUrl !=
+                                              null
+                                          ? Image.network(
+                                              "https://crypto-economy.com//wp-content/uploads/2022/12/cropped-ce-icon-1-270x270.png",
+                                              height: 150.h,
+                                              width: double.infinity,
+                                              fit: BoxFit.cover,
+                                              loadingBuilder: (context, child,
+                                                  loadingProgress) {
+                                                if (loadingProgress == null) {
+                                                  return child;
+                                                }
+                                                return Center(
+                                                    child:
+                                                        CircularProgressIndicator());
+                                              },
+                                              errorBuilder:
+                                                  (context, error, stackTrace) {
+                                                debugPrint(
+                                                    "Image loading error: $error");
+                                                return Container(
+                                                  height: 150.h,
+                                                  width: double.infinity,
+                                                  color: kcPrimaryColorAccent,
+                                                  child: Icon(
+                                                    Icons.image,
+                                                    size: 50.r,
+                                                    color: kcWhite,
+                                                  ),
+                                                );
+                                              },
+                                            )
+                                          : Container(
+                                              height: 150.h,
+                                              width: double.infinity,
+                                              color: kcPrimaryColorAccent,
+                                              child: Icon(
+                                                Icons.image,
+                                                size: 50.r,
+                                                color: kcWhite,
+                                              ),
+                                            ),
+                                    ),
+                                    verticalSpace04,
+                                    verticalSpace16,
+                                    Text(
+                                        viewModel.currentNews!.headline ??
+                                            'Title goes here!',
+                                        style: TextStyles.titleSecondary
+                                            .copyWith(color: kcSecondaryColor)),
+                                    verticalSpace08,
+                                    Text(
+                                      viewModel.currentNews!.summary ??
+                                          'Content goes here!',
+                                      style: TextStyles.bodyPrimary
+                                          .copyWith(color: kcSecondaryColor),
+                                    ),
+                                  ],
                                 ),
-                                horizontalSpace16,
-                                Expanded(
-                                    child: PrimaryButton(
-                                        text: "Next",
-                                        onPressed: viewModel.nextNews)),
+                              ),
+                            ),
+
+                            // Actions section starts here
+                            Column(
+                              children: [
+                                SecondaryButton(
+                                  text: 'Read More',
+                                  onPressed: viewModel.readMore,
+                                ),
+                                verticalSpace04,
+                                verticalSpace08,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Expanded(
+                                      child: SecondaryButton(
+                                          text: "Previous",
+                                          onPressed: viewModel.previousNews),
+                                    ),
+                                    horizontalSpace16,
+                                    Expanded(
+                                        child: PrimaryButton(
+                                            text: "Next",
+                                            onPressed: viewModel.nextNews)),
+                                  ],
+                                ),
                               ],
                             ),
                           ],

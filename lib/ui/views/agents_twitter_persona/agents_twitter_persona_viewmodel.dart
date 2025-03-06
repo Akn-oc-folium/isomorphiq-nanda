@@ -5,6 +5,7 @@ import 'package:isomorph_iq/app/app.router.dart';
 import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
+import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -44,12 +45,17 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> fetchTweets() async {
     setBusyForObject(_tweets, true);
-    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       _tweets = await _apiService.getTweets(
-        userId: userId, // 'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+        userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
         tweetStatus: selectedFilter.toUpperCase(),
       );
+      if (selectedFilter.toUpperCase() ==
+          TweetStatus.pending.name.toUpperCase()) {
+        await _hiveService.storeData(kUserBox, kTweetCountsKey,
+            _tweets!.data.isNotEmpty ? _tweets!.data.length : 0);
+      }
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {
@@ -59,11 +65,11 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> generateTweet() async {
     setBusyForObject('generatingTweet', true);
-    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-          userId: userId, //'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+          userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
           topic: topicController.text.trim(),
         );
 
@@ -99,15 +105,22 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> updateTweetStatus(String tweetId, String tweetStatus) async {
     setBusyForObject('updatingTweetStatus', true);
-    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      await _apiService.postUpdateTweetStatus(
-        userId: userId, //'cc23fa3d-beca-49db-8f04-1f0c6a8cbfec',
+      final response = await _apiService.postUpdateTweetStatus(
+        userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
         tweetId: tweetId,
         tweetStatus: tweetStatus,
       );
+      if ((tweetStatus == TweetStatus.rejected.name.toUpperCase() &&
+              response.code == 200) ||
+          (tweetStatus == TweetStatus.approved.name.toUpperCase() &&
+              response.code == 200)) {
+        int newCount =
+            await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
+        await _hiveService.storeData(kUserBox, kTweetCountsKey, newCount - 1);
+      }
       await fetchTweets();
-      rebuildUi();
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {

@@ -6,6 +6,7 @@ import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:url_launcher_web/url_launcher_web.dart';
 
 class CryptoNewsAgentViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
@@ -31,12 +32,11 @@ class CryptoNewsAgentViewModel extends BaseViewModel {
       debugPrint("Error fetching news: $e");
     }
     setBusy(false);
-    notifyListeners();
   }
 
-  void readMore() {
+  void readMore() async {
     if (currentNews?.source != null) {
-      //_routerService.navigateToExternalWebPage(currentNews!.url);
+      UrlLauncherPlugin().launch(currentNews!.source!.url!, useWebView: true);
     }
   }
 

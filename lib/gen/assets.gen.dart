@@ -54,9 +54,6 @@ class $AssetsIconsGen {
   AssetGenImage get binanceLogo =>
       const AssetGenImage('assets/icons/binance-logo.png');
 
-  /// File path: assets/icons/book.svg
-  String get book => 'assets/icons/book.svg';
-
   /// File path: assets/icons/check-box-filled.svg
   String get checkBoxFilled => 'assets/icons/check-box-filled.svg';
 
@@ -95,6 +92,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/google-logo.png
   AssetGenImage get googleLogo =>
       const AssetGenImage('assets/icons/google-logo.png');
+
+  /// File path: assets/icons/home.svg
+  String get home => 'assets/icons/home.svg';
 
   /// File path: assets/icons/jackpot.svg
   String get jackpot => 'assets/icons/jackpot.svg';
@@ -148,9 +148,6 @@ class $AssetsIconsGen {
   AssetGenImage get uniswapLogo =>
       const AssetGenImage('assets/icons/uniswap-logo.png');
 
-  /// File path: assets/icons/wallet.svg
-  String get wallet => 'assets/icons/wallet.svg';
-
   /// File path: assets/icons/warpcast-logo.png
   AssetGenImage get warpcastLogo =>
       const AssetGenImage('assets/icons/warpcast-logo.png');
@@ -170,7 +167,6 @@ class $AssetsIconsGen {
         atTheRate,
         avatar,
         binanceLogo,
-        book,
         checkBoxFilled,
         checkBoxOutline,
         checkMark,
@@ -182,6 +178,7 @@ class $AssetsIconsGen {
         fireFill,
         foodOrder,
         googleLogo,
+        home,
         jackpot,
         lock,
         logoStatic,
@@ -197,7 +194,6 @@ class $AssetsIconsGen {
         trash,
         trophy,
         uniswapLogo,
-        wallet,
         warpcastLogo,
         xLogoOutline,
         xLogo

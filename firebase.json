@@ -18,6 +18,21 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "headers": [
+      {
+        "source": "/**",
+        "headers": [
+          {
+            "key": "Access-Control-Allow-Origin",
+            "value": "*"
+          },
+          {
+            "key": "Cross-Origin-Opener-Policy",
+            "value": "*"
+          }
+        ]
+      }
+    ],
     "rewrites": [
       {
         "source": "**",

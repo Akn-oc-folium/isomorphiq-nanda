@@ -7,187 +7,195 @@ import 'package:stacked/stacked.dart';
 
 import 'sources_viewmodel.dart';
 
-class SourcesViewMobile extends StackedView<SourcesViewModel> {
+class SourcesViewMobile extends StatefulWidget {
   const SourcesViewMobile({super.key});
 
   @override
-  Widget builder(BuildContext context, SourcesViewModel viewModel, child) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          toolbarHeight: 36.h,
-          bottom: TabBar(
-            padding: const EdgeInsets.symmetric(horizontal: 24).w,
-            tabs: [
-              Tab(
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12).r,
-                  ),
-                  child: const Text('Web 2.0'),
-                ),
-              ),
-              Tab(
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12).r,
-                  ),
-                  child: const Text('Web 3.0'),
-                ),
-              ),
-            ],
-          ),
-        ),
-        body: viewModel.isBusy || viewModel.appConnections == null
-            ? Center(
-                child: SizedBox(
-                  height: 40.r,
-                  width: 40.r,
-                  child: CircularProgressIndicator.adaptive(
-                    backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
-                    strokeWidth: 2.0.w,
-                    valueColor: const AlwaysStoppedAnimation<Color>(
-                      kcPrimaryColor,
+  State<SourcesViewMobile> createState() => _SourcesViewMobileState();
+}
+
+class _SourcesViewMobileState extends State<SourcesViewMobile> {
+  @override
+  Widget build(BuildContext context) {
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => SourcesViewModel(),
+      onViewModelReady: (viewModel) => viewModel.initialise(),
+      createNewViewModelOnInsert: true,
+      builder: (context, viewModel, child) {
+        return DefaultTabController(
+          initialIndex: 0,
+          length: 2,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: const Text('Your Sources'),
+              bottom: TabBar(
+                padding: const EdgeInsets.symmetric(horizontal: 24).w,
+                tabs: [
+                  Tab(
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12).r,
+                      ),
+                      child: const Text('Web 2.0'),
                     ),
                   ),
-                ),
-              )
-            : Padding(
-                padding: EdgeInsets.symmetric(vertical: 24.0.h),
-                child: TabBarView(
-                  children: [
-                    GridView.count(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
-                      mainAxisSpacing: 16.h,
-                      crossAxisSpacing: 12.w,
-                      crossAxisCount: 2,
+                  Tab(
+                    child: Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12).r,
+                      ),
+                      child: const Text('Web 3.0'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            body: viewModel.isBusy || viewModel.appConnections == null
+                ? Center(
+                    child: SizedBox(
+                      height: 40.r,
+                      width: 40.r,
+                      child: CircularProgressIndicator.adaptive(
+                        backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
+                        strokeWidth: 2.0.w,
+                        valueColor: const AlwaysStoppedAnimation<Color>(
+                          kcPrimaryColor,
+                        ),
+                      ),
+                    ),
+                  )
+                : Padding(
+                    padding: EdgeInsets.symmetric(vertical: 24.0.h),
+                    child: TabBarView(
                       children: [
-                        ConnectCard(
-                          title: 'Google',
-                          imagePath: Assets.icons.googleLogo.path,
-                          onConnect: () =>
-                              viewModel.connectApp(AuthProvider.google),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.google]! ||
+                        GridView.count(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 24.0).w,
+                          mainAxisSpacing: 16.h,
+                          crossAxisSpacing: 12.w,
+                          crossAxisCount: 2,
+                          children: [
+                            ConnectCard(
+                              title: 'Google',
+                              imagePath: Assets.icons.googleLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.google),
+                              isConnected: viewModel
+                                      .connectedApps[AuthProvider.google]! ||
                                   viewModel.appConnections!.data!.gmail,
-                          isBusy: viewModel.loadingState[AuthProvider.google] ??
-                              false,
-                        ),
-                        ConnectCard(
-                          title: 'Telegram',
-                          imagePath: Assets.icons.telegramLogo.path,
-                          onConnect: () {},
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.telegram],
-                          isBusy:
-                              viewModel.loadingState[AuthProvider.telegram] ??
+                              isBusy:
+                                  viewModel.loadingState[AuthProvider.google] ??
+                                      false,
+                            ),
+                            ConnectCard(
+                              title: 'Telegram',
+                              imagePath: Assets.icons.telegramLogo.path,
+                              onConnect: () {},
+                              isConnected: viewModel
+                                  .connectedApps[AuthProvider.telegram],
+                              isBusy: viewModel
+                                      .loadingState[AuthProvider.telegram] ??
                                   false,
-                        ),
-                        ConnectCard(
-                          title: 'X',
-                          imagePath: Assets.icons.xLogo.path,
-                          onConnect: () => viewModel.connectApp(AuthProvider.x),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.x]! ||
-                                  viewModel.appConnections!.data!.twitter,
-                          isBusy:
-                              viewModel.loadingState[AuthProvider.x] ?? false,
-                        ),
-                        ConnectCard(
-                          title: 'Discord',
-                          imagePath: Assets.icons.discordLogo.path,
-                          onConnect: () =>
-                              viewModel.connectApp(AuthProvider.discord),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.discord]! ||
+                            ),
+                            ConnectCard(
+                              title: 'X',
+                              imagePath: Assets.icons.xLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.x),
+                              isConnected:
+                                  viewModel.connectedApps[AuthProvider.x]! ||
+                                      viewModel.appConnections!.data!.twitter,
+                              isBusy: viewModel.loadingState[AuthProvider.x] ??
+                                  false,
+                            ),
+                            ConnectCard(
+                              title: 'Discord',
+                              imagePath: Assets.icons.discordLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.discord),
+                              isConnected: viewModel
+                                      .connectedApps[AuthProvider.discord]! ||
                                   viewModel.appConnections!.data!.discord,
-                          isBusy:
-                              viewModel.loadingState[AuthProvider.discord] ??
+                              isBusy: viewModel
+                                      .loadingState[AuthProvider.discord] ??
                                   false,
-                        ),
-                        ConnectCard(
-                          title: 'Facebook',
-                          imagePath: Assets.icons.facebookLogo.path,
-                          onConnect: () =>
-                              viewModel.connectApp(AuthProvider.facebook),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.facebook]! ||
+                            ),
+                            ConnectCard(
+                              title: 'Facebook',
+                              imagePath: Assets.icons.facebookLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.facebook),
+                              isConnected: viewModel
+                                      .connectedApps[AuthProvider.facebook]! ||
                                   viewModel.appConnections!.data!.facebook,
-                          isBusy:
-                              viewModel.loadingState[AuthProvider.facebook] ??
+                              isBusy: viewModel
+                                      .loadingState[AuthProvider.facebook] ??
                                   false,
-                        ),
-                        ConnectCard(
-                          title: 'Spotify',
-                          imagePath: Assets.icons.spotifyLogo.path,
-                          onConnect: () =>
-                              viewModel.connectApp(AuthProvider.spotify),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.spotify]! ||
+                            ),
+                            ConnectCard(
+                              title: 'Spotify',
+                              imagePath: Assets.icons.spotifyLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.spotify),
+                              isConnected: viewModel
+                                      .connectedApps[AuthProvider.spotify]! ||
                                   viewModel.appConnections!.data!.spotify,
-                          isBusy:
-                              viewModel.loadingState[AuthProvider.spotify] ??
+                              isBusy: viewModel
+                                      .loadingState[AuthProvider.spotify] ??
                                   false,
-                        ),
-                        ConnectCard(
-                          title: 'Reddit',
-                          imagePath: Assets.icons.redditLogo.path,
-                          onConnect: () =>
-                              viewModel.connectApp(AuthProvider.reddit),
-                          isConnected:
-                              viewModel.connectedApps[AuthProvider.reddit]! ||
+                            ),
+                            ConnectCard(
+                              title: 'Reddit',
+                              imagePath: Assets.icons.redditLogo.path,
+                              onConnect: () =>
+                                  viewModel.connectApp(AuthProvider.reddit),
+                              isConnected: viewModel
+                                      .connectedApps[AuthProvider.reddit]! ||
                                   viewModel.appConnections!.data!.reddit,
-                          isBusy: viewModel.loadingState[AuthProvider.reddit] ??
-                              false,
+                              isBusy:
+                                  viewModel.loadingState[AuthProvider.reddit] ??
+                                      false,
+                            ),
+                          ],
+                        ),
+                        GridView.count(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: 24.0).w,
+                          mainAxisSpacing: 16.h,
+                          crossAxisSpacing: 12.w,
+                          crossAxisCount: 2,
+                          children: [
+                            ConnectCard(
+                              title: 'Metamask',
+                              imagePath: Assets.icons.metamaskLogo.path,
+                              onConnect: () {},
+                            ),
+                            ConnectCard(
+                              title: 'Binance',
+                              imagePath: Assets.icons.binanceLogo.path,
+                              onConnect: () {},
+                            ),
+                            ConnectCard(
+                              title: 'Uniswap',
+                              imagePath: Assets.icons.uniswapLogo.path,
+                              onConnect: () {},
+                            ),
+                            ConnectCard(
+                              title: 'Warpcast',
+                              imagePath: Assets.icons.warpcastLogo.path,
+                              onConnect: () {},
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                    GridView.count(
-                      padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
-                      mainAxisSpacing: 16.h,
-                      crossAxisSpacing: 12.w,
-                      crossAxisCount: 2,
-                      children: [
-                        ConnectCard(
-                          title: 'Metamask',
-                          imagePath: Assets.icons.metamaskLogo.path,
-                          onConnect: () {},
-                        ),
-                        ConnectCard(
-                          title: 'Binance',
-                          imagePath: Assets.icons.binanceLogo.path,
-                          onConnect: () {},
-                        ),
-                        ConnectCard(
-                          title: 'Uniswap',
-                          imagePath: Assets.icons.uniswapLogo.path,
-                          onConnect: () {},
-                        ),
-                        ConnectCard(
-                          title: 'Warpcast',
-                          imagePath: Assets.icons.warpcastLogo.path,
-                          onConnect: () {},
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-      ),
+                  ),
+          ),
+        );
+      },
     );
-  }
-
-  @override
-  SourcesViewModel viewModelBuilder(BuildContext context) => SourcesViewModel();
-
-  @override
-  void onViewModelReady(SourcesViewModel viewModel) async {
-    await viewModel.initialise();
-    super.onViewModelReady(viewModel);
   }
 }

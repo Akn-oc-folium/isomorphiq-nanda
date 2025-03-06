@@ -56,6 +56,8 @@ class OnboardingViewModel extends BaseViewModel {
       debugPrint("User id: ${_userProfile!.data!.id}");
       await _hiveService.storeData(
           kUserBox, kUserIdKey, _userProfile!.data!.id);
+      await _hiveService.storeData(
+          kUserBox, kUserLevelKey, _userProfile!.data!.level);
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
     }

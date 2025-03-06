@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
+import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
@@ -74,14 +75,14 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
                     colorFilter: const ColorFilter.mode(
                         kcSecondaryColor, BlendMode.srcIn),
                   ),
-                  onPressed: () => viewModel.sendGeneratedTweet('PENDING'),
+                  onPressed: () => viewModel.sendGeneratedTweet(TweetStatus.pending.name.toUpperCase()),
                 ),
                 horizontalSpace16,
                 Expanded(
                   flex: 2,
                   child: PrimaryButton(
                     text: "Tweet Now",
-                    onPressed: () => viewModel.sendGeneratedTweet('APPROVED'),
+                    onPressed: () => viewModel.sendGeneratedTweet(TweetStatus.approved.name.toUpperCase()),
                     isBusy: viewModel.busy('tweetNow'),
                   ),
                 ),

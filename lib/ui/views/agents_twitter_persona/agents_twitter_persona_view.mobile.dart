@@ -4,6 +4,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
+import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
@@ -269,15 +270,15 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                   colorFilter:
                       const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
                 ),
-                onPressed: () =>
-                    viewModel.updateTweetStatus(tweet.id, 'REJECTED'),
+                onPressed: () => viewModel.updateTweetStatus(
+                    tweet.id, TweetStatus.rejected.name.toUpperCase()),
               ),
               horizontalSpace16,
               Expanded(
                 child: PrimaryButton(
                   text: "Tweet Now",
-                  onPressed: () =>
-                      viewModel.updateTweetStatus(tweet.id, 'APPROVED'),
+                  onPressed: () => viewModel.updateTweetStatus(
+                      tweet.id, TweetStatus.approved.name.toUpperCase()),
                   isBusy: viewModel.busy('updatingTweetStatus'),
                 ),
               )

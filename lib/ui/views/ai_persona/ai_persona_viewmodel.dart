@@ -64,7 +64,6 @@ class AiPersonaViewModel extends BaseViewModel {
       storytellingValue = sliderValues["Storytelling"]!;
       optimismValue = sliderValues["Optimism"]!;
       enthusiasmValue = sliderValues["Enthusiasm"]!;
-      debugPrint("Success");
       notifyListeners();
     } catch (e) {
       debugPrint('Error fetching slider values in ai_persona: $e');

@@ -8,7 +8,7 @@ import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 class StreakRedeemCard extends StatefulWidget {
   final ValueChanged<bool>? onRedeem;
 
-  const StreakRedeemCard({Key? key, required this.onRedeem}) : super(key: key);
+  const StreakRedeemCard({super.key, required this.onRedeem});
 
   @override
   State<StreakRedeemCard> createState() => _StreakRedeemCardState();

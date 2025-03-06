@@ -10,6 +10,7 @@ class PrimaryButton extends StatelessWidget {
   final Color? disabledColor;
   final bool isSmall;
   final bool isBusy;
+  final double? width;
 
   const PrimaryButton({
     super.key,
@@ -18,7 +19,8 @@ class PrimaryButton extends StatelessWidget {
     this.isBusy = false,
   })  : icon = null,
         disabledColor = null,
-        isSmall = false;
+        isSmall = false,
+        width = null;
 
   const PrimaryButton.icon({
     super.key,
@@ -27,13 +29,15 @@ class PrimaryButton extends StatelessWidget {
     this.disabledColor,
     this.isBusy = false,
   })  : text = null,
-        isSmall = false;
+        isSmall = false,
+        width = null;
 
   const PrimaryButton.small({
     super.key,
     required this.text,
     required this.onPressed,
     this.isBusy = false,
+    this.width,
   })  : icon = null,
         disabledColor = null,
         isSmall = true;
@@ -43,7 +47,7 @@ class PrimaryButton extends StatelessWidget {
     final borderRadius = BorderRadius.circular(12).r;
 
     return Container(
-      width: icon != null ? 52.w : double.infinity,
+      width: icon != null ? 52.w : width ?? double.infinity,
       height: isSmall ? 44.h : 52.h,
       decoration: onPressed == null
           ? null
