@@ -38,7 +38,7 @@ class SourcesViewModel extends BaseViewModel {
     AuthProvider.reddit: false,
   };
 
-  String? _userId; // = "93855c25-2eb4-49db-98fb-250810934b13";
+  String? _userId;
   String? get userId => _userId;
 
   AppConnections? _appConnections;
@@ -57,14 +57,6 @@ class SourcesViewModel extends BaseViewModel {
 
     _userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     await _fetchConnections();
-  }
-
-  Future<void> _saveAuthState() async {
-    await _hiveService.storeData(
-      AppConstants.authBox,
-      AppConstants.authKey,
-      connectedApps.map((key, value) => MapEntry(key.toString(), value)),
-    );
   }
 
   Future<void> connectApp(AuthProvider provider) async {
@@ -89,8 +81,6 @@ class SourcesViewModel extends BaseViewModel {
 
       if (statusCode == 200) {
         connectedApps[provider] = true;
-        await _saveAuthState();
-        rebuildUi();
       } else {
         // Optionally log or display the error message.
         connectedApps[provider] = false;
@@ -135,26 +125,4 @@ class SourcesViewModel extends BaseViewModel {
       setBusy(false);
     }
   }
-
-  // void _listenToPostMessage() {
-  //   web.window.addEventListener("message", (event) {
-  //     final e = event as web.MessageEvent;
-  //     if (e.origin == "https://isomorph-iq.web.app") {
-  //       setState(() {
-  //         _message = (e.data as JSObject)["message"] as String?;
-  //         _statusCode = (e.data as JSObject)["statusCode"] as int?;
-  //       });
-  //       _handleVerificationSuccess();
-  //     } else {
-  //       print("Received message from unauthorized origin: ${e.origin}");
-  //     }
-  //   });
-  // }
-
-  // void _handleVerificationSuccess() {
-  //   if (_statusCode == 200) {
-  //     // Perform actions upon successful verification
-  //     print("Twitter Verification Successful: $_message");
-  //   }
-  // }
 }

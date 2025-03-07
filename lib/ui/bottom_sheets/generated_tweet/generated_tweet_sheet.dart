@@ -75,14 +75,16 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
                     colorFilter: const ColorFilter.mode(
                         kcSecondaryColor, BlendMode.srcIn),
                   ),
-                  onPressed: () => viewModel.sendGeneratedTweet(TweetStatus.pending.name.toUpperCase()),
+                  onPressed: () => viewModel.sendGeneratedTweet(
+                      TweetStatus.pending.name.toUpperCase()),
                 ),
                 horizontalSpace16,
                 Expanded(
                   flex: 2,
                   child: PrimaryButton(
                     text: "Tweet Now",
-                    onPressed: () => viewModel.sendGeneratedTweet(TweetStatus.approved.name.toUpperCase()),
+                    onPressed: () => viewModel.sendGeneratedTweet(
+                        TweetStatus.approved.name.toUpperCase()),
                     isBusy: viewModel.busy('tweetNow'),
                   ),
                 ),

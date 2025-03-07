@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'crypto_news_agent_viewmodel.dart';
+import 'crypto_news_viewmodel.dart';
 
-class CryptoNewsAgentViewTablet
-    extends ViewModelWidget<CryptoNewsAgentViewModel> {
-  const CryptoNewsAgentViewTablet({super.key});
+class CryptoNewsViewTablet extends ViewModelWidget<CryptoNewsViewModel> {
+  const CryptoNewsViewTablet({super.key});
 
   @override
-  Widget build(BuildContext context, CryptoNewsAgentViewModel viewModel) {
+  Widget build(BuildContext context, CryptoNewsViewModel viewModel) {
     return const Scaffold(
       body: Center(
         child: Text(

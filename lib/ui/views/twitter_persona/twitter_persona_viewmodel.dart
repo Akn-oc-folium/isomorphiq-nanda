@@ -10,7 +10,7 @@ import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-class AgentsTwitterPersonaViewModel extends BaseViewModel {
+class TwitterPersonaViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _dialogService = locator<DialogService>();
@@ -31,6 +31,9 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
   String? _generatedTweet;
   String? get generatedTweet => _generatedTweet;
 
+  String? _userId;
+  String? get userId => _userId;
+
   void toggleFilterDropdown() {
     isFilterDropdownVisible = !isFilterDropdownVisible;
     notifyListeners();
@@ -45,10 +48,10 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> fetchTweets() async {
     setBusyForObject(_tweets, true);
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    _userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       _tweets = await _apiService.getTweets(
-        userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
+        userId: _userId!,
         tweetStatus: selectedFilter.toUpperCase(),
       );
       if (selectedFilter.toUpperCase() ==
@@ -65,11 +68,10 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> generateTweet() async {
     setBusyForObject('generatingTweet', true);
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-          userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
+          userId: _userId!,
           topic: topicController.text.trim(),
         );
 
@@ -105,10 +107,9 @@ class AgentsTwitterPersonaViewModel extends BaseViewModel {
 
   Future<void> updateTweetStatus(String tweetId, String tweetStatus) async {
     setBusyForObject('updatingTweetStatus', true);
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       final response = await _apiService.postUpdateTweetStatus(
-        userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
+        userId: _userId!,
         tweetId: tweetId,
         tweetStatus: tweetStatus,
       );

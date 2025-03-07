@@ -6,16 +6,15 @@ import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:stacked/stacked.dart';
 
-import 'crypto_news_agent_viewmodel.dart';
+import 'crypto_news_viewmodel.dart';
 
-class CryptoNewsAgentViewMobile
-    extends ViewModelWidget<CryptoNewsAgentViewModel> {
-  const CryptoNewsAgentViewMobile({super.key});
+class CryptoNewsViewMobile extends ViewModelWidget<CryptoNewsViewModel> {
+  const CryptoNewsViewMobile({super.key});
 
   @override
-  Widget build(BuildContext context, CryptoNewsAgentViewModel viewModel) {
-    return ViewModelBuilder<CryptoNewsAgentViewModel>.reactive(
-        viewModelBuilder: () => CryptoNewsAgentViewModel(),
+  Widget build(BuildContext context, CryptoNewsViewModel viewModel) {
+    return ViewModelBuilder<CryptoNewsViewModel>.reactive(
+        viewModelBuilder: () => CryptoNewsViewModel(),
         onViewModelReady: (viewModel) => viewModel.fetchNews(),
         builder: (context, viewModel, child) {
           return Scaffold(
@@ -68,7 +67,7 @@ class CryptoNewsAgentViewMobile
                                       child: viewModel.currentNews!.imageUrl !=
                                               null
                                           ? Image.network(
-                                              "https://crypto-economy.com//wp-content/uploads/2022/12/cropped-ce-icon-1-270x270.png",
+                                              viewModel.currentNews!.imageUrl!,
                                               height: 150.h,
                                               width: double.infinity,
                                               fit: BoxFit.cover,

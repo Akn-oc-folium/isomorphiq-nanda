@@ -10,11 +10,9 @@ import 'package:stacked/stacked.dart' as _i16;
 import 'package:stacked_services/stacked_services.dart' as _i15;
 
 import '../ui/views/agents/agents_view.dart' as _i8;
-import '../ui/views/agents_twitter_persona/agents_twitter_persona_view.dart'
-    as _i9;
 import '../ui/views/ai_persona/ai_persona_view.dart' as _i12;
 import '../ui/views/choose_plan/choose_plan_view.dart' as _i11;
-import '../ui/views/crypto_news_agent/crypto_news_agent_view.dart' as _i10;
+import '../ui/views/crypto_news/crypto_news_view.dart' as _i10;
 import '../ui/views/earn/earn_view.dart' as _i5;
 import '../ui/views/home/home_view.dart' as _i2;
 import '../ui/views/jackpot/jackpot_view.dart' as _i6;
@@ -23,6 +21,7 @@ import '../ui/views/play/play_view.dart' as _i7;
 import '../ui/views/sources/sources_view.dart' as _i4;
 import '../ui/views/startup/startup_view.dart' as _i1;
 import '../ui/views/tweet_settings/tweet_settings_view.dart' as _i13;
+import '../ui/views/twitter_persona/twitter_persona_view.dart' as _i9;
 import '../ui/views/unknown/unknown_view.dart' as _i14;
 
 final stackedRouter =
@@ -98,10 +97,10 @@ class StackedRouterWeb extends _i16.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    AgentsTwitterPersonaViewRoute.name: (routeData) {
+    TwitterPersonaViewRoute.name: (routeData) {
       return _i16.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i9.AgentsTwitterPersonaView(),
+        child: const _i9.TwitterPersonaView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -183,8 +182,8 @@ class StackedRouterWeb extends _i16.RootStackRouter {
           path: '/agents-view',
         ),
         _i16.RouteConfig(
-          AgentsTwitterPersonaViewRoute.name,
-          path: '/agents-twitter-persona-view',
+          TwitterPersonaViewRoute.name,
+          path: '/twitter-persona-view',
         ),
         _i16.RouteConfig(
           CryptoNewsAgentViewRoute.name,
@@ -312,15 +311,15 @@ class AgentsViewRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.AgentsTwitterPersonaView]
-class AgentsTwitterPersonaViewRoute extends _i16.PageRouteInfo<void> {
-  const AgentsTwitterPersonaViewRoute()
+/// [_i9.TwitterPersonaView]
+class TwitterPersonaViewRoute extends _i16.PageRouteInfo<void> {
+  const TwitterPersonaViewRoute()
       : super(
-          AgentsTwitterPersonaViewRoute.name,
-          path: '/agents-twitter-persona-view',
+          TwitterPersonaViewRoute.name,
+          path: '/twitter-persona-view',
         );
 
-  static const String name = 'AgentsTwitterPersonaView';
+  static const String name = 'TwitterPersonaView';
 }
 
 /// generated route for
@@ -448,10 +447,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> navigateToAgentsTwitterPersonaView(
+  Future<dynamic> navigateToTwitterPersonaView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const AgentsTwitterPersonaViewRoute(),
+      const TwitterPersonaViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -560,10 +559,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithAgentsTwitterPersonaView(
+  Future<dynamic> replaceWithTwitterPersonaView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const AgentsTwitterPersonaViewRoute(),
+      const TwitterPersonaViewRoute(),
       onFailure: onFailure,
     );
   }

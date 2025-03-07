@@ -24,7 +24,7 @@ class EarnViewModel extends BaseViewModel {
   bool _xAuthTokenExists = false;
   bool get xAuthTokenExists => _xAuthTokenExists;
 
-  final String _username = 'techsatya5';
+  String? _username;
   String? get username => _username;
 
   int? _tweetCount;
@@ -35,7 +35,7 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> initialise() async {
     setBusy(true);
-    // _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
+    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
     await _fetchProfile();
     await _fetchUserRank();
     setBusy(false);
@@ -46,7 +46,7 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> _fetchProfile() async {
     try {
-      _userProfile = await _apiService.getDashboard(username: _username);
+      _userProfile = await _apiService.getDashboard(username: _username!);
       await _hiveService.storeData(
           kUserBox, kUserIdKey, _userProfile!.data!.id);
       if (_userProfile!.data!.twitterAuthToken != "") {
@@ -59,7 +59,7 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> _fetchUserRank() async {
     try {
-      _userRank = await _apiService.getUserRank(username: _username);
+      _userRank = await _apiService.getUserRank(username: _username!);
       if (_xAuthTokenExists) {
         _tweetCount =
             await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
@@ -71,10 +71,10 @@ class EarnViewModel extends BaseViewModel {
 
   Future<void> fetchNews() async {
     setBusyForObject('fetchingNews', true);
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       final response = await _apiService.getCryptoNews(
-          userId: '93855c25-2eb4-49db-98fb-250810934b13');
+          userId: userId);
       _newsList = response.data;
     } catch (e) {
       debugPrint("Error fetching news: $e");
@@ -85,6 +85,6 @@ class EarnViewModel extends BaseViewModel {
   void navigateToSources() => _routerService.navigateToSourcesView();
   void navigateToAiPersona() => _routerService.navigateToAiPersonaView();
   void navigateToTweetPersona() =>
-      _routerService.navigateToAgentsTwitterPersonaView();
+      _routerService.navigateToTwitterPersonaView();
   void navigateToCryptoNews() => _routerService.navigateToCryptoNewsAgentView();
 }

@@ -11,7 +11,7 @@ class AgentsViewModel extends BaseViewModel {
   }
 
   void onTwitterPersonaPressed() {
-    _routerService.navigateToAgentsTwitterPersonaView();
+    _routerService.navigateToTwitterPersonaView();
   }
 
   void onAIPersonaPressed() {

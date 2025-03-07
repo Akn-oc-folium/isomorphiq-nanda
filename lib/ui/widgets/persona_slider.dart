@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
@@ -36,12 +37,12 @@ class PersonaSlider extends StatelessWidget {
             style: TextStyles.titleSecondary.copyWith(color: kcSecondaryColor)),
         SliderTheme(
           data: SliderThemeData(
-            trackHeight: 2.0,
+            trackHeight: 2.0.h,
             trackShape: CustomTrackShape(),
-            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 6.0),
-            tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 3.0),
-            overlayShape: RoundSliderOverlayShape(overlayRadius: 16.0),
-            padding: EdgeInsets.only(top: 0, bottom: 0),
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.0.r),
+            tickMarkShape: RoundSliderTickMarkShape(tickMarkRadius: 3.0.r),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 16.0.r),
+            padding: EdgeInsets.only(top: 0, bottom: 4.0.h),
           ),
           child: Slider(
             value: value,

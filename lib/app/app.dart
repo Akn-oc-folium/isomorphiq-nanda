@@ -6,10 +6,10 @@ import 'package:isomorph_iq/ui/bottom_sheets/notice/notice_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/rewards/rewards_sheet.dart';
 import 'package:isomorph_iq/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
-import 'package:isomorph_iq/ui/views/agents_twitter_persona/agents_twitter_persona_view.dart';
+import 'package:isomorph_iq/ui/views/twitter_persona/twitter_persona_view.dart';
 import 'package:isomorph_iq/ui/views/ai_persona/ai_persona_view.dart';
 import 'package:isomorph_iq/ui/views/choose_plan/choose_plan_view.dart';
-import 'package:isomorph_iq/ui/views/crypto_news_agent/crypto_news_agent_view.dart';
+import 'package:isomorph_iq/ui/views/crypto_news/crypto_news_view.dart';
 import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
 import 'package:isomorph_iq/ui/views/home/home_view.dart';
 import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
@@ -35,7 +35,7 @@ import 'package:isomorph_iq/ui/bottom_sheets/play_instructions/play_instructions
     CustomRoute(page: JackpotView),
     CustomRoute(page: PlayView),
     CustomRoute(page: AgentsView),
-    CustomRoute(page: AgentsTwitterPersonaView),
+    CustomRoute(page: TwitterPersonaView),
     CustomRoute(page: CryptoNewsAgentView),
     CustomRoute(page: ChoosePlanView),
     CustomRoute(page: AiPersonaView),

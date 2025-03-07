@@ -2,24 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/models/tweets_model.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:isomorph_iq/ui/widgets/custom_app_bar.dart';
+import 'package:isomorph_iq/ui/widgets/tweet_card.dart';
 import 'package:stacked/stacked.dart';
 
-import 'agents_twitter_persona_viewmodel.dart';
+import 'twitter_persona_viewmodel.dart';
 
-class AgentsTwitterPersonaViewMobile extends StatelessWidget {
-  const AgentsTwitterPersonaViewMobile({super.key});
+class TwitterPersonaViewMobile extends StatelessWidget {
+  const TwitterPersonaViewMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ViewModelBuilder<AgentsTwitterPersonaViewModel>.reactive(
-      viewModelBuilder: () => AgentsTwitterPersonaViewModel(),
+    return ViewModelBuilder<TwitterPersonaViewModel>.reactive(
+      viewModelBuilder: () => TwitterPersonaViewModel(),
       onViewModelReady: (viewModel) => viewModel.fetchTweets(),
       builder: (context, viewModel, child) {
         return Scaffold(
@@ -148,7 +147,7 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
                             itemCount: viewModel.tweets!.data.length,
                             itemBuilder: (context, index) {
                               final tweet = viewModel.tweets!.data[index];
-                              return _buildTweetCard(tweet, viewModel);
+                              return TweetCard(tweet: tweet);
                             },
                           ),
                         ),
@@ -234,58 +233,6 @@ class AgentsTwitterPersonaViewMobile extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildTweetCard(Tweet tweet, AgentsTwitterPersonaViewModel viewModel) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 16).h,
-      padding: const EdgeInsets.all(12).r,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12).r,
-        border: Border.all(color: kcStrokeSecondary),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Tweet #${tweet.id}',
-            maxLines: 1,
-            style: TextStyles.buttonText.copyWith(color: kcSecondaryColor),
-          ),
-          verticalSpace08,
-          Text(
-            tweet.tweetContent,
-            style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
-          ),
-          verticalSpace08,
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SecondaryButton.icon(
-                icon: SvgPicture.asset(
-                  Assets.icons.trash,
-                  height: 24.r,
-                  colorFilter:
-                      const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
-                ),
-                onPressed: () => viewModel.updateTweetStatus(
-                    tweet.id, TweetStatus.rejected.name.toUpperCase()),
-              ),
-              horizontalSpace16,
-              Expanded(
-                child: PrimaryButton(
-                  text: "Tweet Now",
-                  onPressed: () => viewModel.updateTweetStatus(
-                      tweet.id, TweetStatus.approved.name.toUpperCase()),
-                  isBusy: viewModel.busy('updatingTweetStatus'),
-                ),
-              )
-            ],
-          ),
-        ],
-      ),
     );
   }
 }

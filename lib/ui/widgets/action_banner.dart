@@ -47,7 +47,10 @@ class ActionBanner extends StatelessWidget {
           horizontalSpace08,
           // Right-aligned button
           PrimaryButton.small(
-              width: 96.w, text: buttonLabel, onPressed: onButtonPressed,),
+            width: 96.w,
+            text: buttonLabel,
+            onPressed: onButtonPressed,
+          ),
         ],
       ),
     );

@@ -19,11 +19,11 @@ class GeneratedTweetSheetModel extends BaseViewModel {
 
   Future<void> sendGeneratedTweet(String tweetStatus) async {
     setBusyForObject('tweetNow', true);
-    // final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+    final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
       debugPrint('saving, $generatedTweet');
       final response = await _apiService.postSaveGeneratedTweet(
-        userId: 'ff8bbd4e-6221-48a4-910f-b88c4978c5d5',
+        userId: userId,
         content: generatedTweet,
         tweetStatus: tweetStatus,
       );
@@ -34,7 +34,6 @@ class GeneratedTweetSheetModel extends BaseViewModel {
               await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
           await _hiveService.storeData(kUserBox, kTweetCountsKey, newCount + 1);
         }
-        rebuildUi();
       } else if (response.code == 429) {
         _dialogService.showDialog(
           title: 'Error',

@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:url_launcher_web/url_launcher_web.dart';
 
-class CryptoNewsAgentViewModel extends BaseViewModel {
+class CryptoNewsViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
@@ -23,9 +23,7 @@ class CryptoNewsAgentViewModel extends BaseViewModel {
     setBusy(true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.getCryptoNews(
-          userId: userId // "ff8bbd4e-6221-48a4-910f-b88c4978c5d5"
-          );
+      final response = await _apiService.getCryptoNews(userId: userId);
       _newsList = response.data!.toList();
       _currentIndex = 0;
     } catch (e) {

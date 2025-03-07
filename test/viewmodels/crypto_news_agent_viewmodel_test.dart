@@ -4,7 +4,7 @@ import 'package:isomorph_iq/app/app.locator.dart';
 import '../helpers/test_helpers.dart';
 
 void main() {
-  group('CryptoNewsAgentViewModel Tests -', () {
+  group('CryptoNewsViewModel Tests -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
   });

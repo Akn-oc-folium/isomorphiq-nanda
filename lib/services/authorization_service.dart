@@ -1,10 +1,8 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/app/app.router.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 @JS('window')
 external Window get window;
@@ -43,7 +41,6 @@ extension WindowInstanceExtension on WindowInstance {
 }
 
 class AuthorizationService {
-  final _routerService = locator<RouterService>();
   late Completer<Map<String, dynamic>> _completer;
   WindowInstance? authWindow;
 
@@ -74,8 +71,7 @@ class AuthorizationService {
   @JSExport()
   void _onAuthResponse(MessageEvent event) {
     final String origin = event.origin;
-    if (!origin.contains("isomorph-iq.web.app") &&
-        !origin.contains("isomorph_bot/isomorphiq") &&
+    if (!origin.contains("api.isomorphiq.net") &&
         !origin.contains("api.isomorphiq.com")) {
       debugPrint("Rejected message from unknown origin: $origin");
       return;
@@ -83,11 +79,13 @@ class AuthorizationService {
       debugPrint("Received message from origin: $origin");
     }
 
-    final dynamic response = event.data;
+    final dynamic eventData = event.data;
+    final dynamic response = jsonDecode(eventData);
     if (response is Map<String, dynamic>) {
       String message = response["message"] ?? "Unknown Response";
       int statusCode = response["statusCode"] ?? 400;
 
+      debugPrint("Received message: $message (code: $statusCode)");
       // Optional delay
       Future.delayed(Duration(seconds: 2), () {
         authWindow?.close();
@@ -96,18 +94,18 @@ class AuthorizationService {
     }
   }
 
-  void _pollWindowClosed() {
-    Timer.periodic(Duration(milliseconds: 500), (timer) {
-      if (authWindow?.closed == true) {
-        timer.cancel();
-        // Window closed manually
-        debugPrint("User closed authentication");
-        _completeAndCleanup(
-            {"message": "User closed authentication", "statusCode": 400});
-      }
-      _routerService.replaceWithSourcesView();
-    });
-  }
+  // void _pollWindowClosed() {
+  //   Timer.periodic(Duration(milliseconds: 500), (timer) {
+  //     if (authWindow?.closed == true) {
+  //       timer.cancel();
+  //       // Window closed manually
+  //       debugPrint("User closed authentication");
+  //       _completeAndCleanup(
+  //           {"message": "User closed authentication", "statusCode": 400});
+  //     }
+  //     _routerService.replaceWithSourcesView();
+  //   });
+  // }
 
   void _completeAndCleanup(Map<String, dynamic> result) {
     if (!_completer.isCompleted) {

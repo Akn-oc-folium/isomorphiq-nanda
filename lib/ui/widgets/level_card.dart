@@ -38,7 +38,7 @@ class LevelCard extends StatelessWidget {
               ),
             ),
             child: Text(
-              level.toString(),
+              " ${level.toString()}",
               style: TextStyles.titleTertiary.copyWith(
                 fontSize: 16.sp,
                 color: kcTertiaryColor,

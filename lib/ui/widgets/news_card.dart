@@ -22,7 +22,7 @@ class NewsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 154.w,
-      height: 110.h,
+      height: 120.h,
       padding: const EdgeInsets.all(12.0).r,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.0).r,

@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import 'agents_twitter_persona_viewmodel.dart';
+import 'twitter_persona_viewmodel.dart';
 
-class AgentsTwitterPersonaViewDesktop
-    extends ViewModelWidget<AgentsTwitterPersonaViewModel> {
-  const AgentsTwitterPersonaViewDesktop({super.key});
+class TwitterPersonaViewDesktop
+    extends ViewModelWidget<TwitterPersonaViewModel> {
+  const TwitterPersonaViewDesktop({super.key});
 
   @override
-  Widget build(BuildContext context, AgentsTwitterPersonaViewModel viewModel) {
+  Widget build(BuildContext context, TwitterPersonaViewModel viewModel) {
     return const Scaffold(
       body: Center(
         child: Text(
