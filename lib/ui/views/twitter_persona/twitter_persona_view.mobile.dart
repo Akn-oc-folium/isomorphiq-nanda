@@ -25,16 +25,16 @@ class TwitterPersonaViewMobile extends StatelessWidget {
           backgroundColor: Colors.white,
           appBar: CustomAppBar(
             context: context,
-            actions: [
-              IconButton(
-                onPressed: () => viewModel.navigateToSettings(),
-                icon: SvgPicture.asset(
-                  Assets.icons.settingsOutline,
-                  height: 24.r,
-                ),
-                iconSize: 48.r,
-              )
-            ],
+            // actions: [
+            //   IconButton(
+            //     onPressed: () => viewModel.navigateToSettings(),
+            //     icon: SvgPicture.asset(
+            //       Assets.icons.settingsOutline,
+            //       height: 24.r,
+            //     ),
+            //     iconSize: 48.r,
+            //   )
+            // ],   
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24).w,

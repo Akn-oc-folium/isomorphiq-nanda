@@ -90,6 +90,7 @@ class AiPersonaViewModel extends BaseViewModel {
       debugPrint('Error confirming changes in ai_persona: $e');
     } finally {
       setBusyForObject('personaUpdating', false);
+      _routerService.back();
     }
   }
 }

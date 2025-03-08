@@ -168,22 +168,22 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                           crossAxisSpacing: 12.w,
                           crossAxisCount: 2,
                           children: [
-                            ConnectCard(
+                            ConnectCard.comingSoon(
                               title: 'Metamask',
                               imagePath: Assets.icons.metamaskLogo.path,
                               onConnect: () {},
                             ),
-                            ConnectCard(
+                            ConnectCard.comingSoon(
                               title: 'Binance',
                               imagePath: Assets.icons.binanceLogo.path,
                               onConnect: () {},
                             ),
-                            ConnectCard(
+                            ConnectCard.comingSoon(
                               title: 'Uniswap',
                               imagePath: Assets.icons.uniswapLogo.path,
                               onConnect: () {},
                             ),
-                            ConnectCard(
+                            ConnectCard.comingSoon(
                               title: 'Warpcast',
                               imagePath: Assets.icons.warpcastLogo.path,
                               onConnect: () {},

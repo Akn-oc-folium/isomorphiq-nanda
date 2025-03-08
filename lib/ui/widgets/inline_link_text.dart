@@ -11,13 +11,13 @@ class InlineLinkText extends StatelessWidget {
   final VoidCallback onLinkTap; // What happens when user taps link
 
   const InlineLinkText({
-    Key? key,
+    super.key,
     required this.prefixText,
     required this.linkText,
     required this.onLinkTap,
     this.prefixStyle,
     this.linkStyle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -30,19 +30,19 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                      child:
-                          SecondaryButton(text: 'Monthly', onPressed: () {})),
-                  horizontalSpace08,
-                  Expanded(
-                      child: PrimaryButton.small(
-                          text: 'Yearly -20% off', onPressed: () {}))
-                ],
-              ),
-              verticalSpace16,
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   children: [
+              //     Expanded(
+              //         child:
+              //             SecondaryButton(text: 'Monthly', onPressed: () {})),
+              //     horizontalSpace08,
+              //     Expanded(
+              //         child: PrimaryButton.small(
+              //             text: 'Yearly -20% off', onPressed: () {}))
+              //   ],
+              // ),
+              // verticalSpace16,
               Expanded(
                 child: ListView(
                   children: [
@@ -57,7 +57,7 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
                       ],
                       buttonText: "Current",
                       isCurrentPlan: true,
-                      onPressed: () {},
+                      onPressed: null,
                     ),
                     _buildPlanCard(
                       title: "Pro",
@@ -68,9 +68,9 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
                         "Generate 100 tweets/replies in a month",
                         "Greater Token Airdrop Eligibility"
                       ],
-                      buttonText: "Upgrade to Pro",
+                      buttonText: "Coming Soon",
                       isCurrentPlan: false,
-                      onPressed: () => viewModel.upgradePlan("Pro"),
+                      onPressed: null,
                     ),
                     _buildPlanCard(
                       title: "Community",
@@ -81,9 +81,9 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
                         "Generate 300 tweets/replies in a month",
                         "Highest allocation at Token Airdrop"
                       ],
-                      buttonText: "Upgrade to Unlimited",
+                      buttonText: "Coming Soon",
                       isCurrentPlan: false,
-                      onPressed: () => viewModel.upgradePlan("Community"),
+                      onPressed: null,
                     ),
                   ],
                 ),
@@ -102,7 +102,7 @@ class ChoosePlanViewMobile extends ViewModelWidget<ChoosePlanViewModel> {
     required List<String> description,
     required String buttonText,
     required bool isCurrentPlan,
-    required VoidCallback onPressed,
+    required VoidCallback? onPressed,
   }) {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 16),

@@ -6,7 +6,6 @@ import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/views/onboarding/onboarding_viewmodel.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
-import 'package:isomorph_iq/ui/widgets/inline_link_text.dart';
 import 'package:stacked/stacked.dart';
 
 class OnboardingViewMobile extends StatelessWidget {
@@ -112,7 +111,7 @@ class __OnboardingView1State extends State<_OnboardingView1>
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Hi ${widget.viewModel.userFirstName} Test1!',
+                      'Hi ${widget.viewModel.userFirstName}!',
                       style: TextStyles.titlePrimary
                           .copyWith(color: kcPrimaryColor),
                     ),
@@ -122,14 +121,14 @@ class __OnboardingView1State extends State<_OnboardingView1>
                       style: TextStyles.titleTertiary
                           .copyWith(color: kcSecondaryColor),
                     ),
-                    verticalSpace56,
-                    Center(
-                      child: InlineLinkText(
-                        prefixText: '',
-                        linkText: 'Privacy Policy',
-                        onLinkTap: () {},
-                      ),
-                    ),
+                    // verticalSpace56,
+                    // Center(
+                    //   child: InlineLinkText(
+                    //     prefixText: '',
+                    //     linkText: 'Privacy Policy',
+                    //     onLinkTap: () {},
+                    //   ),
+                    // ),
                     verticalSpace08,
                     verticalSpace04,
                     PrimaryButton(
@@ -193,7 +192,7 @@ class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
                           horizontalSpace(6),
                           Flexible(
                             child: Text(
-                              'The more you chat, the more points you earn.',
+                              'Create your own unique AI Persona and Twitter Clone!',
                               style: TextStyles.titleTertiary
                                   .copyWith(color: kcSecondaryColor),
                             ),
@@ -230,21 +229,21 @@ class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
                       ),
                     ],
                   ),
+                  // verticalSpace16,
+                  // Center(
+                  //   child: InlineLinkText(
+                  //     prefixText: '',
+                  //     linkText: 'Privacy Policy',
+                  //     onLinkTap: () {},
+                  //   ),
+                  // ),
+                  // verticalSpace08,
+                  // verticalSpace04,
+                  // SecondaryButton(
+                  //   text: 'Will my data be secure?',
+                  //   onPressed: () {},
+                  // ),
                   verticalSpace16,
-                  Center(
-                    child: InlineLinkText(
-                      prefixText: '',
-                      linkText: 'Privacy Policy',
-                      onLinkTap: () {},
-                    ),
-                  ),
-                  verticalSpace08,
-                  verticalSpace04,
-                  SecondaryButton(
-                    text: 'Will my data be secure?',
-                    onPressed: () {},
-                  ),
-                  verticalSpace(15),
                   PrimaryButton(
                     text: 'Continue',
                     onPressed: viewModel.onContinuePressed,
@@ -322,13 +321,13 @@ class __OnboardingView3State extends State<_OnboardingView3>
               ),
               Column(
                 children: [
-                  InlineLinkText(
-                    prefixText: 'By continuing, you are in agreement with\n',
-                    linkText: 'IsomorphIQ Terms & Conditions',
-                    onLinkTap: () {},
-                  ),
-                  verticalSpace08,
-                  verticalSpace04,
+                  // InlineLinkText(
+                  //   prefixText: 'By continuing, you are in agreement with\n',
+                  //   linkText: 'IsomorphIQ Terms & Conditions',
+                  //   onLinkTap: () {},
+                  // ),
+                  // verticalSpace08,
+                  // verticalSpace04,
                   PrimaryButton(
                     text: 'Let\'s Play',
                     onPressed: widget.viewModel.onContinuePressed,
