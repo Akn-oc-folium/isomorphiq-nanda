@@ -51,6 +51,7 @@ class EarnViewModel extends BaseViewModel {
           kUserBox, kUserIdKey, _userProfile!.data!.id);
       if (_userProfile!.data!.twitterAuthToken != "") {
         _xAuthTokenExists = true;
+        notifyListeners();
       }
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');

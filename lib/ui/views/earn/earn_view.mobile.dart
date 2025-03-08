@@ -202,4 +202,10 @@ class EarnViewMobile extends StackedView<EarnViewModel> {
     viewModel.initialise();
     super.onViewModelReady(viewModel);
   }
+
+  @override
+  bool get reactive => true;
+
+  @override
+  bool get createNewViewModelOnInsert => true;
 }

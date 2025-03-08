@@ -50,15 +50,19 @@ class TwitterPersonaViewModel extends BaseViewModel {
     setBusyForObject(_tweets, true);
     _userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
+      _tweets = null;
+      notifyListeners();
       _tweets = await _apiService.getTweets(
         userId: _userId!,
         tweetStatus: selectedFilter.toUpperCase(),
       );
-      if (selectedFilter.toUpperCase() ==
-          TweetStatus.pending.name.toUpperCase()) {
+      if (_tweets != null &&
+          selectedFilter.toUpperCase() ==
+              TweetStatus.pending.name.toUpperCase()) {
         await _hiveService.storeData(kUserBox, kTweetCountsKey,
             _tweets!.data.isNotEmpty ? _tweets!.data.length : 0);
       }
+      notifyListeners();
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {
@@ -71,7 +75,7 @@ class TwitterPersonaViewModel extends BaseViewModel {
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-          userId: _userId!,
+          userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
           topic: topicController.text.trim(),
         );
 
@@ -95,14 +99,21 @@ class TwitterPersonaViewModel extends BaseViewModel {
     }
   }
 
-  void openGeneratedTweetModal() {
-    _bottomSheetService.showCustomSheet(
+  void openGeneratedTweetModal() async {
+    var response = await _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.generatedTweet,
       barrierDismissible: false,
       title: 'Tweet you just generated',
       description: _generatedTweet,
       isScrollControlled: true,
     );
+    if (response?.confirmed ?? false) {
+      await fetchTweets();
+    } else {
+      debugPrint(
+          "Bottom sheet closed without confirmation, still refreshing tweets.");
+      await fetchTweets();
+    }
   }
 
   Future<void> updateTweetStatus(String tweetId, String tweetStatus) async {
@@ -120,6 +131,9 @@ class TwitterPersonaViewModel extends BaseViewModel {
         int newCount =
             await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
         await _hiveService.storeData(kUserBox, kTweetCountsKey, newCount - 1);
+
+        _tweets?.data.removeWhere((tweet) => tweet.id == tweetId);
+        notifyListeners();
       }
       await fetchTweets();
     } catch (e) {
