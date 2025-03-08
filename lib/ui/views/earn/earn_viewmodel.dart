@@ -51,6 +51,7 @@ class EarnViewModel extends BaseViewModel {
           kUserBox, kUserIdKey, _userProfile!.data!.id);
       if (_userProfile!.data!.twitterAuthToken != "") {
         _xAuthTokenExists = true;
+        notifyListeners();
       }
     } catch (e) {
       debugPrint('Error fetching dashboard: $e');
@@ -73,8 +74,7 @@ class EarnViewModel extends BaseViewModel {
     setBusyForObject('fetchingNews', true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      final response = await _apiService.getCryptoNews(
-          userId: userId);
+      final response = await _apiService.getCryptoNews(userId: userId);
       _newsList = response.data;
     } catch (e) {
       debugPrint("Error fetching news: $e");
