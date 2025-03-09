@@ -4,7 +4,6 @@ import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/game_instruction/game_instruction_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/generated_tweet/generated_tweet_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/notice/notice_sheet.dart';
-import 'package:isomorph_iq/ui/bottom_sheets/play_instructions/play_instructions_sheet.dart';
 import 'package:isomorph_iq/ui/bottom_sheets/rewards/rewards_sheet.dart';
 import 'package:isomorph_iq/ui/dialogs/info_alert/info_alert_dialog.dart';
 import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
@@ -61,7 +60,6 @@ import 'package:stacked_services/stacked_services.dart';
     StackedBottomsheet(classType: RewardsSheet),
     StackedBottomsheet(classType: GameInstructionSheet),
     StackedBottomsheet(classType: GeneratedTweetSheet),
-    StackedBottomsheet(classType: PlayInstructionsSheet),
 // @stacked-bottom-sheet
   ],
   dialogs: [
