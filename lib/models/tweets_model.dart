@@ -9,7 +9,7 @@ Tweets fetchTweetsFromJson(String str) => Tweets.fromJson(json.decode(str));
 String fetchTweetsToJson(Tweets data) => json.encode(data.toJson());
 
 class Tweets {
-  final List<Tweet> data;
+  final List<Tweet>? data;
   final int code;
   final String message;
 
@@ -26,7 +26,7 @@ class Tweets {
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data.map((x) => x.toJson())),
+        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
         "code": code,
         "message": message,
       };

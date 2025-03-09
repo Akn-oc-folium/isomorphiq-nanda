@@ -1,10 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:isomorph_iq/models/app_connections_model.dart';
+import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/models/fetch_user_personality.dart';
 import 'package:isomorph_iq/models/generate_tweet.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
-import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/models/post_model.dart';
 import 'package:isomorph_iq/models/profile_model.dart';
 import 'package:isomorph_iq/models/save_generated_tweet.dart';
@@ -46,14 +46,16 @@ class ApiService {
   }
 
   Future<PostResponse> postUserPoints({
-    required String username,
+    required String userId,
     required int points,
   }) async {
     try {
       final Response response = await apiClient.post(
         AppConstants.userPointsEndpoint,
+        queryParameters: {
+          'user_id': userId,
+        },
         data: {
-          'name': username,
           'points': points,
         },
       );

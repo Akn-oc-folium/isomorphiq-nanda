@@ -24,6 +24,12 @@ class HiveService {
     return box.get(key);
   }
 
+  // Delete data from a box
+  Future<void> removeData(String boxName, String key) async {
+    final box = await _getBox(boxName);
+    await box.delete(key);
+  }
+
   // Check if a key exists in a box
   Future<bool> containsKey(String boxName, String key) async {
     final box = await _getBox(boxName);
@@ -36,5 +42,11 @@ class HiveService {
       await box.close();
     }
     _openBoxes.clear();
+  }
+
+  Future<void> clearAllData() async {
+    for (var box in _openBoxes.values) {
+      await box.clear(); // Clears all key-value pairs in the box
+    }
   }
 }

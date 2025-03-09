@@ -96,6 +96,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/home.svg
   String get home => 'assets/icons/home.svg';
 
+  /// File path: assets/icons/iq-coin.png
+  AssetGenImage get iqCoin => const AssetGenImage('assets/icons/iq-coin.png');
+
   /// File path: assets/icons/jackpot.svg
   String get jackpot => 'assets/icons/jackpot.svg';
 
@@ -179,6 +182,7 @@ class $AssetsIconsGen {
         foodOrder,
         googleLogo,
         home,
+        iqCoin,
         jackpot,
         lock,
         logoStatic,

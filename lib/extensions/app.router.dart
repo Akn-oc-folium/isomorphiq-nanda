@@ -41,10 +41,10 @@
 //         barrierDismissible: false,
 //       );
 //     },
-//     HomeViewRoute.name: (routeData) {
+//     MainViewRoute.name: (routeData) {
 //       return _i15.CustomPage<dynamic>(
 //         routeData: routeData,
-//         child: const _i2.HomeView(),
+//         child: const _i2.MainView(),
 //         opaque: true,
 //         barrierDismissible: false,
 //       );
@@ -65,10 +65,10 @@
 //         barrierDismissible: false,
 //       );
 //     },
-//     EarnViewRoute.name: (routeData) {
+//     HomeViewRoute.name: (routeData) {
 //       return _i15.CustomPage<dynamic>(
 //         routeData: routeData,
-//         child: const _i5.EarnView(),
+//         child: const _i5.HomeView(),
 //         opaque: true,
 //         barrierDismissible: false,
 //       );
@@ -146,7 +146,7 @@
 //           path: '/',
 //         ),
 //         _i15.RouteConfig(
-//           HomeViewRoute.name,
+//           MainViewRoute.name,
 //           path: '/home-view',
 //         ),
 //         _i15.RouteConfig(
@@ -158,7 +158,7 @@
 //           path: '/sources-view',
 //         ),
 //         _i15.RouteConfig(
-//           EarnViewRoute.name,
+//           HomeViewRoute.name,
 //           path: '/earn-view',
 //         ),
 //         _i15.RouteConfig(
@@ -215,15 +215,15 @@
 // }
 
 // /// generated route for
-// /// [_i2.HomeView]
-// class HomeViewRoute extends _i15.PageRouteInfo<void> {
-//   const HomeViewRoute()
+// /// [_i2.MainView]
+// class MainViewRoute extends _i15.PageRouteInfo<void> {
+//   const MainViewRoute()
 //       : super(
-//           HomeViewRoute.name,
+//           MainViewRoute.name,
 //           path: '/home-view',
 //         );
 
-//   static const String name = 'HomeView';
+//   static const String name = 'MainView';
 // }
 
 // /// generated route for
@@ -251,15 +251,15 @@
 // }
 
 // /// generated route for
-// /// [_i5.EarnView]
-// class EarnViewRoute extends _i15.PageRouteInfo<void> {
-//   const EarnViewRoute()
+// /// [_i5.HomeView]
+// class HomeViewRoute extends _i15.PageRouteInfo<void> {
+//   const HomeViewRoute()
 //       : super(
-//           EarnViewRoute.name,
+//           HomeViewRoute.name,
 //           path: '/earn-view',
 //         );
 
-//   static const String name = 'EarnView';
+//   static const String name = 'HomeView';
 // }
 
 // /// generated route for
@@ -367,10 +367,10 @@
 //     );
 //   }
 
-//   Future<dynamic> navigateToHomeView(
+//   Future<dynamic> navigateToMainView(
 //       {void Function(_i15.NavigationFailure)? onFailure}) async {
 //     return navigateTo(
-//       const HomeViewRoute(),
+//       const MainViewRoute(),
 //       onFailure: onFailure,
 //     );
 //   }
@@ -391,10 +391,10 @@
 //     );
 //   }
 
-//   Future<dynamic> navigateToEarnView(
+//   Future<dynamic> navigateToHomeView(
 //       {void Function(_i15.NavigationFailure)? onFailure}) async {
 //     return navigateTo(
-//       const EarnViewRoute(),
+//       const HomeViewRoute(),
 //       onFailure: onFailure,
 //     );
 //   }
@@ -471,10 +471,10 @@
 //     );
 //   }
 
-//   Future<dynamic> replaceWithHomeView(
+//   Future<dynamic> replaceWithMainView(
 //       {void Function(_i15.NavigationFailure)? onFailure}) async {
 //     return replaceWith(
-//       const HomeViewRoute(),
+//       const MainViewRoute(),
 //       onFailure: onFailure,
 //     );
 //   }
@@ -495,10 +495,10 @@
 //     );
 //   }
 
-//   Future<dynamic> replaceWithEarnView(
+//   Future<dynamic> replaceWithHomeView(
 //       {void Function(_i15.NavigationFailure)? onFailure}) async {
 //     return replaceWith(
-//       const EarnViewRoute(),
+//       const HomeViewRoute(),
 //       onFailure: onFailure,
 //     );
 //   }

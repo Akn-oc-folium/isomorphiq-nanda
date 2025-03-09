@@ -1,130 +1,213 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/gen/fonts.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/app_strings.dart';
-import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
-import 'package:isomorph_iq/ui/views/earn/earn_view.dart';
-import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
+import 'package:isomorph_iq/ui/common/text_styles.dart';
+import 'package:isomorph_iq/ui/common/ui_helpers.dart';
+import 'package:isomorph_iq/ui/widgets/action_banner.dart';
+import 'package:isomorph_iq/ui/widgets/level_card.dart';
+import 'package:isomorph_iq/ui/widgets/news_card.dart';
+import 'package:isomorph_iq/ui/widgets/section_card.dart';
+import 'package:isomorph_iq/ui/widgets/streak_redeem_card.dart';
+import 'package:isomorph_iq/ui/widgets/user_status_card.dart';
 import 'package:stacked/stacked.dart';
 
 import 'home_viewmodel.dart';
 
-class HomeViewMobile extends StatelessWidget {
+class HomeViewMobile extends StackedView<HomeViewModel> {
   const HomeViewMobile({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return ViewModelBuilder.reactive(
-      viewModelBuilder: () => HomeViewModel(),
-      builder: (context, viewModel, child) => Scaffold(
-        bottomNavigationBar: NavigationBar(
-          selectedIndex: 1,
-          onDestinationSelected: viewModel.setIndex,
-          labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
-          destinations: [
-            getCustomizedNavItem(
-              index: 0,
-              selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.home,
-              label: ksHomeNavTitle,
-            ),
-            getCustomizedNavItem(
-              index: 1,
-              selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.logoStatic.path,
-              label: ksAgentNavTitle,
-            ),
-            getCustomizedNavItem(
-              index: 2,
-              selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.jackpot,
-              label: ksJackpotNavTitle,
-            ),
-          ],
-        ),
-        body: getViewForIndex(viewModel.currentIndex),
-      ),
-    );
-  }
-
-  Container getCustomizedNavItem({
-    required int index,
-    required int selectedIndex,
-    required String iconPath,
-    required String label,
-  }) {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: selectedIndex == index
-            ? LinearGradient(
-                colors: [
-                  kcPrimaryColor.withValues(alpha: 0.24),
-                  kcPrimaryColor.withValues(alpha: 0.0),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              )
-            : null,
-        border: selectedIndex == index
-            ? const Border(
-                top: BorderSide(color: kcPrimaryColor, width: 3.0),
-              )
-            : const Border(
-                top: BorderSide(color: Colors.transparent, width: 3.0),
-              ),
-        borderRadius: selectedIndex == index
-            ? const BorderRadius.only(
-                topLeft: Radius.circular(2.0),
-                topRight: Radius.circular(2.0),
-              )
-            : null,
-      ),
-      child: NavigationDestination(
-        label: '',
-        icon: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Opacity(
-              opacity: selectedIndex == index ? 1.0 : 0.5,
-              child: iconPath == Assets.icons.logoStatic.path
-                  ? Image.asset(
-                      iconPath,
-                      height: 24,
-                    )
-                  : SvgPicture.asset(
-                      iconPath,
-                      height: 24,
+  Widget builder(BuildContext context, HomeViewModel viewModel, child) {
+    return FocusDetector(
+      onFocusGained: () {
+        // Refresh data when the screen regains focus
+        viewModel.refreshData();
+      },
+      child: Scaffold(
+        body: viewModel.isBusy || viewModel.userProfile == null
+            ? Center(
+                child: SizedBox(
+                  height: 40.r,
+                  width: 40.r,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
+                    strokeWidth: 2.0.w,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      kcPrimaryColor,
                     ),
-            ),
-            Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w600,
-                fontFamily: FontFamily.sora,
-                height: 1.66,
-                color: selectedIndex == index
-                    ? kcWhite
-                    : kcWhite.withValues(alpha: 0.5),
+                  ),
+                ),
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                          horizontal: 24.0, vertical: 16.0)
+                      .r,
+                  child: Column(
+                    children: [
+                      viewModel.userRank == null ||
+                              viewModel.userRank!.data.rank == 0
+                          ? SizedBox(
+                              height: 20.r,
+                              width: 20.r,
+                              child: CircularProgressIndicator.adaptive(
+                                backgroundColor:
+                                    kcPrimaryColor.withValues(alpha: 0.5),
+                                strokeWidth: 2.0.w,
+                                valueColor: const AlwaysStoppedAnimation<Color>(
+                                  kcPrimaryColor,
+                                ),
+                              ),
+                            )
+                          : UserStatusCard(
+                              name:
+                                  viewModel.userProfile!.data!.telegramHandle ??
+                                      'User',
+                              rank: viewModel.userRank!.data.rank,
+                            ),
+                      verticalSpace08,
+                      verticalSpace04,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          StreakRedeemCard(
+                            points: viewModel.streakPoints,
+                            isRedeemed: viewModel.isRedeemedToday,
+                            onRedeem: (tap) => viewModel.onClickStreakRedeem(),
+                            isBusy: viewModel.busy("redeemingStreak"),
+                          ),
+                          LevelCard(
+                              level: viewModel.userProfile!.data!.level ?? 1),
+                        ],
+                      ),
+                      verticalSpace08,
+                      verticalSpace16,
+                      Text(
+                        'Total Points Earned',
+                        style: TextStyles.titleSecondary
+                            .copyWith(color: kcSecondaryColor),
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            Assets.icons.iqCoin.path,
+                            width: 56.r,
+                          ),
+                          horizontalSpace04,
+                          Text(
+                            viewModel.totalEarned.toString(),
+                            style: TextStyle(
+                              color: kcSecondaryColor,
+                              fontSize: 44.r,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: FontFamily.sora,
+                              height: 1.8.h,
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpace08,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SectionCard(
+                            title: 'Data Sources',
+                            description:
+                                'Connect & disconnect your data sources',
+                            onTap: viewModel.navigateToSources,
+                          ),
+                          SectionCard(
+                            title: 'AI Persona',
+                            description:
+                                'Customise the tone and style of your AI.',
+                            onTap: viewModel.navigateToAiPersona,
+                          ),
+                        ],
+                      ),
+                      verticalSpace08,
+                      verticalSpace16,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Crypto News',
+                            style: TextStyles.titleSecondary
+                                .copyWith(color: kcSecondaryColor),
+                          ),
+                          TextButton(
+                            onPressed: viewModel.navigateToCryptoNews,
+                            child: Text(
+                              'View All',
+                              style: TextStyles.bodyPrimary
+                                  .copyWith(color: kcPrimaryColor),
+                            ),
+                          ),
+                        ],
+                      ),
+                      verticalSpace08,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          NewsCard(
+                            headline: viewModel.busy('fetchingNews')
+                                ? ''
+                                : viewModel.newsList![0].headline!,
+                            isLoading: viewModel.busy('fetchingNews'),
+                            onReadMore: () => viewModel.readMore(0),
+                          ),
+                          NewsCard(
+                            headline: viewModel.busy('fetchingNews')
+                                ? ''
+                                : viewModel.newsList![1].headline!,
+                            isLoading: viewModel.busy('fetchingNews'),
+                            onReadMore: () => viewModel.readMore(1),
+                          ),
+                        ],
+                      ),
+                      verticalSpace08,
+                      verticalSpace16,
+                      if (viewModel.xAuthTokenExists)
+                        ActionBanner(
+                          leading: Text(
+                            (viewModel.tweetCount ?? 0).toString(),
+                            style: TextStyles.titlePrimary
+                                .copyWith(color: kcPrimaryColor),
+                          ),
+                          text: Text(
+                            'Tweets Waiting for Your Review',
+                            style: TextStyles.titleSecondary
+                                .copyWith(color: kcSecondaryColor),
+                          ),
+                          buttonLabel: 'View All',
+                          onButtonPressed: viewModel.navigateToTweetPersona,
+                        )
+                      else
+                        ActionBanner(
+                          leading: Image.asset(
+                            Assets.icons.xLogo.path,
+                            height: 40.r,
+                            width: 40.r,
+                          ),
+                          text: Text(
+                            'Connect your X account to activate the AI Agent',
+                            style: TextStyles.bodySecondary
+                                .copyWith(color: kcSecondaryColor),
+                          ),
+                          buttonLabel: 'Connect',
+                          onButtonPressed: viewModel.navigateToSources,
+                        )
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
       ),
     );
   }
 
-  Widget getViewForIndex(int index) {
-    switch (index) {
-      case 0:
-        return const EarnView();
-      case 1:
-        return const AgentsView();
-      case 2:
-        return const JackpotView();
-    }
-    return const EarnView();
-  }
+  @override
+  HomeViewModel viewModelBuilder(BuildContext context) => HomeViewModel();
 }

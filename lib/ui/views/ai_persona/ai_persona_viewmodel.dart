@@ -16,22 +16,22 @@ class AiPersonaViewModel extends BaseViewModel {
   }
 
   // Slider values
-  double degenValue = 2;
+  double degenValue = 1;
   double humorValue = 1;
-  double storytellingValue = 3;
-  double optimismValue = 4;
-  double enthusiasmValue = 5;
+  double storytellingValue = 1;
+  double optimismValue = 1;
+  double enthusiasmValue = 1;
 
   TextEditingController accountsController = TextEditingController();
 
   List<String> selectedTopics = ["Bitcoin", "Decentralisation", "NFT’s"];
 
   Map<String, double> sliderValues = {
-    "Degen": 2,
+    "Degen": 1,
     "Humor": 1,
-    "Storytelling": 3,
-    "Optimism": 4,
-    "Enthusiasm": 5,
+    "Storytelling": 1,
+    "Optimism": 1,
+    "Enthusiasm": 1,
   };
 
   final List<Map<String, dynamic>> sliderList = [

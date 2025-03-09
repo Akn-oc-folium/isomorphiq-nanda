@@ -4,7 +4,7 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i18;
-import 'dart:ui' as _i21;
+import 'dart:ui' as _i22;
 
 import 'package:flutter/material.dart' as _i19;
 import 'package:isomorph_iq/models/app_connections_model.dart' as _i9;
@@ -21,14 +21,17 @@ import 'package:isomorph_iq/models/upsert_user_personality.dart' as _i16;
 import 'package:isomorph_iq/models/user_points.dart' as _i6;
 import 'package:isomorph_iq/models/user_rank_model.dart' as _i8;
 import 'package:isomorph_iq/services/api_client.dart' as _i3;
-import 'package:isomorph_iq/services/api_service.dart' as _i23;
-import 'package:isomorph_iq/services/authorization_service.dart' as _i25;
-import 'package:isomorph_iq/services/hive_service.dart' as _i24;
+import 'package:isomorph_iq/services/api_service.dart' as _i25;
+import 'package:isomorph_iq/services/authorization_service.dart' as _i27;
+import 'package:isomorph_iq/services/hive_service.dart' as _i26;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:stacked/stacked.dart' as _i2;
-import 'package:stacked_services/src/models/overlay_request.dart' as _i22;
-import 'package:stacked_services/src/models/overlay_response.dart' as _i20;
-import 'package:stacked_services/stacked_services.dart' as _i17;
+import 'package:stacked_services/src/bottom_sheet/bottom_sheet_service.dart'
+    as _i20;
+import 'package:stacked_services/src/dialog/dialog_service.dart' as _i23;
+import 'package:stacked_services/src/models/overlay_request.dart' as _i24;
+import 'package:stacked_services/src/models/overlay_response.dart' as _i21;
+import 'package:stacked_services/src/navigation/router_service.dart' as _i17;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -454,9 +457,9 @@ class MockRouterService extends _i1.Mock implements _i17.RouterService {
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockBottomSheetService extends _i1.Mock
-    implements _i17.BottomSheetService {
+    implements _i20.BottomSheetService {
   @override
-  void setCustomSheetBuilders(Map<dynamic, _i17.SheetBuilder>? builders) =>
+  void setCustomSheetBuilders(Map<dynamic, _i20.SheetBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #setCustomSheetBuilders,
@@ -466,7 +469,7 @@ class MockBottomSheetService extends _i1.Mock
       );
 
   @override
-  _i18.Future<_i20.SheetResponse<dynamic>?> showBottomSheet({
+  _i18.Future<_i21.SheetResponse<dynamic>?> showBottomSheet({
     required String? title,
     String? description,
     String? confirmButtonTitle = 'Ok',
@@ -499,13 +502,13 @@ class MockBottomSheetService extends _i1.Mock
             #elevation: elevation,
           },
         ),
-        returnValue: _i18.Future<_i20.SheetResponse<dynamic>?>.value(),
+        returnValue: _i18.Future<_i21.SheetResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i18.Future<_i20.SheetResponse<dynamic>?>.value(),
-      ) as _i18.Future<_i20.SheetResponse<dynamic>?>);
+            _i18.Future<_i21.SheetResponse<dynamic>?>.value(),
+      ) as _i18.Future<_i21.SheetResponse<dynamic>?>);
 
   @override
-  _i18.Future<_i20.SheetResponse<T>?> showCustomSheet<T, R>({
+  _i18.Future<_i21.SheetResponse<T>?> showCustomSheet<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -518,7 +521,7 @@ class MockBottomSheetService extends _i1.Mock
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i21.Color? barrierColor = const _i21.Color(2315255808),
+    _i22.Color? barrierColor = const _i22.Color(2315255808),
     double? elevation = 1.0,
     bool? barrierDismissible = true,
     bool? isScrollControlled = false,
@@ -562,12 +565,12 @@ class MockBottomSheetService extends _i1.Mock
             #useRootNavigator: useRootNavigator,
           },
         ),
-        returnValue: _i18.Future<_i20.SheetResponse<T>?>.value(),
-        returnValueForMissingStub: _i18.Future<_i20.SheetResponse<T>?>.value(),
-      ) as _i18.Future<_i20.SheetResponse<T>?>);
+        returnValue: _i18.Future<_i21.SheetResponse<T>?>.value(),
+        returnValueForMissingStub: _i18.Future<_i21.SheetResponse<T>?>.value(),
+      ) as _i18.Future<_i21.SheetResponse<T>?>);
 
   @override
-  void completeSheet(_i20.SheetResponse<dynamic>? response) =>
+  void completeSheet(_i21.SheetResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeSheet,
@@ -580,10 +583,10 @@ class MockBottomSheetService extends _i1.Mock
 /// A class which mocks [DialogService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockDialogService extends _i1.Mock implements _i17.DialogService {
+class MockDialogService extends _i1.Mock implements _i23.DialogService {
   @override
   void registerCustomDialogBuilders(
-          Map<dynamic, _i17.DialogBuilder>? builders) =>
+          Map<dynamic, _i23.DialogBuilder>? builders) =>
       super.noSuchMethod(
         Invocation.method(
           #registerCustomDialogBuilders,
@@ -597,8 +600,8 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
     required dynamic variant,
     required _i19.Widget Function(
       _i19.BuildContext,
-      _i22.DialogRequest<dynamic>,
-      dynamic Function(_i20.DialogResponse<dynamic>),
+      _i24.DialogRequest<dynamic>,
+      dynamic Function(_i21.DialogResponse<dynamic>),
     )? builder,
   }) =>
       super.noSuchMethod(
@@ -614,17 +617,17 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
       );
 
   @override
-  _i18.Future<_i20.DialogResponse<dynamic>?> showDialog({
+  _i18.Future<_i21.DialogResponse<dynamic>?> showDialog({
     String? title,
     String? description,
     String? cancelTitle,
-    _i21.Color? cancelTitleColor,
+    _i22.Color? cancelTitleColor,
     String? buttonTitle = 'Ok',
-    _i21.Color? buttonTitleColor,
+    _i22.Color? buttonTitleColor,
     bool? barrierDismissible = false,
     _i19.RouteSettings? routeSettings,
     _i19.GlobalKey<_i19.NavigatorState>? navigatorKey,
-    _i17.DialogPlatform? dialogPlatform,
+    _i23.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -643,13 +646,13 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i18.Future<_i20.DialogResponse<dynamic>?>.value(),
+        returnValue: _i18.Future<_i21.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i18.Future<_i20.DialogResponse<dynamic>?>.value(),
-      ) as _i18.Future<_i20.DialogResponse<dynamic>?>);
+            _i18.Future<_i21.DialogResponse<dynamic>?>.value(),
+      ) as _i18.Future<_i21.DialogResponse<dynamic>?>);
 
   @override
-  _i18.Future<_i20.DialogResponse<T>?> showCustomDialog<T, R>({
+  _i18.Future<_i21.DialogResponse<T>?> showCustomDialog<T, R>({
     dynamic variant,
     String? title,
     String? description,
@@ -662,7 +665,7 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
     bool? showIconInAdditionalButton = false,
     String? additionalButtonTitle,
     bool? takesInput = false,
-    _i21.Color? barrierColor = const _i21.Color(2315255808),
+    _i22.Color? barrierColor = const _i22.Color(2315255808),
     bool? barrierDismissible = false,
     String? barrierLabel = '',
     bool? useSafeArea = true,
@@ -700,21 +703,21 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
             #data: data,
           },
         ),
-        returnValue: _i18.Future<_i20.DialogResponse<T>?>.value(),
-        returnValueForMissingStub: _i18.Future<_i20.DialogResponse<T>?>.value(),
-      ) as _i18.Future<_i20.DialogResponse<T>?>);
+        returnValue: _i18.Future<_i21.DialogResponse<T>?>.value(),
+        returnValueForMissingStub: _i18.Future<_i21.DialogResponse<T>?>.value(),
+      ) as _i18.Future<_i21.DialogResponse<T>?>);
 
   @override
-  _i18.Future<_i20.DialogResponse<dynamic>?> showConfirmationDialog({
+  _i18.Future<_i21.DialogResponse<dynamic>?> showConfirmationDialog({
     String? title,
     String? description,
     String? cancelTitle = 'Cancel',
-    _i21.Color? cancelTitleColor,
+    _i22.Color? cancelTitleColor,
     String? confirmationTitle = 'Ok',
-    _i21.Color? confirmationTitleColor,
+    _i22.Color? confirmationTitleColor,
     bool? barrierDismissible = false,
     _i19.RouteSettings? routeSettings,
-    _i17.DialogPlatform? dialogPlatform,
+    _i23.DialogPlatform? dialogPlatform,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -732,13 +735,13 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
             #dialogPlatform: dialogPlatform,
           },
         ),
-        returnValue: _i18.Future<_i20.DialogResponse<dynamic>?>.value(),
+        returnValue: _i18.Future<_i21.DialogResponse<dynamic>?>.value(),
         returnValueForMissingStub:
-            _i18.Future<_i20.DialogResponse<dynamic>?>.value(),
-      ) as _i18.Future<_i20.DialogResponse<dynamic>?>);
+            _i18.Future<_i21.DialogResponse<dynamic>?>.value(),
+      ) as _i18.Future<_i21.DialogResponse<dynamic>?>);
 
   @override
-  void completeDialog(_i20.DialogResponse<dynamic>? response) =>
+  void completeDialog(_i21.DialogResponse<dynamic>? response) =>
       super.noSuchMethod(
         Invocation.method(
           #completeDialog,
@@ -751,7 +754,7 @@ class MockDialogService extends _i1.Mock implements _i17.DialogService {
 /// A class which mocks [ApiService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockApiService extends _i1.Mock implements _i23.ApiService {
+class MockApiService extends _i1.Mock implements _i25.ApiService {
   @override
   _i3.ApiClient get apiClient => (super.noSuchMethod(
         Invocation.getter(#apiClient),
@@ -803,7 +806,7 @@ class MockApiService extends _i1.Mock implements _i23.ApiService {
 
   @override
   _i18.Future<_i5.PostResponse> postUserPoints({
-    required String? username,
+    required String? userId,
     required int? points,
   }) =>
       (super.noSuchMethod(
@@ -811,7 +814,7 @@ class MockApiService extends _i1.Mock implements _i23.ApiService {
           #postUserPoints,
           [],
           {
-            #username: username,
+            #userId: userId,
             #points: points,
           },
         ),
@@ -821,7 +824,7 @@ class MockApiService extends _i1.Mock implements _i23.ApiService {
             #postUserPoints,
             [],
             {
-              #username: username,
+              #userId: userId,
               #points: points,
             },
           ),
@@ -833,7 +836,7 @@ class MockApiService extends _i1.Mock implements _i23.ApiService {
             #postUserPoints,
             [],
             {
-              #username: username,
+              #userId: userId,
               #points: points,
             },
           ),
@@ -1327,7 +1330,7 @@ class MockApiService extends _i1.Mock implements _i23.ApiService {
 /// A class which mocks [HiveService].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockHiveService extends _i1.Mock implements _i24.HiveService {
+class MockHiveService extends _i1.Mock implements _i26.HiveService {
   @override
   _i18.Future<void> storeData(
     String? boxName,
@@ -1365,6 +1368,23 @@ class MockHiveService extends _i1.Mock implements _i24.HiveService {
       ) as _i18.Future<dynamic>);
 
   @override
+  _i18.Future<void> removeData(
+    String? boxName,
+    String? key,
+  ) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removeData,
+          [
+            boxName,
+            key,
+          ],
+        ),
+        returnValue: _i18.Future<void>.value(),
+        returnValueForMissingStub: _i18.Future<void>.value(),
+      ) as _i18.Future<void>);
+
+  @override
   _i18.Future<bool> containsKey(
     String? boxName,
     String? key,
@@ -1390,15 +1410,25 @@ class MockHiveService extends _i1.Mock implements _i24.HiveService {
         returnValue: _i18.Future<void>.value(),
         returnValueForMissingStub: _i18.Future<void>.value(),
       ) as _i18.Future<void>);
+
+  @override
+  _i18.Future<void> clearAllData() => (super.noSuchMethod(
+        Invocation.method(
+          #clearAllData,
+          [],
+        ),
+        returnValue: _i18.Future<void>.value(),
+        returnValueForMissingStub: _i18.Future<void>.value(),
+      ) as _i18.Future<void>);
 }
 
 /// A class which mocks [AuthorizationService].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockAuthorizationService extends _i1.Mock
-    implements _i25.AuthorizationService {
+    implements _i27.AuthorizationService {
   @override
-  set authWindow(_i25.WindowInstance? _authWindow) => super.noSuchMethod(
+  set authWindow(_i27.WindowInstance? _authWindow) => super.noSuchMethod(
         Invocation.setter(
           #authWindow,
           _authWindow,

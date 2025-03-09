@@ -42,8 +42,7 @@ class GeneratedTweetSheetModel extends BaseViewModel {
       } else if (response.code == 500) {
         _dialogService.showDialog(
           title: 'Error',
-          description:
-              'You need to connect your X account to ${tweetStatus == TweetStatus.pending.name.toUpperCase() ? "save" : "post"} tweets.',
+          description: 'You need to connect your X account to post tweets.',
         );
       } else {
         _dialogService.showDialog(

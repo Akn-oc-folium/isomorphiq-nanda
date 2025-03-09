@@ -102,9 +102,9 @@ class PlayViewModel extends BaseViewModel {
         notifyListeners();
       } else {
         debugPrint("Game Over! Total Points: $totalPoints");
-        var username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
-        await _apiService.postUserPoints(
-            username: username, points: totalPoints);
+        var userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+        await _apiService.postUserPoints(userId: userId, points: totalPoints);
+        await _hiveService.storeData(kUserBox, kPlayActiveKey, false);
         openRewardsSheet();
       }
     }
@@ -117,8 +117,7 @@ class PlayViewModel extends BaseViewModel {
       title: 'You earned\n$totalPoints points!',
       description: 'Keep playing, climb the\nleaderboard, and win big!',
       imageUrl: Assets.images.earnedPoints.path,
-      mainButtonTitle: 'Find New Tasks',
-      secondaryButtonTitle: 'Check Leaderboard',
+      mainButtonTitle: 'Check Leaderboard',
       data: {
         'points': totalPoints,
       },

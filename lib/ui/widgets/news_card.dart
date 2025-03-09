@@ -54,6 +54,7 @@ class NewsCard extends StatelessWidget {
                 ),
                 verticalSpace04,
 
+                Spacer(),
                 // "Read More"
                 GestureDetector(
                   onTap: onReadMore,

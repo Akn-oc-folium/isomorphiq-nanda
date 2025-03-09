@@ -19,12 +19,12 @@ class TwitterPersonaViewModel extends BaseViewModel {
 
   TextEditingController topicController = TextEditingController();
 
-  Tweets? _tweets;
-  Tweets? get tweets => _tweets;
+  List<Tweet>? _tweets;
+  List<Tweet>? get tweets => _tweets;
 
   bool isFilterDropdownVisible = false;
 
-  List<String> filterOptions = ["Pending", "Approved", "Latest"];
+  List<String> filterOptions = ["Pending", "Approved"];
 
   String selectedFilter = "Pending";
 
@@ -47,26 +47,23 @@ class TwitterPersonaViewModel extends BaseViewModel {
   }
 
   Future<void> fetchTweets() async {
-    setBusyForObject(_tweets, true);
+    setBusyForObject("tweetsFetching", true);
     _userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      _tweets = null;
-      notifyListeners();
-      _tweets = await _apiService.getTweets(
+      final response = await _apiService.getTweets(
         userId: _userId!,
         tweetStatus: selectedFilter.toUpperCase(),
       );
-      if (_tweets != null &&
-          selectedFilter.toUpperCase() ==
-              TweetStatus.pending.name.toUpperCase()) {
-        await _hiveService.storeData(kUserBox, kTweetCountsKey,
-            _tweets!.data.isNotEmpty ? _tweets!.data.length : 0);
+      _tweets = response.data;
+
+      if (selectedFilter.toUpperCase() == "Pending") {
+        await _hiveService.storeData(
+            kUserBox, kTweetCountsKey, _tweets != null ? _tweets!.length : 0);
       }
-      notifyListeners();
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {
-      setBusyForObject(_tweets, false);
+      setBusyForObject("tweetsFetching", false);
     }
   }
 
@@ -75,7 +72,7 @@ class TwitterPersonaViewModel extends BaseViewModel {
     if (topicController.text.isNotEmpty) {
       try {
         final response = await _apiService.postGenerateTweet(
-          userId: '5683a938-9f01-4ff7-9318-00eea726a7cd',
+          userId: _userId!,
           topic: topicController.text.trim(),
         );
 
@@ -109,10 +106,7 @@ class TwitterPersonaViewModel extends BaseViewModel {
     );
     if (response?.confirmed ?? false) {
       await fetchTweets();
-    } else {
-      debugPrint(
-          "Bottom sheet closed without confirmation, still refreshing tweets.");
-      await fetchTweets();
+      // rebuildUi();
     }
   }
 
@@ -124,18 +118,32 @@ class TwitterPersonaViewModel extends BaseViewModel {
         tweetId: tweetId,
         tweetStatus: tweetStatus,
       );
-      if ((tweetStatus == TweetStatus.rejected.name.toUpperCase() &&
-              response.code == 200) ||
-          (tweetStatus == TweetStatus.approved.name.toUpperCase() &&
-              response.code == 200)) {
-        int newCount =
-            await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
-        await _hiveService.storeData(kUserBox, kTweetCountsKey, newCount - 1);
+      if (response.code == 200) {
+        if (tweetStatus == TweetStatus.rejected.name.toUpperCase() ||
+            tweetStatus == TweetStatus.approved.name.toUpperCase()) {
+          int newCount =
+              await _hiveService.retrieveData(kUserBox, kTweetCountsKey);
+          await _hiveService.storeData(kUserBox, kTweetCountsKey, newCount - 1);
+        }
 
-        _tweets?.data.removeWhere((tweet) => tweet.id == tweetId);
-        notifyListeners();
+        _tweets?.removeWhere((tweet) => tweet.id == tweetId);
+        _tweets!.isEmpty ? _tweets = null : _tweets;
+      } else if (response.code == 429) {
+        _dialogService.showDialog(
+          title: 'Error',
+          description: 'You have reached the limit of posting tweets per day.',
+        );
+      } else if (response.code == 500) {
+        _dialogService.showDialog(
+          title: 'Error',
+          description: 'You need to connect your X account to post tweets.',
+        );
+      } else {
+        _dialogService.showDialog(
+          title: 'Error',
+          description: 'Could not save tweet. Please try again.',
+        );
       }
-      await fetchTweets();
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {

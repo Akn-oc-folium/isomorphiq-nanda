@@ -11,12 +11,14 @@ class PrimaryButton extends StatelessWidget {
   final bool isSmall;
   final bool isBusy;
   final double? width;
+  final int? points;
 
   const PrimaryButton({
     super.key,
     required this.text,
     required this.onPressed,
     this.isBusy = false,
+    this.points,
   })  : icon = null,
         disabledColor = null,
         isSmall = false,
@@ -30,7 +32,8 @@ class PrimaryButton extends StatelessWidget {
     this.isBusy = false,
   })  : text = null,
         isSmall = false,
-        width = null;
+        width = null,
+        points = null;
 
   const PrimaryButton.small({
     super.key,
@@ -40,7 +43,8 @@ class PrimaryButton extends StatelessWidget {
     this.width,
   })  : icon = null,
         disabledColor = null,
-        isSmall = true;
+        isSmall = true,
+        points = null;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +56,7 @@ class PrimaryButton extends StatelessWidget {
       decoration: onPressed == null
           ? null
           : BoxDecoration(
-              // Match the button’s corners so the shadow lines up
+              // Match the button's corners so the shadow lines up
               borderRadius: borderRadius,
               boxShadow: onPressed == null
                   ? null
@@ -79,7 +83,7 @@ class PrimaryButton extends StatelessWidget {
               ? const EdgeInsets.all(14).r
               : isSmall
                   ? EdgeInsets.symmetric(vertical: 10.h, horizontal: 4.h)
-                  : EdgeInsets.symmetric(vertical: 16.h),
+                  : EdgeInsets.symmetric(vertical: 10.h),
         ),
         onPressed: onPressed,
         child: isBusy
@@ -88,9 +92,7 @@ class PrimaryButton extends StatelessWidget {
                   height: 20.r,
                   width: 20.r,
                   child: CircularProgressIndicator.adaptive(
-                    backgroundColor: isBusy
-                        ? kcWhite
-                        : kcPrimaryColor.withValues(alpha: 0.5),
+                    backgroundColor: Colors.transparent,
                     strokeWidth: 2.0.w,
                     valueColor: const AlwaysStoppedAnimation<Color>(
                       kcWhite,
@@ -98,13 +100,31 @@ class PrimaryButton extends StatelessWidget {
                   ),
                 ),
               )
-            : icon ??
-                Text(
-                  text!,
-                  style: isSmall
-                      ? TextStyles.buttonText.copyWith(height: 1.125.h)
-                      : TextStyles.buttonText,
-                ),
+            : icon != null
+                ? icon!
+                : points != null
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            text!,
+                            style: isSmall
+                                ? TextStyles.buttonText
+                                    .copyWith(height: 1.125.h)
+                                : TextStyles.buttonText,
+                          ),
+                          Text(
+                            '$points Credits',
+                            style: TextStyles.caption,
+                          ),
+                        ],
+                      )
+                    : Text(
+                        text!,
+                        style: isSmall
+                            ? TextStyles.buttonText.copyWith(height: 1.125.h)
+                            : TextStyles.buttonText,
+                      ),
       ),
     );
   }

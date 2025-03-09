@@ -174,9 +174,9 @@ class PlayViewMobile extends StackedView<PlayViewModel> {
   @override
   void onViewModelReady(PlayViewModel viewModel) {
     viewModel.generateChests();
-    Future.delayed(Duration(seconds: 1), () {
-      viewModel.playInstructions();
-    });
+    // Future.delayed(Duration(seconds: 1), () {
+    //   viewModel.playInstructions();
+    // });
     super.onViewModelReady(viewModel);
   }
 }

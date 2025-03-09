@@ -86,6 +86,7 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
                     onPressed: () => viewModel.sendGeneratedTweet(
                         TweetStatus.approved.name.toUpperCase()),
                     isBusy: viewModel.busy('tweetNow'),
+                    points: 100,
                   ),
                 ),
               ],

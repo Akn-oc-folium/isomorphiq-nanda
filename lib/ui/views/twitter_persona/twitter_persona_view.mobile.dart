@@ -20,6 +20,7 @@ class TwitterPersonaViewMobile extends StatelessWidget {
     return ViewModelBuilder<TwitterPersonaViewModel>.reactive(
       viewModelBuilder: () => TwitterPersonaViewModel(),
       onViewModelReady: (viewModel) => viewModel.fetchTweets(),
+      createNewViewModelOnInsert: true,
       builder: (context, viewModel, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -34,7 +35,7 @@ class TwitterPersonaViewMobile extends StatelessWidget {
             //     ),
             //     iconSize: 48.r,
             //   )
-            // ],   
+            // ],
           ),
           body: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24).w,
@@ -96,7 +97,7 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                     ),
                     verticalSpace04,
                     verticalSpace16,
-                    if (viewModel.busy(viewModel.tweets)) ...[
+                    if (viewModel.busy("tweetsFetching")) ...[
                       Expanded(
                         child: Center(
                           child: CircularProgressIndicator(
@@ -144,9 +145,10 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                       ] else ...[
                         Expanded(
                           child: ListView.builder(
-                            itemCount: viewModel.tweets!.data.length,
+                            physics: ClampingScrollPhysics(),
+                            itemCount: viewModel.tweets!.length,
                             itemBuilder: (context, index) {
-                              final tweet = viewModel.tweets!.data[index];
+                              final tweet = viewModel.tweets![index];
                               return TweetCard(tweet: tweet);
                             },
                           ),
@@ -157,17 +159,18 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                 ),
                 Positioned(
                   right: 0,
-                  top: 300,
+                  top: 300.h,
                   child: viewModel.isFilterDropdownVisible
                       ? Material(
                           elevation: 4,
                           borderRadius: BorderRadius.circular(8),
                           child: Container(
-                            width: 150,
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
+                            width: 150.w,
+                            padding: const EdgeInsets.symmetric(
+                                    horizontal: 12, vertical: 8)
+                                .r,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
+                              borderRadius: BorderRadius.circular(8).r,
                               color: Colors.white,
                             ),
                             child: ListView.builder(

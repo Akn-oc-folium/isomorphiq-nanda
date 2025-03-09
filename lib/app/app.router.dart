@@ -13,9 +13,9 @@ import '../ui/views/agents/agents_view.dart' as _i8;
 import '../ui/views/ai_persona/ai_persona_view.dart' as _i12;
 import '../ui/views/choose_plan/choose_plan_view.dart' as _i11;
 import '../ui/views/crypto_news/crypto_news_view.dart' as _i10;
-import '../ui/views/earn/earn_view.dart' as _i5;
-import '../ui/views/home/home_view.dart' as _i2;
+import '../ui/views/home/home_view.dart' as _i5;
 import '../ui/views/jackpot/jackpot_view.dart' as _i6;
+import '../ui/views/main/main_view.dart' as _i2;
 import '../ui/views/onboarding/onboarding_view.dart' as _i3;
 import '../ui/views/play/play_view.dart' as _i7;
 import '../ui/views/sources/sources_view.dart' as _i4;
@@ -41,10 +41,10 @@ class StackedRouterWeb extends _i16.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    HomeViewRoute.name: (routeData) {
+    MainViewRoute.name: (routeData) {
       return _i16.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i2.HomeView(),
+        child: const _i2.MainView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -65,10 +65,10 @@ class StackedRouterWeb extends _i16.RootStackRouter {
         barrierDismissible: false,
       );
     },
-    EarnViewRoute.name: (routeData) {
+    HomeViewRoute.name: (routeData) {
       return _i16.CustomPage<dynamic>(
         routeData: routeData,
-        child: const _i5.EarnView(),
+        child: const _i5.HomeView(),
         opaque: true,
         barrierDismissible: false,
       );
@@ -154,8 +154,8 @@ class StackedRouterWeb extends _i16.RootStackRouter {
           path: '/',
         ),
         _i16.RouteConfig(
-          HomeViewRoute.name,
-          path: '/home-view',
+          MainViewRoute.name,
+          path: '/main-view',
         ),
         _i16.RouteConfig(
           OnboardingViewRoute.name,
@@ -166,8 +166,8 @@ class StackedRouterWeb extends _i16.RootStackRouter {
           path: '/sources-view',
         ),
         _i16.RouteConfig(
-          EarnViewRoute.name,
-          path: '/earn-view',
+          HomeViewRoute.name,
+          path: '/home-view',
         ),
         _i16.RouteConfig(
           JackpotViewRoute.name,
@@ -227,15 +227,15 @@ class StartupViewRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.HomeView]
-class HomeViewRoute extends _i16.PageRouteInfo<void> {
-  const HomeViewRoute()
+/// [_i2.MainView]
+class MainViewRoute extends _i16.PageRouteInfo<void> {
+  const MainViewRoute()
       : super(
-          HomeViewRoute.name,
-          path: '/home-view',
+          MainViewRoute.name,
+          path: '/main-view',
         );
 
-  static const String name = 'HomeView';
+  static const String name = 'MainView';
 }
 
 /// generated route for
@@ -263,15 +263,15 @@ class SourcesViewRoute extends _i16.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i5.EarnView]
-class EarnViewRoute extends _i16.PageRouteInfo<void> {
-  const EarnViewRoute()
+/// [_i5.HomeView]
+class HomeViewRoute extends _i16.PageRouteInfo<void> {
+  const HomeViewRoute()
       : super(
-          EarnViewRoute.name,
-          path: '/earn-view',
+          HomeViewRoute.name,
+          path: '/home-view',
         );
 
-  static const String name = 'EarnView';
+  static const String name = 'HomeView';
 }
 
 /// generated route for
@@ -391,10 +391,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> navigateToHomeView(
+  Future<dynamic> navigateToMainView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const HomeViewRoute(),
+      const MainViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -415,10 +415,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> navigateToEarnView(
+  Future<dynamic> navigateToHomeView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return navigateTo(
-      const EarnViewRoute(),
+      const HomeViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -503,10 +503,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithHomeView(
+  Future<dynamic> replaceWithMainView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const HomeViewRoute(),
+      const MainViewRoute(),
       onFailure: onFailure,
     );
   }
@@ -527,10 +527,10 @@ extension RouterStateExtension on _i15.RouterService {
     );
   }
 
-  Future<dynamic> replaceWithEarnView(
+  Future<dynamic> replaceWithHomeView(
       {void Function(_i16.NavigationFailure)? onFailure}) async {
     return replaceWith(
-      const EarnViewRoute(),
+      const HomeViewRoute(),
       onFailure: onFailure,
     );
   }

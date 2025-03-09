@@ -89,6 +89,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               isBusy:
                                   viewModel.loadingState[AuthProvider.google] ??
                                       false,
+                              points: 50,
                             ),
                             ConnectCard(
                               title: 'Telegram',
@@ -110,6 +111,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                                       viewModel.appConnections!.data!.twitter,
                               isBusy: viewModel.loadingState[AuthProvider.x] ??
                                   false,
+                              points: 50,
                             ),
                             ConnectCard(
                               title: 'Discord',
@@ -122,6 +124,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               isBusy: viewModel
                                       .loadingState[AuthProvider.discord] ??
                                   false,
+                              points: 50,
                             ),
                             ConnectCard(
                               title: 'Facebook',
@@ -134,6 +137,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               isBusy: viewModel
                                       .loadingState[AuthProvider.facebook] ??
                                   false,
+                              points: 50,
                             ),
                             ConnectCard(
                               title: 'Spotify',
@@ -146,6 +150,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               isBusy: viewModel
                                       .loadingState[AuthProvider.spotify] ??
                                   false,
+                              points: 50,
                             ),
                             ConnectCard(
                               title: 'Reddit',
@@ -158,6 +163,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               isBusy:
                                   viewModel.loadingState[AuthProvider.reddit] ??
                                       false,
+                              points: 50,
                             ),
                           ],
                         ),

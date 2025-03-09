@@ -9,40 +9,62 @@ import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:telegram_web_app/telegram_web_app.dart';
 
 class JackpotViewModel extends BaseViewModel {
-  final TelegramWebApp telegramWebApp = TelegramWebApp.instance;
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
   final _routerService = locator<RouterService>();
 
-  final bool _tgInitialized = false;
-  bool get tgInitialized => _tgInitialized;
-
   String? _username;
-  String get username => _username!;
+  String get username => _username ?? '';
 
   int? _userLevel;
   int? get userLevel => _userLevel;
 
+  bool _playActive = false;
+  bool get playActive => _playActive;
+
   Leaderboard? _leaderboard;
   Leaderboard get leaderboard => _leaderboard!;
 
-  Future<void> fetchLeaderboard() async {
+  Future<void> refreshData() async {
     setBusy(true);
-    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
-    _userLevel = await _hiveService.retrieveData(kUserBox, kUserLevelKey);
     try {
-      _leaderboard = await _apiService.getLeaderboard();
+      await _fetchLeaderboard();
     } catch (e) {
-      debugPrint('Error fetching dashboard: $e');
+      debugPrint('Error fetching leaderboard: $e');
+    } finally {
+      setBusy(false);
     }
-    setBusy(false);
   }
 
-  Future<void> initState() async {
-    await fetchLeaderboard();
+  Future<void> _fetchLeaderboard() async {
+    setBusy(true);
+    try {
+      // Retrieve username and stored user level.
+      _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
+      _userLevel = await _hiveService.retrieveData(kUserBox, kUserLevelKey);
+
+      debugPrint("User level: $_userLevel");
+
+      // Read the play-active flag if the user level indicates eligibility.
+      if (_userLevel != null && _userLevel! > 1) {
+        _playActive =
+            await _hiveService.retrieveData(kUserBox, kPlayActiveKey) ?? false;
+      } else {
+        _playActive = false;
+      }
+
+      _leaderboard = await _apiService.getLeaderboard();
+    } catch (e) {
+      debugPrint('Error fetching leaderboard: $e');
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  Future<void> initialise() async {
+    await _fetchLeaderboard();
   }
 
   void enterPlayMode() {
