@@ -48,7 +48,7 @@ class PlayViewModel extends BaseViewModel {
               "You’ll play 5 rounds per game – each round, pick 1 of 5 cards to find chests."
         },
         {
-          "icon": Assets.icons.dollarCoin.path,
+          "icon": Assets.icons.trophy.path,
           "content":
               "Common, Rare, and Legendary chests hold different rewards!"
         },

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
+import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
+import 'package:isomorph_iq/ui/widgets/buttons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -23,9 +25,9 @@ class GameInstructionSheet extends StackedView<GameInstructionSheetModel> {
     Widget? child,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 16),
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: kcPrimaryColorLight,
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(10),
           topRight: Radius.circular(10),
@@ -35,20 +37,46 @@ class GameInstructionSheet extends StackedView<GameInstructionSheetModel> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(
-            request.title ?? 'Hello Stacked Sheet!!',
-            style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w900),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(request.title ?? 'Hello Stacked Sheet!!',
+                  style:
+                      TextStyles.titlePrimary.copyWith(color: kcPrimaryColor)),
+              GestureDetector(
+                onTap: () => completer!(SheetResponse(confirmed: false)),
+                child: Icon(Icons.close, size: 24),
+              ),
+            ],
           ),
-          if (request.description != null) ...[
-            verticalSpace08,
-            Text(
-              request.description!,
-              style: const TextStyle(fontSize: 14, color: kcSecondaryColor),
-              maxLines: 3,
-              softWrap: true,
-            ),
+          if (request.data != null) ...[
+            ...(request.data as List<Map<String, String>>).map((item) => Column(
+                  children: [
+                    verticalSpace16,
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Image.asset(
+                          item["icon"]!,
+                          height: 40,
+                          width: 40,
+                        ),
+                        horizontalSpace08,
+                        Expanded(
+                          child: Text(
+                            item["content"]!,
+                            style: TextStyles.titleTertiary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                )),
           ],
           verticalSpace16,
+          PrimaryButton(
+              text: "Continue",
+              onPressed: () => completer!(SheetResponse(confirmed: false)))
         ],
       ),
     );
