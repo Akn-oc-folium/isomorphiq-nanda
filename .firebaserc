@@ -1,7 +1,8 @@
 {
   "projects": {
     "default": "isomorph-iq",
-    "build/web": "isomorph-iq"
+    "build/web": "isomorph-iq",
+    "development": "isomorph-iq"
   },
   "targets": {},
   "etags": {}
