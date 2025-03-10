@@ -25,7 +25,7 @@ class TweetSettingsViewModel extends BaseViewModel {
     sliderValues[title] = value;
     notifyListeners();
 
-    print('$title; $value');
+    debugPrint('$title; $value');
   }
 
   void toggleRandomize(bool value) {

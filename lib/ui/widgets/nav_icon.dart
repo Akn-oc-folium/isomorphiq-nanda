@@ -21,7 +21,7 @@ class NavImage extends NavAsset {
 class CustomNavIcon extends StatelessWidget {
   final NavAsset asset;
 
-  const CustomNavIcon({Key? key, required this.asset}) : super(key: key);
+  const CustomNavIcon({super.key, required this.asset});
 
   @override
   Widget build(BuildContext context) {
