@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
@@ -13,10 +15,10 @@ class RewardsSheet extends StackedView<RewardsSheetModel> {
   final Function(SheetResponse response)? completer;
   final SheetRequest request;
   const RewardsSheet({
-    Key? key,
+    super.key,
     required this.completer,
     required this.request,
-  }) : super(key: key);
+  });
 
   @override
   Widget builder(
@@ -37,16 +39,16 @@ class RewardsSheet extends StackedView<RewardsSheetModel> {
         crossAxisAlignment: CrossAxisAlignment.end,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // GestureDetector(
-          //   onTap: () => completer!(SheetResponse()),
-          //   child: SvgPicture.asset(
-          //     Assets.icons.close,
-          //     width: 24,
-          //     height: 24,
-          //     colorFilter:
-          //         const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
-          //   ),
-          // ),
+          GestureDetector(
+            onTap: () => completer!(SheetResponse()),
+            child: SvgPicture.asset(
+              Assets.icons.close,
+              width: 24,
+              height: 24,
+              colorFilter:
+                  const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
+            ),
+          ),
           Column(
             children: [
               Image.asset(
@@ -75,20 +77,11 @@ class RewardsSheet extends StackedView<RewardsSheetModel> {
                 ),
               ],
               verticalSpace16,
-              SecondaryButton(
-                text: request.secondaryButtonTitle!,
-                onPressed: () {
-                  // viewModel.navigateToJackpot();
-                  completer!(SheetResponse(confirmed: true));
-                },
-              ),
-              verticalSpace16,
               PrimaryButton(
                 text: request.mainButtonTitle!,
                 onPressed: () {
-                  // viewModel.navigateToSources(
-                  //     totalPoints: request.data['points']);
                   completer!(SheetResponse(confirmed: true));
+                  viewModel.navigateToJackpot();
                 },
               ),
             ],

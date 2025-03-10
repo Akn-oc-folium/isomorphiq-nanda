@@ -1,24 +1,52 @@
 import 'package:hive/hive.dart';
 
 class HiveService {
+  // Cache opened boxes to avoid reopening them repeatedly
+  final Map<String, Box> _openBoxes = {};
+
+  // Open a box (or return the already opened one)
+  Future<Box> _getBox(String boxName) async {
+    if (!_openBoxes.containsKey(boxName)) {
+      _openBoxes[boxName] = await Hive.openBox(boxName);
+    }
+    return _openBoxes[boxName]!;
+  }
+
+  // Store data in a box
   Future<void> storeData(String boxName, String key, dynamic value) async {
-    var box = await Hive.openBox(boxName);
+    final box = await _getBox(boxName);
     await box.put(key, value);
-    await box.close();
   }
 
+  // Retrieve data from a box
   Future<dynamic> retrieveData(String boxName, String key) async {
-    var box = await Hive.openBox(boxName);
-    var value = box.get(key);
-    await box.close();
-    return value;
+    final box = await _getBox(boxName);
+    return box.get(key);
   }
 
-  // Function to check if the key exists
+  // Delete data from a box
+  Future<void> removeData(String boxName, String key) async {
+    final box = await _getBox(boxName);
+    await box.delete(key);
+  }
+
+  // Check if a key exists in a box
   Future<bool> containsKey(String boxName, String key) async {
-    var box = await Hive.openBox(boxName);
-    bool exists = box.containsKey(key);
-    await box.close();
-    return exists;
+    final box = await _getBox(boxName);
+    return box.containsKey(key);
+  }
+
+  // Close all open boxes (call this when the app is closing)
+  Future<void> closeAllBoxes() async {
+    for (var box in _openBoxes.values) {
+      await box.close();
+    }
+    _openBoxes.clear();
+  }
+
+  Future<void> clearAllData() async {
+    for (var box in _openBoxes.values) {
+      await box.clear(); // Clears all key-value pairs in the box
+    }
   }
 }

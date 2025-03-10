@@ -11,8 +11,6 @@ import 'package:isomorph_iq/firebase_options.dart';
 import 'package:isomorph_iq/ui/common/app_themes.dart';
 import 'package:telegram_web_app/telegram_web_app.dart';
 import 'package:url_strategy/url_strategy.dart';
-import 'package:webview_flutter_platform_interface/webview_flutter_platform_interface.dart';
-import 'package:webview_flutter_web/webview_flutter_web.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +32,6 @@ Future<void> main() async {
     return;
   }
 
-  WebViewPlatform.instance = WebWebViewPlatform();
   setPathUrlStrategy();
   await setupLocator(stackedRouter: stackedRouter);
   await Hive.initFlutter();
@@ -51,6 +48,7 @@ class MainApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(360, 706),
       builder: (contet, _) => MaterialApp.router(
+        scrollBehavior: MaterialScrollBehavior(),
         theme: AppThemes.getTheme(),
         routerDelegate: stackedRouter.delegate(),
         routeInformationParser: stackedRouter.defaultRouteParser(),

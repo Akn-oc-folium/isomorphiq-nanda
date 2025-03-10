@@ -34,6 +34,33 @@ class PlayViewModel extends BaseViewModel {
     kLEGENDARY: 2000,
   };
 
+  void playInstructions() {
+    _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.gameInstruction,
+      barrierDismissible: false,
+      title: 'Ready to Play?',
+      mainButtonTitle: 'Find New Tasks',
+      isScrollControlled: true,
+      data: [
+        {
+          "icon": Assets.icons.dollarCoin.path,
+          "content":
+              "You’ll play 5 rounds per game – each round, pick 1 of 5 cards to find chests."
+        },
+        {
+          "icon": Assets.icons.trophy.path,
+          "content":
+              "Common, Rare, and Legendary chests hold different rewards!"
+        },
+        {
+          "icon": Assets.icons.dollarCoin.path,
+          "content":
+              "After 5 rounds, the total points from all chests will be added to your balance."
+        },
+      ],
+    );
+  }
+
   // Generate chests based on level
   void generateChests() {
     chestPool.clear();
@@ -75,9 +102,9 @@ class PlayViewModel extends BaseViewModel {
         notifyListeners();
       } else {
         debugPrint("Game Over! Total Points: $totalPoints");
-        var username = await _hiveService.retrieveData(kUserBox, usernameKey);
-        await _apiService.postUserPoints(
-            username: username, points: totalPoints);
+        var userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
+        await _apiService.postUserPoints(userId: userId, points: totalPoints);
+        await _hiveService.storeData(kUserBox, kPlayActiveKey, false);
         openRewardsSheet();
       }
     }
@@ -90,8 +117,7 @@ class PlayViewModel extends BaseViewModel {
       title: 'You earned\n$totalPoints points!',
       description: 'Keep playing, climb the\nleaderboard, and win big!',
       imageUrl: Assets.images.earnedPoints.path,
-      mainButtonTitle: 'Find New Tasks',
-      secondaryButtonTitle: 'Check Leaderboard',
+      mainButtonTitle: 'Check Leaderboard',
       data: {
         'points': totalPoints,
       },

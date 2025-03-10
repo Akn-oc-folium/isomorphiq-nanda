@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:isomorph_iq/gen/fonts.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
@@ -10,6 +12,8 @@ class ConnectCard extends StatelessWidget {
   final VoidCallback? onConnect;
   final bool? isConnected;
   final bool? isComingSoon;
+  final bool isBusy;
+  final int? points;
 
   const ConnectCard({
     super.key,
@@ -17,6 +21,8 @@ class ConnectCard extends StatelessWidget {
     required this.title,
     required this.onConnect,
     this.isConnected = false,
+    this.isBusy = false,
+    this.points,
   }) : isComingSoon = false;
 
   const ConnectCard.comingSoon({
@@ -25,15 +31,17 @@ class ConnectCard extends StatelessWidget {
     required this.title,
     required this.onConnect,
     this.isConnected = false,
-  }) : isComingSoon = true;
+  })  : isComingSoon = true,
+        isBusy = false,
+        points = null;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12),
+      padding: const EdgeInsets.all(12).r,
       decoration: BoxDecoration(
         color: kcPrimaryColorLight, // Light background color
-        borderRadius: BorderRadius.circular(22),
+        borderRadius: BorderRadius.circular(24).r,
         boxShadow: const [
           BoxShadow(
             color: kcStrokePrimary,
@@ -49,18 +57,29 @@ class ConnectCard extends StatelessWidget {
           // Image
           Image.asset(
             imagePath,
-            width: 40,
-            height: 40,
+            width: 40.r,
+            height: 40.r,
             fit: BoxFit.contain,
           ),
-          verticalSpace(12),
+          verticalSpace(6),
           // Title Text
           Text(
             title,
             style: TextStyles.buttonText.copyWith(
-              fontSize: 18,
-              height: 1.11,
+              fontSize: 18.sp,
+              height: 1.11.h,
               color: kcSecondaryColor,
+            ),
+          ),
+          verticalSpace04,
+          Text(
+            '+${points ?? 0} Points',
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.w400,
+              fontFamily: FontFamily.sora,
+              height: 1.25.h,
+              letterSpacing: 0,
             ),
           ),
           const Spacer(),
@@ -79,6 +98,7 @@ class ConnectCard extends StatelessWidget {
             PrimaryButton.small(
               text: 'Connect',
               onPressed: onConnect,
+              isBusy: isBusy,
             ),
         ],
       ),

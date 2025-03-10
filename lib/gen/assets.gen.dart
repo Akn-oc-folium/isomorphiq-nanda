@@ -31,8 +31,14 @@ class $AssetsGifsGen {
 class $AssetsIconsGen {
   const $AssetsIconsGen();
 
+  /// File path: assets/icons/ai-persona.svg
+  String get aiPersona => 'assets/icons/ai-persona.svg';
+
   /// File path: assets/icons/arrow-right.svg
   String get arrowRight => 'assets/icons/arrow-right.svg';
+
+  /// File path: assets/icons/arrow_back.svg
+  String get arrowBack => 'assets/icons/arrow_back.svg';
 
   /// File path: assets/icons/arrow_top.svg
   String get arrowTop => 'assets/icons/arrow_top.svg';
@@ -47,9 +53,6 @@ class $AssetsIconsGen {
   /// File path: assets/icons/binance-logo.png
   AssetGenImage get binanceLogo =>
       const AssetGenImage('assets/icons/binance-logo.png');
-
-  /// File path: assets/icons/book.svg
-  String get book => 'assets/icons/book.svg';
 
   /// File path: assets/icons/check-box-filled.svg
   String get checkBoxFilled => 'assets/icons/check-box-filled.svg';
@@ -74,6 +77,10 @@ class $AssetsIconsGen {
   AssetGenImage get dollarCoin =>
       const AssetGenImage('assets/icons/dollar-coin.png');
 
+  /// File path: assets/icons/facebook-logo.png
+  AssetGenImage get facebookLogo =>
+      const AssetGenImage('assets/icons/facebook-logo.png');
+
   /// File path: assets/icons/fire-fill.png
   AssetGenImage get fireFill =>
       const AssetGenImage('assets/icons/fire-fill.png');
@@ -86,8 +93,17 @@ class $AssetsIconsGen {
   AssetGenImage get googleLogo =>
       const AssetGenImage('assets/icons/google-logo.png');
 
+  /// File path: assets/icons/home.svg
+  String get home => 'assets/icons/home.svg';
+
+  /// File path: assets/icons/iq-coin.png
+  AssetGenImage get iqCoin => const AssetGenImage('assets/icons/iq-coin.png');
+
   /// File path: assets/icons/jackpot.svg
   String get jackpot => 'assets/icons/jackpot.svg';
+
+  /// File path: assets/icons/lock.svg
+  String get lock => 'assets/icons/lock.svg';
 
   /// File path: assets/icons/logo-static.png
   AssetGenImage get logoStatic =>
@@ -97,6 +113,26 @@ class $AssetsIconsGen {
   AssetGenImage get metamaskLogo =>
       const AssetGenImage('assets/icons/metamask-logo.png');
 
+  /// File path: assets/icons/news.svg
+  String get news => 'assets/icons/news.svg';
+
+  /// File path: assets/icons/reddit-logo.png
+  AssetGenImage get redditLogo =>
+      const AssetGenImage('assets/icons/reddit-logo.png');
+
+  /// File path: assets/icons/save.svg
+  String get save => 'assets/icons/save.svg';
+
+  /// File path: assets/icons/settings-outline.svg
+  String get settingsOutline => 'assets/icons/settings-outline.svg';
+
+  /// File path: assets/icons/sort.svg
+  String get sort => 'assets/icons/sort.svg';
+
+  /// File path: assets/icons/spotify-logo.png
+  AssetGenImage get spotifyLogo =>
+      const AssetGenImage('assets/icons/spotify-logo.png');
+
   /// File path: assets/icons/star-level.png
   AssetGenImage get starLevel =>
       const AssetGenImage('assets/icons/star-level.png');
@@ -105,6 +141,9 @@ class $AssetsIconsGen {
   AssetGenImage get telegramLogo =>
       const AssetGenImage('assets/icons/telegram-logo.png');
 
+  /// File path: assets/icons/trash.svg
+  String get trash => 'assets/icons/trash.svg';
+
   /// File path: assets/icons/trophy.png
   AssetGenImage get trophy => const AssetGenImage('assets/icons/trophy.png');
 
@@ -112,24 +151,25 @@ class $AssetsIconsGen {
   AssetGenImage get uniswapLogo =>
       const AssetGenImage('assets/icons/uniswap-logo.png');
 
-  /// File path: assets/icons/wallet.svg
-  String get wallet => 'assets/icons/wallet.svg';
-
   /// File path: assets/icons/warpcast-logo.png
   AssetGenImage get warpcastLogo =>
       const AssetGenImage('assets/icons/warpcast-logo.png');
+
+  /// File path: assets/icons/x-logo-outline.svg
+  String get xLogoOutline => 'assets/icons/x-logo-outline.svg';
 
   /// File path: assets/icons/x-logo.png
   AssetGenImage get xLogo => const AssetGenImage('assets/icons/x-logo.png');
 
   /// List of all assets
   List<dynamic> get values => [
+        aiPersona,
         arrowRight,
+        arrowBack,
         arrowTop,
         atTheRate,
         avatar,
         binanceLogo,
-        book,
         checkBoxFilled,
         checkBoxOutline,
         checkMark,
@@ -137,18 +177,29 @@ class $AssetsIconsGen {
         coin,
         discordLogo,
         dollarCoin,
+        facebookLogo,
         fireFill,
         foodOrder,
         googleLogo,
+        home,
+        iqCoin,
         jackpot,
+        lock,
         logoStatic,
         metamaskLogo,
+        news,
+        redditLogo,
+        save,
+        settingsOutline,
+        sort,
+        spotifyLogo,
         starLevel,
         telegramLogo,
+        trash,
         trophy,
         uniswapLogo,
-        wallet,
         warpcastLogo,
+        xLogoOutline,
         xLogo
       ];
 }
@@ -232,7 +283,7 @@ class $AssetsImagesGen {
 }
 
 class Assets {
-  Assets._();
+  const Assets._();
 
   static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsGifsGen gifs = $AssetsGifsGen();
@@ -273,7 +324,7 @@ class AssetGenImage {
     bool gaplessPlayback = true,
     bool isAntiAlias = false,
     String? package,
-    FilterQuality filterQuality = FilterQuality.low,
+    FilterQuality filterQuality = FilterQuality.medium,
     int? cacheWidth,
     int? cacheHeight,
   }) {

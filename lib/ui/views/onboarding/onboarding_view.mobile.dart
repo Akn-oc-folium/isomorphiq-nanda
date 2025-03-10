@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gif/gif.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
@@ -6,11 +7,10 @@ import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq/ui/views/onboarding/onboarding_viewmodel.dart';
 import 'package:isomorph_iq/ui/widgets/buttons.dart';
-import 'package:isomorph_iq/ui/widgets/inline_link_text.dart';
 import 'package:stacked/stacked.dart';
 
 class OnboardingViewMobile extends StatelessWidget {
-  const OnboardingViewMobile({Key? key}) : super(key: key);
+  const OnboardingViewMobile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class OnboardingViewMobile extends StatelessWidget {
 class _OnboardingView1 extends StatefulWidget {
   final OnboardingViewModel viewModel;
 
-  const _OnboardingView1({Key? key, required this.viewModel}) : super(key: key);
+  const _OnboardingView1({required this.viewModel});
 
   @override
   State<_OnboardingView1> createState() => __OnboardingView1State();
@@ -70,8 +70,8 @@ class __OnboardingView1State extends State<_OnboardingView1>
         child: Stack(
           children: [
             Container(
-              margin: const EdgeInsets.only(top: 20),
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              margin: const EdgeInsets.only(top: 20).h,
+              padding: const EdgeInsets.symmetric(horizontal: 24.0).w,
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(Assets.images.onboardingSlide1Bg.path),
@@ -81,7 +81,7 @@ class __OnboardingView1State extends State<_OnboardingView1>
               ),
             ),
             Positioned(
-              top: 32,
+              top: 32.h,
               left: 0,
               right: 0,
               child: Center(
@@ -89,8 +89,8 @@ class __OnboardingView1State extends State<_OnboardingView1>
                   controller: _gifController,
                   autostart: Autostart.loop,
                   image: AssetImage(Assets.gifs.isomorphLogo.path),
-                  width: 244,
-                  height: 344,
+                  width: 244.w,
+                  height: 344.h,
                 ),
               ),
             ),
@@ -99,14 +99,14 @@ class __OnboardingView1State extends State<_OnboardingView1>
               left: 0,
               right: 0,
               child: Container(
-                padding: const EdgeInsets.all(24.0),
+                padding: const EdgeInsets.all(24.0).r,
                 decoration: BoxDecoration(
                   color: kcPrimaryColorLight,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(20),
-                    topRight: Radius.circular(20),
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(20).r,
+                    topRight: Radius.circular(20).r,
                   ),
-                  border: Border.all(color: kcStrokePrimary, width: 1),
+                  border: Border.all(color: kcStrokePrimary, width: 1.w),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -122,14 +122,14 @@ class __OnboardingView1State extends State<_OnboardingView1>
                       style: TextStyles.titleTertiary
                           .copyWith(color: kcSecondaryColor),
                     ),
-                    verticalSpace56,
-                    Center(
-                      child: InlineLinkText(
-                        prefixText: '',
-                        linkText: 'Privacy Policy',
-                        onLinkTap: () {},
-                      ),
-                    ),
+                    // verticalSpace56,
+                    // Center(
+                    //   child: InlineLinkText(
+                    //     prefixText: '',
+                    //     linkText: 'Privacy Policy',
+                    //     onLinkTap: () {},
+                    //   ),
+                    // ),
                     verticalSpace08,
                     verticalSpace04,
                     PrimaryButton(
@@ -148,7 +148,7 @@ class __OnboardingView1State extends State<_OnboardingView1>
 }
 
 class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
-  const _OnboardingView2({Key? key}) : super(key: key);
+  const _OnboardingView2();
 
   @override
   Widget build(BuildContext context, OnboardingViewModel viewModel) {
@@ -193,7 +193,7 @@ class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
                           horizontalSpace(6),
                           Flexible(
                             child: Text(
-                              'The more you chat, the more points you earn.',
+                              'Create your own unique AI Persona and Twitter Clone!',
                               style: TextStyles.titleTertiary
                                   .copyWith(color: kcSecondaryColor),
                             ),
@@ -230,21 +230,21 @@ class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
                       ),
                     ],
                   ),
+                  // verticalSpace16,
+                  // Center(
+                  //   child: InlineLinkText(
+                  //     prefixText: '',
+                  //     linkText: 'Privacy Policy',
+                  //     onLinkTap: () {},
+                  //   ),
+                  // ),
+                  // verticalSpace08,
+                  // verticalSpace04,
+                  // SecondaryButton(
+                  //   text: 'Will my data be secure?',
+                  //   onPressed: () {},
+                  // ),
                   verticalSpace16,
-                  Center(
-                    child: InlineLinkText(
-                      prefixText: '',
-                      linkText: 'Privacy Policy',
-                      onLinkTap: () {},
-                    ),
-                  ),
-                  verticalSpace08,
-                  verticalSpace04,
-                  SecondaryButton(
-                    text: 'Will my data be secure?',
-                    onPressed: () {},
-                  ),
-                  verticalSpace(15),
                   PrimaryButton(
                     text: 'Continue',
                     onPressed: viewModel.onContinuePressed,
@@ -262,10 +262,7 @@ class _OnboardingView2 extends ViewModelWidget<OnboardingViewModel> {
 class _OnboardingView3 extends StatefulWidget {
   final OnboardingViewModel viewModel;
 
-  const _OnboardingView3({
-    Key? key,
-    required this.viewModel,
-  }) : super(key: key);
+  const _OnboardingView3({required this.viewModel});
 
   @override
   State<_OnboardingView3> createState() => __OnboardingView3State();
@@ -278,7 +275,6 @@ class __OnboardingView3State extends State<_OnboardingView3>
   @override
   void initState() {
     super.initState();
-    // Provide `vsync: this` because this State object mixes in a TickerProvider
     _gifController = GifController(vsync: this);
   }
 
@@ -323,13 +319,13 @@ class __OnboardingView3State extends State<_OnboardingView3>
               ),
               Column(
                 children: [
-                  InlineLinkText(
-                    prefixText: 'By continuing, you are in agreement with\n',
-                    linkText: 'IsomorphIQ Terms & Conditions',
-                    onLinkTap: () {},
-                  ),
-                  verticalSpace08,
-                  verticalSpace04,
+                  // InlineLinkText(
+                  //   prefixText: 'By continuing, you are in agreement with\n',
+                  //   linkText: 'IsomorphIQ Terms & Conditions',
+                  //   onLinkTap: () {},
+                  // ),
+                  // verticalSpace08,
+                  // verticalSpace04,
                   PrimaryButton(
                     text: 'Let\'s Play',
                     onPressed: widget.viewModel.onContinuePressed,

@@ -5,32 +5,24 @@ import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
 import 'package:isomorph_iq/ui/common/ui_helpers.dart';
 
-class StreakRedeemCard extends StatefulWidget {
+class StreakRedeemCard extends StatelessWidget {
   final ValueChanged<bool>? onRedeem;
+  final int points;
+  final bool isRedeemed;
+  final bool isBusy;
 
-  const StreakRedeemCard({Key? key, required this.onRedeem}) : super(key: key);
-
-  @override
-  State<StreakRedeemCard> createState() => _StreakRedeemCardState();
-}
-
-class _StreakRedeemCardState extends State<StreakRedeemCard> {
-  bool _isPressed = false;
-
-  Future<void> _handlePress() async {
-    if (widget.onRedeem != null) {
-      widget.onRedeem!(_isPressed);
-    }
-
-    setState(() {
-      _isPressed = true;
-    });
-  }
+  const StreakRedeemCard({
+    super.key,
+    required this.onRedeem,
+    required this.points,
+    required this.isRedeemed,
+    this.isBusy = false,
+  });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _handlePress,
+      onTap: isRedeemed ? null : () => onRedeem?.call(true),
       child: Container(
         width: 186.w,
         height: 45.h,
@@ -69,7 +61,7 @@ class _StreakRedeemCardState extends State<StreakRedeemCard> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                // Day 1 part
+                // Day part
                 Padding(
                   padding:
                       const EdgeInsets.only(left: 20, top: 12, bottom: 12).r,
@@ -91,30 +83,39 @@ class _StreakRedeemCardState extends State<StreakRedeemCard> {
                     ],
                   ),
                 ),
-                // Coins part
+                // Coins / Redeemed part
                 Padding(
                   padding: EdgeInsets.only(
-                          right: _isPressed ? 10 : 20, top: 12, bottom: 12)
+                          right: isRedeemed ? 10 : 20, top: 12, bottom: 12)
                       .r,
-                  child: Row(
-                    children: [
-                      Text(
-                        _isPressed ? 'Redeemed' : '500',
-                        style: TextStyles.buttonText.copyWith(
-                          fontSize: 12.sp,
-                          color: kcSecondaryColor,
-                          height: _isPressed ? 1.h : 1.66.h,
-                        ),
-                      ),
-                      horizontalSpace(3),
-                      _isPressed
-                          ? const SizedBox()
-                          : Image.asset(
-                              Assets.icons.coin.path,
-                              height: 18.h,
+                  child: isBusy
+                      ? SizedBox(
+                          height: 14.r,
+                          width: 14.r,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: kcSecondaryColor,
+                          ),
+                        )
+                      : Row(
+                          children: [
+                            Text(
+                              isRedeemed ? 'Redeemed' : '$points',
+                              style: TextStyles.buttonText.copyWith(
+                                fontSize: 12.sp,
+                                color: kcSecondaryColor,
+                                height: isRedeemed ? 1.h : 1.66.h,
+                              ),
                             ),
-                    ],
-                  ),
+                            horizontalSpace(3),
+                            isRedeemed
+                                ? const SizedBox()
+                                : Image.asset(
+                                    Assets.icons.coin.path,
+                                    height: 18.h,
+                                  ),
+                          ],
+                        ),
                 ),
               ],
             ),
@@ -125,16 +126,14 @@ class _StreakRedeemCardState extends State<StreakRedeemCard> {
   }
 }
 
-// Custom clipper for slashed background
 class SlashedBackgroundClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     final path = Path();
-    path.lineTo(size.width * 0.7, 0); // Start from the top
-    path.lineTo(
-        size.width, size.height); // Slash line to the bottom-right corner
-    path.lineTo(0, size.height); // Bottom-left corner
-    path.close(); // Complete the path
+    path.lineTo(size.width * 0.7, 0);
+    path.lineTo(size.width, size.height);
+    path.lineTo(0, size.height);
+    path.close();
     return path;
   }
 

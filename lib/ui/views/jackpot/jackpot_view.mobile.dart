@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:focus_detector_v2/focus_detector_v2.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
 import 'package:isomorph_iq/ui/common/text_styles.dart';
@@ -16,153 +17,194 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
   const JackpotViewMobile({super.key});
 
   @override
+  void onViewModelReady(JackpotViewModel viewModel) {
+    viewModel.initialise();
+    super.onViewModelReady(viewModel);
+  }
+
+  @override
   Widget builder(
       BuildContext context, JackpotViewModel viewModel, Widget? child) {
-    return Scaffold(
-      body: viewModel.isBusy
-          ? Center(
-              child: SizedBox(
-                height: 40.r,
-                width: 40.r,
-                child: CircularProgressIndicator.adaptive(
-                  backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
-                  strokeWidth: 2.0.w,
-                  valueColor: const AlwaysStoppedAnimation<Color>(
-                    kcPrimaryColor,
-                  ),
-                ),
-              ),
-            )
-          : Column(
-              children: [
-                verticalSpace(24),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Center(
-                    child: Assets.images.chestLevel2Opened.image(
-                      height: 130,
-                      width: 130,
+    return FocusDetector(
+      onFocusGained: () {
+        // Refresh data when the screen regains focus
+        viewModel.refreshData();
+      },
+      child: Scaffold(
+        body: viewModel.isBusy
+            ? Center(
+                child: SizedBox(
+                  height: 40.r,
+                  width: 40.r,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: kcPrimaryColor.withValues(alpha: 0.5),
+                    strokeWidth: 2.0.w,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      kcPrimaryColor,
                     ),
                   ),
                 ),
-                verticalSpace08,
+              )
+            : Column(
+                children: [
+                  verticalSpace16,
 
-                // Invite Friends Card
-                Container(
-                  margin: const EdgeInsets.symmetric(horizontal: 24),
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: kcPrimaryColorLight,
-                    borderRadius: BorderRadius.circular(12),
-                    boxShadow: const [
-                      BoxShadow(
-                        color: kcStrokePrimary,
-                        offset: Offset(0, 1),
-                      ),
-                    ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Image.asset(Assets.icons.atTheRate.path,
-                          width: 62, height: 67),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Invite Friends',
-                              style: TextStyles.titleSecondary
-                                  .copyWith(color: kcSecondaryColor),
-                            ),
-                            verticalSpace04,
-                            Text(
-                              'The more users chat, the bigger the jackpot grows!',
-                              style: TextStyles.bodyPrimary.copyWith(
-                                  color: kcPrimaryColor, letterSpacing: -0.5),
-                            ),
-                          ],
-                        ),
-                      ),
-                      PrimaryButton.icon(
-                        icon: SvgPicture.asset(
-                          Assets.icons.arrowRight,
-                          height: 24,
-                          width: 24,
-                        ),
-                        onPressed: () {
-                          TelegramShare.shareInviteLink(viewModel.username);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-
-                verticalSpace16,
-                verticalSpace08,
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
-                    decoration: const BoxDecoration(
+                  // Invite Friends Card
+                  Container(
+                    margin: const EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(
+                            horizontal: 8.0, vertical: 10.0)
+                        .r,
+                    decoration: BoxDecoration(
                       color: kcPrimaryColorLight,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
-                      ),
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: const [
+                        BoxShadow(
+                          color: kcStrokePrimary,
+                          offset: Offset(0, 1),
+                        ),
+                      ],
                     ),
-                    child: Stack(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Positioned(
-                          top: 30,
-                          child: Text(
-                            'Leaderboard',
-                            style: TextStyles.titleSecondary.copyWith(
-                              fontSize: 20,
-                              color: kcSecondaryColor,
-                              height: 0.9,
-                            ),
+                        Image.asset(Assets.icons.atTheRate.path,
+                            width: 62.w, height: 67.h),
+                        horizontalSpace08,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Invite Friends',
+                                style: TextStyles.titleSecondary
+                                    .copyWith(color: kcSecondaryColor),
+                              ),
+                              verticalSpace04,
+                              Text(
+                                'The more users chat, the bigger the jackpot grows!',
+                                style: TextStyles.bodySecondary.copyWith(
+                                  color: kcSecondaryColor,
+                                  height: 1.33.h,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
-                        Positioned(
-                          right: 0,
-                          child: Transform.rotate(
-                            angle: 0,
-                            child: Assets.images.trophy2x.image(
-                              height: 100,
-                              width: 100,
+                        horizontalSpace08,
+                        PrimaryButton.icon(
+                          icon: SvgPicture.asset(
+                            Assets.icons.arrowRight,
+                            height: 24,
+                            width: 24,
+                          ),
+                          onPressed: () {
+                            TelegramShare.shareInviteLink(viewModel.username);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  verticalSpace16,
+                  verticalSpace04,
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Stack(
+                      clipBehavior: Clip.none,
+                      alignment: Alignment.centerLeft,
+                      children: [
+                        PrimaryButton(
+                          text: "Play Game",
+                          onPressed: viewModel.playActive == false
+                              ? null
+                              : viewModel.enterPlayMode,
+                        ),
+                        if (viewModel.playActive == false) ...[
+                          Positioned(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 24),
+                              child: SvgPicture.asset(Assets.icons.lock),
                             ),
                           ),
+                        ],
+                      ],
+                    ),
+                  ),
+                  if (viewModel.playActive == false) ...[
+                    verticalSpace(10),
+                    Text(
+                      'Level up to unlock game and start playing to earn!',
+                      style: TextStyles.bodyPrimary
+                          .copyWith(color: kcSecondaryColor),
+                    ),
+                  ],
+                  verticalSpace16,
+                  verticalSpace04,
+
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 24).h,
+                      decoration: BoxDecoration(
+                        color: kcPrimaryColorLight,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20).r,
+                          topRight: Radius.circular(20).r,
                         ),
-                        Positioned(
-                          top: 40,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            height: 34,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  kcPrimaryColorLight.withValues(alpha: 0.0),
-                                  kcPrimaryColorLight,
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
+                      ),
+                      child: Stack(
+                        children: [
+                          Positioned(
+                            top: 30.h,
+                            child: Text(
+                              'Leaderboard',
+                              style: TextStyles.titleSecondary.copyWith(
+                                fontSize: 20.sp,
+                                color: kcSecondaryColor,
+                                height: 0.9.h,
                               ),
                             ),
                           ),
-                        ),
-                        Positioned(
-                          top: 74,
-                          left: 0,
-                          right: 0,
-                          child: SizedBox(
-                            height: 260,
+                          Positioned(
+                            right: 0,
+                            child: Transform.rotate(
+                              angle: 0,
+                              child: Assets.images.trophy2x.image(
+                                height: 100.h,
+                                width: 100.w,
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 40.h,
+                            left: 0,
+                            right: 0,
+                            child: Container(
+                              height: 34.h,
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    kcPrimaryColorLight.withValues(alpha: 0.0),
+                                    kcPrimaryColorLight,
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Positioned(
+                            top: 74.h,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
                             child: ScrollConfiguration(
                               behavior:
                                   ScrollConfiguration.of(context).copyWith(
                                 scrollbars: false,
                               ),
                               child: ListView.builder(
+                                physics: ClampingScrollPhysics(),
                                 itemCount: viewModel
                                     .leaderboard.data.leaderBoard.length,
                                 itemBuilder: (context, index) {
@@ -177,19 +219,16 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                               ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
+      ),
     );
   }
 
   @override
   JackpotViewModel viewModelBuilder(BuildContext context) => JackpotViewModel();
-
-  @override
-  void onViewModelReady(JackpotViewModel viewModel) => viewModel.initState();
 }

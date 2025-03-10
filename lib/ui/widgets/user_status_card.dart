@@ -9,13 +9,12 @@ class UserStatusCard extends StatelessWidget {
   final String name;
   final int rank;
 
-  const UserStatusCard({Key? key, required this.name, required this.rank})
-      : super(key: key);
+  const UserStatusCard({super.key, required this.name, required this.rank});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(12).r,
+      padding: const EdgeInsets.all(8).r,
       decoration: BoxDecoration(
         color: kcPrimaryColorLight,
         borderRadius: BorderRadius.circular(12).r,
@@ -53,8 +52,8 @@ class UserStatusCard extends StatelessWidget {
               horizontalSpace08,
               Container(
                 alignment: Alignment.center,
-                height: 42.r,
-                width: 42.r,
+                height: 40.r,
+                width: 40.r,
                 decoration: BoxDecoration(
                   color: kcPrimaryColorAccent,
                   borderRadius: BorderRadius.circular(8).r,

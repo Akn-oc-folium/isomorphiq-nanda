@@ -1,5 +1,9 @@
 {
   "projects": {
-    "default": "isomorph-iq"
-  }
+    "default": "isomorph-iq",
+    "build/web": "isomorph-iq",
+    "development": "isomorph-iq"
+  },
+  "targets": {},
+  "etags": {}
 }

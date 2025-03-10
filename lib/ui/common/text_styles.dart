@@ -56,7 +56,7 @@ class TextStyles {
       fontSize: 16.sp,
       fontWeight: FontWeight.w600,
       fontFamily: FontFamily.sora,
-      height: 1.375.h,
+      height: 1.h,
     );
   }
 

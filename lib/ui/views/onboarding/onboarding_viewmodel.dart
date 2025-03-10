@@ -11,13 +11,16 @@ class OnboardingViewModel extends BaseViewModel {
   final PageController pageController = PageController();
   final RouterService _routerService = locator<RouterService>();
   final TelegramWebApp _telegramWebApp = TelegramWebApp.instance;
-  final _hiveService = locator<HiveService>();
+  final HiveService _hiveService = locator<HiveService>();
 
   int _currentPage = 0;
   int get currentPage => _currentPage;
 
   String? _userFirstName;
   String? get userFirstName => _userFirstName;
+
+  String? _username;
+  String? get username => _username;
 
   Future<void> initialise() async {
     await _retrieveUserDetails();
@@ -31,9 +34,10 @@ class OnboardingViewModel extends BaseViewModel {
     } else {
       _userFirstName = telegramUser.firstName;
       await _hiveService.storeData(
-          kUserBox, userFirstNameKey, telegramUser.firstName);
+          kUserBox, kFirstNameKey, telegramUser.firstName);
+      _username = telegramUser.username;
       await _hiveService.storeData(
-          kUserBox, usernameKey, telegramUser.username);
+          kUserBox, kUsernameKey, telegramUser.username);
       debugPrint("User details: $telegramUser");
     }
   }
@@ -53,7 +57,7 @@ class OnboardingViewModel extends BaseViewModel {
         curve: Curves.easeInOut,
       );
     } else {
-      _routerService.replaceWith(const HomeViewRoute());
+      _routerService.replaceWith(const MainViewRoute());
       debugPrint('Onboarding finished!');
     }
   }

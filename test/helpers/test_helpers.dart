@@ -4,6 +4,7 @@ import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
+import 'package:isomorph_iq/services/authorization_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';
@@ -14,6 +15,7 @@ import 'test_helpers.mocks.dart';
   MockSpec<DialogService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<ApiService>(onMissingStub: OnMissingStub.returnDefault),
   MockSpec<HiveService>(onMissingStub: OnMissingStub.returnDefault),
+  MockSpec<AuthorizationService>(onMissingStub: OnMissingStub.returnDefault),
 // @stacked-mock-spec
 ])
 void registerServices() {
@@ -22,6 +24,7 @@ void registerServices() {
   getAndRegisterDialogService();
   getAndRegisterApiService();
   getAndRegisterHiveService();
+  getAndRegisterAuthorizationService();
 // @stacked-mock-register
 }
 
@@ -86,6 +89,13 @@ MockHiveService getAndRegisterHiveService() {
   _removeRegistrationIfExists<HiveService>();
   final service = MockHiveService();
   locator.registerSingleton<HiveService>(service);
+  return service;
+}
+
+MockAuthorizationService getAndRegisterAuthorizationService() {
+  _removeRegistrationIfExists<AuthorizationService>();
+  final service = MockAuthorizationService();
+  locator.registerSingleton<AuthorizationService>(service);
   return service;
 }
 // @stacked-mock-create

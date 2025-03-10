@@ -2,15 +2,20 @@ const String ksHomeBottomSheetTitle = 'Build Great Apps!';
 const String ksHomeBottomSheetDescription =
     'Stacked is built to help you build better apps. Give us a chance and we\'ll prove it to you. Check out stacked.filledstacks.com to learn more';
 
-const String ksSourcesNavTitle = 'Sources';
-const String ksEarnNavTitle = 'Earn';
-const String ksPlayNavTitle = 'Play';
+const String ksHomeNavTitle = 'Home';
 const String ksJackpotNavTitle = 'Jackpot';
+const String ksAgentNavTitle = 'Agents';
 
 // Local Storage Constants
 const String kUserBox = 'userBox';
 
 /// Local Storage Keys
-const String usernameKey = 'telegram_handle';
-const String userFirstNameKey = 'first_name';
-const String userIdKey = 'user_id';
+const String kUsernameKey = 'telegram_handle';
+const String kFirstNameKey = 'first_name';
+const String kUserIdKey = 'user_id';
+const String kAppsConnectionsKey = 'apps_connections';
+const String kTweetCountsKey = 'tweet_counts';
+const String kUserLevelKey = 'user_level';
+const String kXTokenKey = 'x_token';
+const String kPlayActiveKey = 'play_active';
+const String klastRedeemedKey = 'last_redeemed_date';

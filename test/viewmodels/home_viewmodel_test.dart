@@ -7,7 +7,7 @@ import 'package:mockito/mockito.dart';
 import '../helpers/test_helpers.dart';
 
 void main() {
-  group('HomeViewmodelTest -', () {
+  group('MainViewmodelTest -', () {
     setUp(() => registerServices());
     tearDown(() => locator.reset());
 

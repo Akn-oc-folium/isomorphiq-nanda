@@ -3,8 +3,9 @@ import 'package:telegram_web_app/telegram_web_app.dart';
 class TelegramShare {
   static Future<void> shareInviteLink(String userId) async {
     // Example: Link to your Bot with a referral parameter
-    const botUsername = 'isomorphiq';
-    final inviteLink = 'https://t.me/$botUsername/start?start=ref_$userId';
+    const botUsername = 'isomorph_bot';
+    const miniAppName = 'isomorphiq';
+    final inviteLink = 'https://t.me/$botUsername/$miniAppName?startapp=start';
     final message = 'Join this awesome Mini App! $inviteLink';
 
     // 1) Try Telegram deep link (to open "Share" in Telegram)
