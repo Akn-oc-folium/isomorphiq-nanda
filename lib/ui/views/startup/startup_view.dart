@@ -7,7 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'startup_viewmodel.dart';
 
 class StartupView extends StatefulWidget {
-  const StartupView({Key? key}) : super(key: key);
+  const StartupView({super.key});
 
   @override
   State<StartupView> createState() => _StartupViewState();

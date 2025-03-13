@@ -23,7 +23,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
           backgroundColor: Colors.white,
           appBar: CustomAppBar(
             context: context,
-            title: Text("AI Persona"),
+            title: const Text("AI Persona"),
           ),
           body: SafeArea(
             child: Padding(
@@ -40,12 +40,12 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
                   verticalSpace16,
                   ...viewModel.sliderList.map((slider) {
                     return PersonaSlider(
-                      title: slider["title"],
-                      leftLabel: slider["leftLabel"],
-                      rightLabel: slider["rightLabel"],
+                      title: slider["title"] ?? "",
+                      leftLabel: slider["leftLabel"] ?? "",
+                      rightLabel: slider["rightLabel"] ?? "",
                       value: viewModel.sliderValues[slider["title"]] ?? 0.5,
                       onChanged: (value) =>
-                          viewModel.updateSlider(slider["title"], value),
+                          viewModel.updateSlider(slider["title"] ?? "", value),
                       divisions: 4,
                     );
                   }),
@@ -88,7 +88,7 @@ class AiPersonaViewMobile extends ViewModelWidget<AiPersonaViewModel> {
                   // verticalSpace08,
                   // TagList(tags: viewModel.selectedTopics),
                   // verticalSpace16,
-                  Spacer(),
+                  const Spacer(),
                   PrimaryButton(
                     text: 'Confirm Changes',
                     onPressed: viewModel.confirmChanges,

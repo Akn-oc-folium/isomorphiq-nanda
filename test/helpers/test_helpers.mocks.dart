@@ -1288,6 +1288,7 @@ class MockApiService extends _i1.Mock implements _i25.ApiService {
   @override
   _i18.Future<_i16.UpsertUserPersonality> postUserPersonality({
     required String? userId,
+    required String? username,
     required Map<String, double>? sliderValues,
   }) =>
       (super.noSuchMethod(
@@ -1296,6 +1297,7 @@ class MockApiService extends _i1.Mock implements _i25.ApiService {
           [],
           {
             #userId: userId,
+            #username: username,
             #sliderValues: sliderValues,
           },
         ),
@@ -1307,6 +1309,7 @@ class MockApiService extends _i1.Mock implements _i25.ApiService {
             [],
             {
               #userId: userId,
+              #username: username,
               #sliderValues: sliderValues,
             },
           ),
@@ -1320,6 +1323,7 @@ class MockApiService extends _i1.Mock implements _i25.ApiService {
             [],
             {
               #userId: userId,
+              #username: username,
               #sliderValues: sliderValues,
             },
           ),

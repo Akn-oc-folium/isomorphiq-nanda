@@ -1,7 +1,7 @@
 import 'package:telegram_web_app/telegram_web_app.dart';
 
 class TelegramShare {
-  static Future<void> shareInviteLink(String userId) async {
+  static Future<void> shareInviteLink() async {
     // Example: Link to your Bot with a referral parameter
     const botUsername = 'isomorph_bot';
     const miniAppName = 'isomorphiq';

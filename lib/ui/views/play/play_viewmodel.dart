@@ -29,9 +29,9 @@ class PlayViewModel extends BaseViewModel {
   static const String kLEGENDARY = "Legendary";
 
   final Map<String, int> chestPoints = {
-    kCOMMON: 500,
-    kRARE: 1000,
-    kLEGENDARY: 2000,
+    kCOMMON: 10,
+    kRARE: 20,
+    kLEGENDARY: 50,
   };
 
   void playInstructions() {
@@ -45,7 +45,7 @@ class PlayViewModel extends BaseViewModel {
         {
           "icon": Assets.icons.dollarCoin.path,
           "content":
-              "You’ll play 5 rounds per game – each round, pick 1 of 5 cards to find chests."
+              "You'll play 5 rounds per game - each round, pick 1 of 5 cards to find chests."
         },
         {
           "icon": Assets.icons.trophy.path,

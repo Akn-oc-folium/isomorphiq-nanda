@@ -5,12 +5,10 @@ import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:telegram_web_app/telegram_web_app.dart';
 
 class OnboardingViewModel extends BaseViewModel {
   final PageController pageController = PageController();
   final RouterService _routerService = locator<RouterService>();
-  final TelegramWebApp _telegramWebApp = TelegramWebApp.instance;
   final HiveService _hiveService = locator<HiveService>();
 
   int _currentPage = 0;
@@ -27,19 +25,9 @@ class OnboardingViewModel extends BaseViewModel {
   }
 
   Future<void> _retrieveUserDetails() async {
-    final telegramUser = _telegramWebApp.initDataUnsafe?.user;
-
-    if (telegramUser == null) {
-      debugPrint("Could not retrieve user info");
-    } else {
-      _userFirstName = telegramUser.firstName;
-      await _hiveService.storeData(
-          kUserBox, kFirstNameKey, telegramUser.firstName);
-      _username = telegramUser.username;
-      await _hiveService.storeData(
-          kUserBox, kUsernameKey, telegramUser.username);
-      debugPrint("User details: $telegramUser");
-    }
+    _userFirstName = await _hiveService.retrieveData(kUserBox, kFirstNameKey);
+    _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
+    notifyListeners();
   }
 
   // Called whenever the page changes (via swipe or programmatically)

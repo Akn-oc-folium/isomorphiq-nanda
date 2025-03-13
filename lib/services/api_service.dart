@@ -371,14 +371,19 @@ class ApiService {
     }
   }
 
-  Future<UpsertUserPersonality> postUserPersonality(
-      {required String userId,
-      required Map<String, double> sliderValues}) async {
+  Future<UpsertUserPersonality> postUserPersonality({
+    required String userId,
+    required String username,
+    required Map<String, double> sliderValues,
+  }) async {
     try {
-      Map<String, dynamic> apiBody = {};
+      Map<String, dynamic> apiBody = {
+        "name": username,
+      };
       sliderValues.forEach((key, value) {
         apiBody[key.toLowerCase()] = value;
       });
+
       final Response response = await apiClient.post(
         AppConstants.upsertUserPersonalityEndpoint,
         queryParameters: {
