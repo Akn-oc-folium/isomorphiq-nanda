@@ -15,9 +15,6 @@ class JackpotViewModel extends BaseViewModel {
   final _hiveService = locator<HiveService>();
   final _routerService = locator<RouterService>();
 
-  String? _username;
-  String get username => _username ?? '';
-
   int? _userLevel;
   int? get userLevel => _userLevel;
 
@@ -40,17 +37,13 @@ class JackpotViewModel extends BaseViewModel {
 
   Future<void> _fetchLeaderboard() async {
     setBusy(true);
+    _userLevel = await _hiveService.retrieveData(kUserBox, kUserLevelKey);
     try {
-      // Retrieve username and stored user level.
-      _username = await _hiveService.retrieveData(kUserBox, kUsernameKey);
-      _userLevel = await _hiveService.retrieveData(kUserBox, kUserLevelKey);
-
-      debugPrint("User level: $_userLevel");
-
       // Read the play-active flag if the user level indicates eligibility.
       if (_userLevel != null && _userLevel! > 1) {
-        _playActive =
-            await _hiveService.retrieveData(kUserBox, kPlayActiveKey) ?? false;
+        final retrievePlayActiveStatus =
+            await _hiveService.retrieveData(kUserBox, kPlayActiveKey);
+        _playActive = retrievePlayActiveStatus ?? false;
       } else {
         _playActive = false;
       }

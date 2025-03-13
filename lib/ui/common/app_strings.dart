@@ -18,4 +18,6 @@ const String kTweetCountsKey = 'tweet_counts';
 const String kUserLevelKey = 'user_level';
 const String kXTokenKey = 'x_token';
 const String kPlayActiveKey = 'play_active';
-const String klastRedeemedKey = 'last_redeemed_date';
+const String kLastRedeemedKey = 'last_redeemed_date';
+const String kJwtTokenKey = 'jwt_token';
+const String kHashKey = 'hash';

@@ -99,7 +99,7 @@ class JackpotViewMobile extends StackedView<JackpotViewModel> {
                             width: 24,
                           ),
                           onPressed: () {
-                            TelegramShare.shareInviteLink(viewModel.username);
+                            TelegramShare.shareInviteLink();
                           },
                         ),
                       ],

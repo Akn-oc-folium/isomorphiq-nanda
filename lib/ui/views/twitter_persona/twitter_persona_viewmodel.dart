@@ -56,7 +56,7 @@ class TwitterPersonaViewModel extends BaseViewModel {
       );
       _tweets = response.data;
 
-      if (selectedFilter.toUpperCase() == "Pending") {
+      if (selectedFilter == "Pending") {
         await _hiveService.storeData(
             kUserBox, kTweetCountsKey, _tweets != null ? _tweets!.length : 0);
       }
@@ -106,7 +106,6 @@ class TwitterPersonaViewModel extends BaseViewModel {
     );
     if (response?.confirmed ?? false) {
       await fetchTweets();
-      // rebuildUi();
     }
   }
 
@@ -114,7 +113,7 @@ class TwitterPersonaViewModel extends BaseViewModel {
     setBusyForObject('updatingTweetStatus', true);
     try {
       final response = await _apiService.postUpdateTweetStatus(
-        userId: _userId!,
+        userId:  _userId!,
         tweetId: tweetId,
         tweetStatus: tweetStatus,
       );
