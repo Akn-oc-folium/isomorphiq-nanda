@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:isomorph_iq/app/app.bottomsheets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
@@ -10,6 +11,7 @@ class AiPersonaViewModel extends BaseViewModel {
   final RouterService _routerService = locator<RouterService>();
   final ApiService _apiService = locator<ApiService>();
   final HiveService _hiveService = locator<HiveService>();
+  final BottomSheetService _bottomSheetService = locator<BottomSheetService>();
 
   final TextEditingController accountsController = TextEditingController();
 
@@ -35,6 +37,12 @@ class AiPersonaViewModel extends BaseViewModel {
     {"title": "Optimism", "leftLabel": "Realistic", "rightLabel": "Positive"},
     {"title": "Enthusiasm", "leftLabel": "Monotone", "rightLabel": "Exuberant"},
   ];
+
+  Map<String, List<String>> currentTopics = {
+    "Web3 and Crypto": ["NFTs", "Decentralisation", "Bitcoin"],
+    "AI and ML": ["Bitcoin", "Workflow Automation", "Privacy-first AI models"],
+    "Crypto X AI": ["Automated DAOs", "Predictive analytics", "On-chain AI"],
+  };
 
   /// Getters for slider values to avoid duplicate state.
   double get degenValue => sliderValues["Degen"] ?? 1;
@@ -76,8 +84,18 @@ class AiPersonaViewModel extends BaseViewModel {
   }
 
   /// Placeholder for topic change action.
-  void changeTopics() {
+  void changeTopics() async {
     debugPrint("Change Topics Clicked!");
+    var response = await _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.topicInterest,
+      barrierDismissible: false,
+      title: 'Edit your topics & interests',
+      data: currentTopics,
+      isScrollControlled: true,
+    );
+    if (response?.confirmed ?? false) {
+      debugPrint("Ready to send chip data to backend");
+    }
   }
 
   /// Confirms changes by posting updated slider values to the API.

@@ -1,20 +1,41 @@
 import 'package:flutter/widgets.dart';
+import 'package:isomorph_iq/app/app.bottomsheets.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/models/app_connections_model.dart';
-import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/services/api_service.dart';
-import 'package:isomorph_iq/services/authorization_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 enum AuthProvider { google, telegram, x, discord, facebook, spotify, reddit }
+
+extension AuthProviderExtension on AuthProvider {
+  String get title {
+    switch (this) {
+      case AuthProvider.google:
+        return "Google";
+      case AuthProvider.telegram:
+        return "Telegram";
+      case AuthProvider.x:
+        return "X";
+      case AuthProvider.discord:
+        return "Discord";
+      case AuthProvider.facebook:
+        return "Facebook";
+      case AuthProvider.spotify:
+        return "Spotify";
+      case AuthProvider.reddit:
+        return "Reddit";
+    }
+  }
+}
 
 class SourcesViewModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
-  final AuthorizationService _authService = locator<AuthorizationService>();
+  final _bottomSheetService = locator<BottomSheetService>();
 
   // Track connection status
   Map<AuthProvider, bool> connectedApps = {
@@ -59,59 +80,28 @@ class SourcesViewModel extends BaseViewModel {
     await _fetchConnections();
   }
 
-  Future<void> connectApp(AuthProvider provider) async {
-    String appId = provider.name;
-    String urlEndPoint = _getAuthUrlEndpoint(provider);
-
+  void connectApp(AuthProvider provider) async {
     try {
       loadingState[provider] = true;
       notifyListeners();
 
-      SignAuth signAuth = await _apiService.getAppAuthUrl(
-        appId: appId,
-        userId: userId!,
-        urlEndPoint: urlEndPoint,
+      var response = await _bottomSheetService.showCustomSheet(
+        variant: BottomSheetType.connectApp,
+        barrierDismissible: false,
+        title: provider.title,
+        data: {
+          provider: provider,
+          userId: userId,
+        },
+        isScrollControlled: true,
       );
 
-      Map<String, dynamic> authResult =
-          await _authService.authenticate(signAuth.data.link);
-
-      String message = authResult["message"] as String;
-      int statusCode = authResult["statusCode"] as int;
-
-      if (statusCode == 200) {
-        connectedApps[provider] = true;
-      } else {
-        // Optionally log or display the error message.
-        connectedApps[provider] = false;
-        debugPrint("Authentication failed: $message (code: $statusCode)");
+      if (response?.confirmed ?? false) {
+        await _fetchConnections();
       }
-    } catch (e) {
-      debugPrint(
-          "Error during authentication: $e"); // Replace with error UI handling
     } finally {
-      loadingState[provider] = false; // Stop loading
+      loadingState[provider] = false;
       notifyListeners();
-    }
-  }
-
-  /// Replace with actual API endpoints
-  String _getAuthUrlEndpoint(AuthProvider provider) {
-    switch (provider) {
-      case AuthProvider.google:
-        return AppConstants.googleEndpoint;
-      case AuthProvider.x:
-        return AppConstants.xEndpoint;
-      case AuthProvider.discord:
-        return AppConstants.discordEndpoint;
-      case AuthProvider.facebook:
-        return AppConstants.facebookEndpoint;
-      case AuthProvider.spotify:
-        return AppConstants.spotifyEndpoint;
-      case AuthProvider.reddit:
-        return AppConstants.redditEndpoint;
-      default:
-        return "";
     }
   }
 

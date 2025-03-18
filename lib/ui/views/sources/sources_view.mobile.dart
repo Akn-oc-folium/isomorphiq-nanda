@@ -79,7 +79,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                           crossAxisCount: 2,
                           children: [
                             ConnectCard(
-                              title: 'Google',
+                              title: AuthProvider.google.title,
                               imagePath: Assets.icons.googleLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.google),
@@ -92,7 +92,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               points: 50,
                             ),
                             ConnectCard(
-                              title: 'Telegram',
+                              title: AuthProvider.telegram.title,
                               imagePath: Assets.icons.telegramLogo.path,
                               onConnect: () {},
                               isConnected: viewModel
@@ -102,7 +102,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                                   false,
                             ),
                             ConnectCard(
-                              title: 'X',
+                              title: AuthProvider.x.title,
                               imagePath: Assets.icons.xLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.x),
@@ -114,7 +114,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               points: 50,
                             ),
                             ConnectCard(
-                              title: 'Discord',
+                              title: AuthProvider.discord.title,
                               imagePath: Assets.icons.discordLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.discord),
@@ -127,7 +127,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               points: 50,
                             ),
                             ConnectCard(
-                              title: 'Facebook',
+                              title: AuthProvider.facebook.title,
                               imagePath: Assets.icons.facebookLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.facebook),
@@ -140,7 +140,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               points: 50,
                             ),
                             ConnectCard(
-                              title: 'Spotify',
+                              title: AuthProvider.spotify.title,
                               imagePath: Assets.icons.spotifyLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.spotify),
@@ -153,7 +153,7 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                               points: 50,
                             ),
                             ConnectCard(
-                              title: 'Reddit',
+                              title: AuthProvider.reddit.title,
                               imagePath: Assets.icons.redditLogo.path,
                               onConnect: () =>
                                   viewModel.connectApp(AuthProvider.reddit),

@@ -7,16 +7,20 @@
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app.locator.dart';
+import '../ui/bottom_sheets/connect_app/connect_app_sheet.dart';
 import '../ui/bottom_sheets/game_instruction/game_instruction_sheet.dart';
 import '../ui/bottom_sheets/generated_tweet/generated_tweet_sheet.dart';
 import '../ui/bottom_sheets/notice/notice_sheet.dart';
 import '../ui/bottom_sheets/rewards/rewards_sheet.dart';
+import '../ui/bottom_sheets/topic_interest/topic_interest_sheet.dart';
 
 enum BottomSheetType {
   notice,
   rewards,
   gameInstruction,
   generatedTweet,
+  connectApp,
+  topicInterest,
 }
 
 void setupBottomSheetUi() {
@@ -31,6 +35,10 @@ void setupBottomSheetUi() {
         GameInstructionSheet(request: request, completer: completer),
     BottomSheetType.generatedTweet: (context, request, completer) =>
         GeneratedTweetSheet(request: request, completer: completer),
+    BottomSheetType.connectApp: (context, request, completer) =>
+        ConnectAppSheet(request: request, completer: completer),
+    BottomSheetType.topicInterest: (context, request, completer) =>
+        TopicInterestSheet(request: request, completer: completer),
   };
 
   bottomsheetService.setCustomSheetBuilders(builders);
