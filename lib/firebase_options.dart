@@ -54,7 +54,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyBDVoyI8TIUnfGG0YvIuWnrcozpOqtP928',
-    appId: '1:683212693307:web:e9f0d500a4e79c1a02e11e',
+    appId: '1:683212693307:web:a8189da263b9395202e11e',
     messagingSenderId: '683212693307',
     projectId: 'isomorph-iq',
     authDomain: 'isomorph-iq.firebaseapp.com',

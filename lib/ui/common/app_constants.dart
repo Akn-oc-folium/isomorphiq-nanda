@@ -15,7 +15,8 @@ class AppConstants {
   // API Constants
   static const int receiveTimeout = 10000;
   static const int connectionTimeout = 30000;
-  static const String baseUrl = 'https://api.isomorphiq.net';
+  static const String baseUrl = 'https://api.isomorphiq.com';
+  static const String tokenEndpoint = '/user/generate-token';
   static const String dashboardEndpoint = '/user';
   static const String userPointsEndpoint = '/points';
   static const String leaderboardEndpoint = '/leaderboard';

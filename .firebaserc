@@ -4,6 +4,14 @@
     "build/web": "isomorph-iq",
     "development": "isomorph-iq"
   },
-  "targets": {},
+  "targets": {
+    "isomorph-iq": {
+      "hosting": {
+        "isomorph-iq-test": [
+          "isomorph-iq-test"
+        ]
+      }
+    }
+  },
   "etags": {}
 }

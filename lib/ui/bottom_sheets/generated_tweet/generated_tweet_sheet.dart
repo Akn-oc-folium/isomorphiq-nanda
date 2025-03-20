@@ -22,18 +22,24 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
   });
 
   @override
+  void onViewModelReady(GeneratedTweetSheetModel viewModel) {
+    viewModel.initialise(request.description!);
+    super.onViewModelReady(viewModel);
+  }
+
+  @override
   Widget builder(
     BuildContext context,
     GeneratedTweetSheetModel viewModel,
     Widget? child,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      decoration: const BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(10).r,
+          topRight: Radius.circular(10).r,
         ),
       ),
       child: Column(
@@ -60,10 +66,41 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
           ),
           if (request.description != null) ...[
             verticalSpace16,
-            Text(
-              request.description!,
-              style: TextStyles.bodyPrimary,
-              softWrap: true,
+            TextField(
+              controller: viewModel.tweetController,
+              readOnly: !viewModel.isEditing,
+              maxLength: 280,
+              decoration: InputDecoration(
+                hintText: "Input context you want to tweet...",
+                border: InputBorder.none,
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: kcStrokePrimary,
+                    style: BorderStyle.solid,
+                  ),
+                  borderRadius: BorderRadius.circular(8).r,
+                ),
+                suffixIcon: Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 4.0),
+                  child: IconButton(
+                    color: kcSecondaryColor,
+                    icon: Icon(
+                      viewModel.isEditing ? Icons.check : Icons.edit,
+                    ),
+                    onPressed: () {
+                      viewModel.toggleEditing();
+                    },
+                    style: IconButton.styleFrom(
+                      backgroundColor: kcStrokeSecondary,
+                    ),
+                  ),
+                ),
+                suffixIconConstraints: BoxConstraints(),
+              ),
+              cursorColor: kcSecondaryColor,
+              cursorHeight: 16.h,
+              style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+              maxLines: null,
             ),
             verticalSpace16,
             Row(
@@ -77,6 +114,7 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
                   ),
                   onPressed: () => viewModel.sendGeneratedTweet(
                       TweetStatus.pending.name.toUpperCase()),
+                      isBusy: viewModel.busy('saveTweet'),
                 ),
                 horizontalSpace16,
                 Expanded(
@@ -100,5 +138,5 @@ class GeneratedTweetSheet extends StackedView<GeneratedTweetSheetModel> {
 
   @override
   GeneratedTweetSheetModel viewModelBuilder(BuildContext context) =>
-      GeneratedTweetSheetModel(generatedTweet: request.description ?? '');
+      GeneratedTweetSheetModel();
 }

@@ -1,5 +1,10 @@
+import 'dart:convert';
+
+import 'package:crypto/crypto.dart';
+import 'package:flutter/material.dart';
 import 'package:isomorph_iq/app/app.locator.dart';
 import 'package:isomorph_iq/app/app.router.dart';
+import 'package:isomorph_iq/services/api_service.dart';
 import 'package:isomorph_iq/services/hive_service.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
@@ -9,15 +14,18 @@ import 'package:telegram_web_app/telegram_web_app.dart';
 class StartupViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _hiveService = locator<HiveService>();
-  // final _apiService = locator<ApiService>();
+  final _apiService = locator<ApiService>();
   final TelegramWebApp _telegramWebApp = TelegramWebApp.instance;
   final DialogService _dialogService = locator<DialogService>();
 
   String? _userFirstName;
   String? get userFirstName => _userFirstName;
 
+  String? _userLastName;
+  String? get userLastName => _userLastName;
+
   String? _username;
-  String? get username => _username;
+  // String? get username => _username;
 
   // Place anything here that needs to happen before we get into the application
   Future runStartupLogic() async {
@@ -26,23 +34,26 @@ class StartupViewModel extends BaseViewModel {
 
     await _updateUserDetails();
 
-    // try {
-    //   final jwtToken = await _hiveService.retrieveData(kUserBox, kJwtTokenKey);
-    //   if (jwtToken == null) {
-    //     // Call api to get jwt
-    //     var hashOutput =
-    //         sha256.convert(utf8.encode("$username$userFirstName")).toString();
-    //     final jwt =
-    //         await _apiService.getJwt(username: username!, hash: hashOutput);
-    //     debugPrint("JWT Token: $jwt");
-    //     await _hiveService.storeData(kUserBox, kJwtTokenKey, jwt);
-    //     await _hiveService.storeData(kUserBox, kHashKey, hashOutput);
-    //   } else {
-    //     debugPrint("JWT already exists in Hive");
-    //   }
-    // } catch (e) {
-    //   debugPrint(e.toString());
-    // }
+    try {
+      final jwtToken = await _hiveService.retrieveData(kUserBox, kJwtTokenKey);
+      debugPrint("JWT Token outside: $jwtToken");
+      if (jwtToken == null) {
+        var hashOutput = sha256
+            .convert(utf8.encode("$_username$_userFirstName $_userLastName"))
+            .toString();
+        debugPrint("Hash Output: $hashOutput");
+        final jwtResponse =
+            await _apiService.getJwt(username: _username!, hash: hashOutput);
+        debugPrint("JWT Token: ${jwtResponse.data!.jwt}");
+        await _hiveService.storeData(
+            kUserBox, kJwtTokenKey, jwtResponse.data!.jwt);
+        await _hiveService.storeData(kUserBox, kHashKey, hashOutput);
+      } else {
+        debugPrint("JWT already exists in Hive");
+      }
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   Future<void> _updateUserDetails() async {
@@ -61,8 +72,13 @@ class StartupViewModel extends BaseViewModel {
     } else {
       final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
       if (userId != null) {
+        debugPrint("User id: $userId");
         _routerService.replaceWith(const MainViewRoute());
       } else {
+        debugPrint("User id doesn't exist");
+        _username = telegramUser?.username;
+        _userFirstName = telegramUser?.firstName;
+        _userLastName = telegramUser?.lastName;
         await _hiveService.storeData(
             kUserBox, kFirstNameKey, telegramUser?.firstName);
         await _hiveService.storeData(

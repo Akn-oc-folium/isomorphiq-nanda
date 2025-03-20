@@ -1,27 +1,34 @@
+// api_client.dart
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:isomorph_iq/services/token_interceptors.dart';
 import 'package:isomorph_iq/ui/common/app_constants.dart';
 
 class ApiClient {
-  //dio instance
-  final Dio _dio = Dio()
-    ..options.baseUrl = AppConstants.baseUrl
-    ..options.receiveDataWhenStatusError = true
-    ..options.connectTimeout =
-        const Duration(milliseconds: AppConstants.connectionTimeout)
-    ..options.receiveTimeout =
-        const Duration(milliseconds: AppConstants.receiveTimeout)
-    ..options.responseType = ResponseType.json
-    ..interceptors.add(
-      LogInterceptor(
-        request: true,
-        requestHeader: true,
-        requestBody: true,
-        responseHeader: true,
-        responseBody: true,
-      ),
-    );
-  // ..httpClientAdapter = BrowserHttpClientAdapter();
+  late final Dio _dio;
+
+  ApiClient() {
+    _dio = Dio()
+      ..options.baseUrl = AppConstants.baseUrl
+      ..options.receiveDataWhenStatusError = true
+      ..options.connectTimeout =
+          const Duration(milliseconds: AppConstants.connectionTimeout)
+      ..options.receiveTimeout =
+          const Duration(milliseconds: AppConstants.receiveTimeout)
+      ..options.responseType = ResponseType.json
+      // Add log interceptor
+      ..interceptors.addAll([
+        LogInterceptor(
+          request: true,
+          requestHeader: true,
+          requestBody: true,
+          responseHeader: true,
+          responseBody: true,
+        ),
+        // Add token interceptor using the same Dio instance
+        TokenInterceptor(dio: Dio()),
+      ]);
+  }
 
   // Get:-----------------------------------------------------------------------
   Future<Response> get(
@@ -72,29 +79,3 @@ class ApiClient {
     }
   }
 }
-
-// class ApiInterceptors extends Interceptor {
-//   @override
-//   Future<dynamic> onRequest(
-//       RequestOptions options, RequestInterceptorHandler handler) async {
-//     // do something before request is sent
-
-//     Map<String, String> headers = {
-//       "x-request-time": "",
-//       "x-app-version": "",
-//       "x-device-fingerprint": "",
-//       // "x-request-signature": "",
-//     };
-//   }
-
-//   @override
-//   Future<dynamic> onResponse(
-//       Response response, ResponseInterceptorHandler handler) async {
-//     // do something before response
-//   }
-
-//   @override
-//   void onError(DioError err, ErrorInterceptorHandler handler) {
-//     // do something to error
-//   }
-// }

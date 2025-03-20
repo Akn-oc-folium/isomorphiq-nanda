@@ -12,19 +12,30 @@ class GeneratedTweetSheetModel extends BaseViewModel {
   final _dialogService = locator<DialogService>();
   final _apiService = locator<ApiService>();
   final _hiveService = locator<HiveService>();
+  TextEditingController tweetController = TextEditingController();
 
-  GeneratedTweetSheetModel({required this.generatedTweet});
+  bool isEditing = false;
 
-  late String generatedTweet;
+  void initialise(String generatedTweet) {
+    tweetController = TextEditingController(text: generatedTweet);
+  }
+
+  void toggleEditing() {
+    isEditing = !isEditing;
+    notifyListeners();
+  }
 
   Future<void> sendGeneratedTweet(String tweetStatus) async {
-    setBusyForObject('tweetNow', true);
+    setBusyForObject(
+        tweetStatus.toUpperCase() == TweetStatus.approved.name.toUpperCase()
+            ? 'tweetNow'
+            : 'saveTweet',
+        true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
-      debugPrint('saving, $generatedTweet');
       final response = await _apiService.postSaveGeneratedTweet(
         userId: userId,
-        content: generatedTweet,
+        content: tweetController.text,
         tweetStatus: tweetStatus,
       );
       if (response.code == 200) {
@@ -53,7 +64,11 @@ class GeneratedTweetSheetModel extends BaseViewModel {
     } catch (e) {
       debugPrint('Error fetching tweets: $e');
     } finally {
-      setBusyForObject('tweetNow', false);
+      setBusyForObject(
+          tweetStatus.toUpperCase() == TweetStatus.approved.name.toUpperCase()
+              ? 'tweetNow'
+              : 'saveTweet',
+          false);
       rebuildUi();
     }
   }

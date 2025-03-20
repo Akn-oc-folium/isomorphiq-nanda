@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:isomorph_iq/models/app_connections_model.dart';
 import 'package:isomorph_iq/models/crypto_news_model.dart';
 import 'package:isomorph_iq/models/fetch_user_personality.dart';
+import 'package:isomorph_iq/models/generate_token_model.dart';
 import 'package:isomorph_iq/models/generate_tweet.dart';
 import 'package:isomorph_iq/models/google_sign.dart';
 import 'package:isomorph_iq/models/leaderboard_model.dart';
@@ -18,6 +19,38 @@ import 'package:isomorph_iq/ui/common/app_constants.dart';
 
 class ApiService {
   ApiClient apiClient = ApiClient();
+
+  Future<GenerateToken> getJwt({
+    required String username,
+    required String hash,
+  }) async {
+    try {
+      final Response<dynamic> response = await apiClient.get(
+        AppConstants.tokenEndpoint,
+        options: Options(
+          headers: {
+            'hash' : hash,
+          },
+        ),
+        queryParameters: {
+          'user_name': username,
+        },
+      );
+      if (response.statusCode == 200) {
+        return GenerateToken.fromJson(response.data as Map<String, dynamic>);
+      } else {
+        throw Exception('Failed to fetch the JWT!');
+      }
+    } catch (e) {
+      String errorMessage;
+      if (e is DioException) {
+        errorMessage = DioExceptions.fromDioError(e).toString();
+      } else {
+        errorMessage = 'An unexpected error occurred: ${e.toString()}';
+      }
+      throw errorMessage;
+    }
+  }
 
   Future<UserProfile> getDashboard({
     required String username,
