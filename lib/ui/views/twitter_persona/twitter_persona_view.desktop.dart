@@ -12,7 +12,7 @@ class TwitterPersonaViewDesktop
     return const Scaffold(
       body: Center(
         child: Text(
-          'Hello, DESKTOP UI - AgentsTwitterPersonaView!',
+          'Hello, DESKTOP UI!',
           style: TextStyle(
             fontSize: 35,
             fontWeight: FontWeight.w900,

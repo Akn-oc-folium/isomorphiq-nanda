@@ -56,6 +56,8 @@ class TweetCard extends ViewModelWidget<TwitterPersonaViewModel> {
                   ),
                   onPressed: () => viewModel.updateTweetStatus(
                       tweet.id, TweetStatus.rejected.name.toUpperCase()),
+                  isBusy: viewModel
+                      .busy('rejectingTweet${tweet.id.split('-').first}'),
                 ),
                 horizontalSpace16,
                 Expanded(
@@ -63,7 +65,8 @@ class TweetCard extends ViewModelWidget<TwitterPersonaViewModel> {
                     text: "Tweet Now",
                     onPressed: () => viewModel.updateTweetStatus(
                         tweet.id, TweetStatus.approved.name.toUpperCase()),
-                    isBusy: viewModel.busy('updatingTweetStatus'),
+                    isBusy: viewModel.busy(
+                        'updatingTweetStatus${tweet.id.split('-').first}'),
                   ),
                 )
               ],

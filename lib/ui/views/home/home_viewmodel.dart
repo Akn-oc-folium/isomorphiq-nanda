@@ -43,11 +43,6 @@ class HomeViewModel extends BaseViewModel {
   List<News>? _newsList;
   List<News>? get newsList => _newsList;
 
-  Future<void> initialise() async {
-    await _loadRedeemStatus();
-    await refreshData();
-  }
-
   Future<void> refreshData() async {
     try {
       setBusy(true);
@@ -209,7 +204,7 @@ class HomeViewModel extends BaseViewModel {
   Future<void> signout() async {
     await _hiveService.clearAllData();
     await _hiveService.closeAllBoxes();
-    _routerService.replaceWithMainView();
+    _routerService.replaceWithStartupView();
   }
 
   void navigateToSources() => _routerService.navigateToSourcesView();

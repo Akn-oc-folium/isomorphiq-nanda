@@ -19,8 +19,7 @@ class TwitterPersonaViewMobile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<TwitterPersonaViewModel>.reactive(
       viewModelBuilder: () => TwitterPersonaViewModel(),
-      onViewModelReady: (viewModel) => viewModel.fetchTweets(),
-      createNewViewModelOnInsert: true,
+      onViewModelReady: (viewModel) => viewModel.initialize(),
       builder: (context, viewModel, child) {
         return Scaffold(
           backgroundColor: Colors.white,
@@ -130,7 +129,7 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                       ),
                       verticalSpace04,
                       verticalSpace08,
-                      if (viewModel.tweets == null) ...[
+                      if (viewModel.tweets.isEmpty) ...[
                         Expanded(
                           child: Center(
                             child: Text(
@@ -146,9 +145,9 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                         Expanded(
                           child: ListView.builder(
                             physics: ClampingScrollPhysics(),
-                            itemCount: viewModel.tweets!.length,
+                            itemCount: viewModel.tweets.length,
                             itemBuilder: (context, index) {
-                              final tweet = viewModel.tweets![index];
+                              final tweet = viewModel.tweets[index];
                               return TweetCard(tweet: tweet);
                             },
                           ),

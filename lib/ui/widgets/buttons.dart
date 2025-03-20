@@ -135,11 +135,13 @@ class SecondaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final bool isSmall;
   final Widget? icon;
+  final bool isBusy;
 
   const SecondaryButton({
     super.key,
     required this.text,
     this.onPressed,
+    this.isBusy = false,
   })  : isSmall = false,
         icon = null;
 
@@ -147,6 +149,7 @@ class SecondaryButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.isBusy = false,
   })  : isSmall = true,
         icon = null;
 
@@ -154,6 +157,7 @@ class SecondaryButton extends StatelessWidget {
     super.key,
     required this.icon,
     required this.onPressed,
+    this.isBusy = false,
   })  : text = null,
         isSmall = false;
 
@@ -193,13 +197,28 @@ class SecondaryButton extends StatelessWidget {
               : EdgeInsets.symmetric(vertical: 16.h),
         ),
         onPressed: onPressed,
-        child: icon ??
-            Text(
-              text ?? '',
-              style: isSmall
-                  ? TextStyles.buttonText.copyWith(height: 1.125.h)
-                  : TextStyles.buttonText,
-            ),
+        child: isBusy
+            ? Center(
+                child: SizedBox(
+                  height: 20.r,
+                  width: 20.r,
+                  child: CircularProgressIndicator.adaptive(
+                    backgroundColor: Colors.transparent,
+                    strokeWidth: 2.0.w,
+                    valueColor: const AlwaysStoppedAnimation<Color>(
+                      kcSecondaryColor,
+                    ),
+                  ),
+                ),
+              )
+            : icon != null
+                ? icon!
+                : Text(
+                    text ?? '',
+                    style: isSmall
+                        ? TextStyles.buttonText.copyWith(height: 1.125.h)
+                        : TextStyles.buttonText,
+                  ),
       ),
     );
   }

@@ -20,13 +20,17 @@ class Tweets {
   });
 
   factory Tweets.fromJson(Map<String, dynamic> json) => Tweets(
-        data: List<Tweet>.from(json["data"].map((x) => Tweet.fromJson(x))),
+        data: json["data"] == null
+            ? null
+            : List<Tweet>.from(json["data"].map((x) => Tweet.fromJson(x))),
         code: json["code"],
         message: json["message"],
       );
 
   Map<String, dynamic> toJson() => {
-        "data": List<dynamic>.from(data!.map((x) => x.toJson())),
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x.toJson())),
         "code": code,
         "message": message,
       };
