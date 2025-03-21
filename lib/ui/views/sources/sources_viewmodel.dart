@@ -8,9 +8,6 @@ import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
-enum AuthProvider { google, telegram, x, discord, facebook, spotify, reddit }
-
 extension AuthProviderExtension on AuthProvider {
   String get title {
     switch (this) {
@@ -24,8 +21,8 @@ extension AuthProviderExtension on AuthProvider {
         return "Discord";
       case AuthProvider.facebook:
         return "Facebook";
-      case AuthProvider.spotify:
-        return "Spotify";
+      // case AuthProvider.spotify:
+      //   return "Spotify";
       case AuthProvider.reddit:
         return "Reddit";
     }
@@ -44,7 +41,7 @@ class SourcesViewModel extends BaseViewModel {
     AuthProvider.x: false,
     AuthProvider.discord: false,
     AuthProvider.facebook: false,
-    AuthProvider.spotify: false,
+    // AuthProvider.spotify: false,
     AuthProvider.reddit: false,
   };
 
@@ -55,7 +52,7 @@ class SourcesViewModel extends BaseViewModel {
     AuthProvider.x: false,
     AuthProvider.discord: false,
     AuthProvider.facebook: false,
-    AuthProvider.spotify: false,
+    // AuthProvider.spotify: false,
     AuthProvider.reddit: false,
   };
 

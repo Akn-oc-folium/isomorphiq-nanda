@@ -26,19 +26,19 @@ class ConnectAppSheet extends StackedView<ConnectAppSheetModel> {
     Widget? child,
   ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-      decoration: const BoxDecoration(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15).r,
+      decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(10),
-          topRight: Radius.circular(10),
+          topLeft: Radius.circular(10).r,
+          topRight: Radius.circular(10).r,
         ),
       ),
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 23, vertical: 24),
+        padding: const EdgeInsets.all(24.0).r,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          // mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(
@@ -47,12 +47,12 @@ class ConnectAppSheet extends StackedView<ConnectAppSheetModel> {
                 Spacer(),
                 GestureDetector(
                   onTap: () => completer!(SheetResponse(confirmed: false)),
-                  child: Icon(Icons.close, size: 24),
+                  child: Icon(Icons.close, size: 24.r),
                 ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 18),
+              padding: const EdgeInsets.symmetric(horizontal: 18).h,
               child: Row(
                 children: [
                   Image.asset(
@@ -84,8 +84,9 @@ class ConnectAppSheet extends StackedView<ConnectAppSheetModel> {
             ),
             verticalSpace16,
             PrimaryButton(
-                text: 'Connect',
-                onPressed: () => viewModel.connectApp(request.data?.provider)),
+              text: 'Connect',
+              onPressed: () => viewModel.connectApp(request.data?.provider),
+            ),
           ],
         ),
       ),

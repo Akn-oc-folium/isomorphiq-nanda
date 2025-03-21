@@ -7,8 +7,6 @@ import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-enum AuthProvider { google, telegram, x, discord, facebook, spotify, reddit }
-
 class ConnectAppSheetModel extends BaseViewModel {
   final _apiService = locator<ApiService>();
   final AuthorizationService _authService = locator<AuthorizationService>();
@@ -49,8 +47,8 @@ class ConnectAppSheetModel extends BaseViewModel {
         return AppConstants.discordEndpoint;
       case AuthProvider.facebook:
         return AppConstants.facebookEndpoint;
-      case AuthProvider.spotify:
-        return AppConstants.spotifyEndpoint;
+      // case AuthProvider.spotify:
+      //   return AppConstants.spotifyEndpoint;
       case AuthProvider.reddit:
         return AppConstants.redditEndpoint;
       default:

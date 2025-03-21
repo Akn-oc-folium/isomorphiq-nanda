@@ -43,8 +43,8 @@ class RewardsSheet extends StackedView<RewardsSheetModel> {
             onTap: () => completer!(SheetResponse()),
             child: SvgPicture.asset(
               Assets.icons.close,
-              width: 24,
-              height: 24,
+              width: 24.r,
+              height: 24.r,
               colorFilter:
                   const ColorFilter.mode(kcSecondaryColor, BlendMode.srcIn),
             ),

@@ -12,10 +12,10 @@ class TopicInterestSheet extends StackedView<TopicInterestSheetModel> {
   final SheetRequest request;
 
   const TopicInterestSheet({
-    Key? key,
+    super.key,
     required this.completer,
     required this.request,
-  }) : super(key: key);
+  });
 
   @override
   Widget builder(

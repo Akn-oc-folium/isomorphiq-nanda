@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:isomorph_iq/gen/assets.gen.dart';
 import 'package:isomorph_iq/ui/common/app_colors.dart';
+import 'package:isomorph_iq/ui/common/app_constants.dart';
 import 'package:isomorph_iq/ui/widgets/connect_card.dart';
 import 'package:stacked/stacked.dart';
 
@@ -139,19 +140,19 @@ class _SourcesViewMobileState extends State<SourcesViewMobile> {
                                   false,
                               points: 50,
                             ),
-                            ConnectCard(
-                              title: AuthProvider.spotify.title,
-                              imagePath: Assets.icons.spotifyLogo.path,
-                              onConnect: () =>
-                                  viewModel.connectApp(AuthProvider.spotify),
-                              isConnected: viewModel
-                                      .connectedApps[AuthProvider.spotify]! ||
-                                  viewModel.appConnections!.data!.spotify,
-                              isBusy: viewModel
-                                      .loadingState[AuthProvider.spotify] ??
-                                  false,
-                              points: 50,
-                            ),
+                            // ConnectCard(
+                            //   title: AuthProvider.spotify.title,
+                            //   imagePath: Assets.icons.spotifyLogo.path,
+                            //   onConnect: () =>
+                            //       viewModel.connectApp(AuthProvider.spotify),
+                            //   isConnected: viewModel
+                            //           .connectedApps[AuthProvider.spotify]! ||
+                            //       viewModel.appConnections!.data!.spotify,
+                            //   isBusy: viewModel
+                            //           .loadingState[AuthProvider.spotify] ??
+                            //       false,
+                            //   points: 50,
+                            // ),
                             ConnectCard(
                               title: AuthProvider.reddit.title,
                               imagePath: Assets.icons.redditLogo.path,

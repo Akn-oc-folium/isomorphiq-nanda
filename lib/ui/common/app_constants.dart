@@ -6,6 +6,8 @@ const double kdDesktopMaxContentHeight = 750;
 
 enum TweetStatus { pending, approved, rejected }
 
+enum AuthProvider { google, telegram, x, discord, facebook, reddit }
+
 class AppConstants {
   AppConstants._();
 
