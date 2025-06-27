@@ -65,7 +65,7 @@ class AppThemes {
           },
         ),
       ),
-      tabBarTheme: TabBarTheme(
+      tabBarTheme: TabBarThemeData(
         labelColor: kcWhite,
         unselectedLabelColor: kcPrimaryColor,
         labelStyle: TextStyles.titleSecondary,
