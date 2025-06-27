@@ -1,41 +1,138 @@
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
-import 'package:isomorph_iq/ui/common/ui_helpers.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
+import 'package:isomorph_iq_nanda/gen/fonts.gen.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
+import 'package:isomorph_iq_nanda/ui/views/agents/agents_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/home/home_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/jackpot/jackpot_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_viewmodel.dart';
 
-class MainViewDesktop extends ViewModelWidget<MainViewModel> {
+class MainViewDesktop extends StatelessWidget {
   const MainViewDesktop({super.key});
 
   @override
-  Widget build(BuildContext context, MainViewModel viewModel) {
-    return Scaffold(
-      body: Center(
-        child: SizedBox(
-          width: kdDesktopMaxContentWidth,
-          height: kdDesktopMaxContentHeight,
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              verticalSpace48,
-              Column(
-                children: [
-                  const Text(
-                    'Hello, DESKTOP UI!',
-                    style: TextStyle(
-                      fontSize: 35,
-                      fontWeight: FontWeight.w900,
-                    ),
-                  ),
-                  verticalSpace16,
-                ],
-              ),
-            ],
+  Widget build(BuildContext context) {
+    return ViewModelBuilder.reactive(
+      viewModelBuilder: () => MainViewModel(),
+      builder: (context, viewModel, child) => Scaffold(
+        bottomNavigationBar: Padding(
+          padding: EdgeInsets.only(left: 761.w, right: 799.w, bottom: 56.h),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(100),
+            child: NavigationBar(
+              height: 72.h,
+              selectedIndex: viewModel.currentIndex,
+              onDestinationSelected: viewModel.setIndex,
+              labelBehavior: NavigationDestinationLabelBehavior.alwaysHide,
+              destinations: [
+                getCustomizedNavItem(
+                  index: 0,
+                  selectedIndex: viewModel.currentIndex,
+                  iconPath: Assets.icons.home,
+                  label: ksHomeNavTitle,
+                ),
+                getCustomizedNavItem(
+                  index: 1,
+                  selectedIndex: viewModel.currentIndex,
+                  iconPath: Assets.icons.logoStatic.path,
+                  label: ksAgentNavTitle,
+                ),
+                getCustomizedNavItem(
+                  index: 2,
+                  selectedIndex: viewModel.currentIndex,
+                  iconPath: Assets.icons.jackpot,
+                  label: ksJackpotNavTitle,
+                ),
+              ],
+            ),
           ),
+        ),
+        body: getViewForIndex(viewModel.currentIndex),
+      ),
+    );
+  }
+
+  Container getCustomizedNavItem({
+    required int index,
+    required int selectedIndex,
+    required String iconPath,
+    required String label,
+  }) {
+    return Container(
+      decoration: BoxDecoration(
+        gradient: selectedIndex == index
+            ? LinearGradient(
+                colors: [
+                  kcPrimaryColor.withValues(alpha: 0.24),
+                  kcPrimaryColor.withValues(alpha: 0.0),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              )
+            : null,
+        border: selectedIndex == index
+            ? const Border(
+                top: BorderSide(color: kcPrimaryColor, width: 3.0),
+              )
+            : const Border(
+                top: BorderSide(color: Colors.transparent, width: 3.0),
+              ),
+        borderRadius: selectedIndex == index
+            ? const BorderRadius.only(
+                topLeft: Radius.circular(2.0),
+                topRight: Radius.circular(2.0),
+              )
+            : null,
+      ),
+      child: NavigationDestination(
+        label: '',
+        icon: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Opacity(
+              opacity: selectedIndex == index ? 1.0 : 0.5,
+              child: iconPath == Assets.icons.logoStatic.path
+                  ? Image.asset(
+                      iconPath,
+                      height: 24.r,
+                    )
+                  : SvgPicture.asset(
+                      iconPath,
+                      height: 24.r,
+                    ),
+            ),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: 12.sp,
+                fontWeight: FontWeight.w600,
+                fontFamily: FontFamily.sora,
+                height: 1.66.h,
+                color: selectedIndex == index
+                    ? kcWhite
+                    : kcWhite.withValues(alpha: 0.5),
+              ),
+            ),
+          ],
         ),
       ),
     );
+  }
+
+  Widget getViewForIndex(int index) {
+    switch (index) {
+      case 0:
+        return HomeView(key: UniqueKey());
+      case 1:
+        return const AgentsView();
+      case 2:
+        return const JackpotView();
+    }
+    return HomeView(key: UniqueKey());
   }
 }

@@ -1,5 +1,5 @@
-import 'package:isomorph_iq/ui/widgets/mouse_transforms/scale_on_hover.dart';
-import 'package:isomorph_iq/ui/widgets/mouse_transforms/translate_on_hover.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/mouse_transforms/scale_on_hover.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/mouse_transforms/translate_on_hover.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 

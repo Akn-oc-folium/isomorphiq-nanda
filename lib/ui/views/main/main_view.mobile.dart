@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/gen/fonts.gen.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/app_strings.dart';
-import 'package:isomorph_iq/ui/views/agents/agents_view.dart';
-import 'package:isomorph_iq/ui/views/home/home_view.dart';
-import 'package:isomorph_iq/ui/views/jackpot/jackpot_view.dart';
+import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
+import 'package:isomorph_iq_nanda/gen/fonts.gen.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
+import 'package:isomorph_iq_nanda/ui/views/agents/agents_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/home/home_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/jackpot/jackpot_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_viewmodel.dart';

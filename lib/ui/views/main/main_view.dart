@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/ui/views/main/main_view.mobile.dart';
+import 'package:isomorph_iq_nanda/ui/views/main/main_view.mobile.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 import 'package:stacked/stacked.dart';
 

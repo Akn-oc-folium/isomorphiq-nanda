@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
-import 'package:isomorph_iq/ui/widgets/connect_card.dart';
+import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_constants.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/connect_card.dart';
 import 'package:stacked/stacked.dart';
 
 import 'sources_viewmodel.dart';

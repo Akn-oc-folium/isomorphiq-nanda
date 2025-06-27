@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/app/app.router.dart';
-import 'package:isomorph_iq/services/hive_service.dart';
-import 'package:isomorph_iq/ui/common/app_strings.dart';
+import 'package:isomorph_iq_nanda/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/app/app.router.dart';
+import 'package:isomorph_iq_nanda/services/hive_service.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
@@ -34,6 +34,11 @@ class OnboardingViewModel extends BaseViewModel {
   void onPageChanged(int index) {
     _currentPage = index;
     notifyListeners();
+  }
+
+  void onContinuePressedWeb() {
+    _routerService.replaceWith(const MainViewRoute());
+    debugPrint('Onboarding finished!');
   }
 
   void onContinuePressed() {

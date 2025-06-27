@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/text_styles.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
 
 class InlineLinkText extends StatelessWidget {
   final String prefixText; // e.g. "By continuing, you agree to our "

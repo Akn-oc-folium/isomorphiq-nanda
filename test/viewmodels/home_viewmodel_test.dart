@@ -1,7 +1,7 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:isomorph_iq/app/app.bottomsheets.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/ui/common/app_strings.dart';
+import 'package:isomorph_iq_nanda/app/app.bottomsheets.dart';
+import 'package:isomorph_iq_nanda/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
 import 'package:mockito/mockito.dart';
 
 import '../helpers/test_helpers.dart';

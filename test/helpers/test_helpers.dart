@@ -1,10 +1,10 @@
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/app/app.locator.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:isomorph_iq/services/api_service.dart';
-import 'package:isomorph_iq/services/hive_service.dart';
-import 'package:isomorph_iq/services/authorization_service.dart';
+import 'package:isomorph_iq_nanda/services/api_service.dart';
+import 'package:isomorph_iq_nanda/services/hive_service.dart';
+import 'package:isomorph_iq_nanda/services/authorization_service.dart';
 // @stacked-import
 
 import 'test_helpers.mocks.dart';

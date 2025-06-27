@@ -1,9 +1,9 @@
 import 'package:flutter/widgets.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/models/google_sign.dart';
-import 'package:isomorph_iq/services/api_service.dart';
-import 'package:isomorph_iq/services/authorization_service.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
+import 'package:isomorph_iq_nanda/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/models/google_sign.dart';
+import 'package:isomorph_iq_nanda/services/api_service.dart';
+import 'package:isomorph_iq_nanda/services/authorization_service.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_constants.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:isomorph_iq/gen/fonts.gen.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/text_styles.dart';
+import 'package:isomorph_iq_nanda/gen/fonts.gen.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
 
 class AppThemes {
   AppThemes._();

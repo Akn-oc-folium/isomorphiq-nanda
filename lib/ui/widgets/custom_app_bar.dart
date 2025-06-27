@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:isomorph_iq/gen/assets.gen.dart';
+import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
 
 class CustomAppBar extends AppBar {
   CustomAppBar({

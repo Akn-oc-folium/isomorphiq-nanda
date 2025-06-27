@@ -1,21 +1,21 @@
 import 'package:dio/dio.dart';
-import 'package:isomorph_iq/models/app_connections_model.dart';
-import 'package:isomorph_iq/models/crypto_news_model.dart';
-import 'package:isomorph_iq/models/fetch_user_personality.dart';
-import 'package:isomorph_iq/models/generate_token_model.dart';
-import 'package:isomorph_iq/models/generate_tweet.dart';
-import 'package:isomorph_iq/models/google_sign.dart';
-import 'package:isomorph_iq/models/leaderboard_model.dart';
-import 'package:isomorph_iq/models/post_model.dart';
-import 'package:isomorph_iq/models/profile_model.dart';
-import 'package:isomorph_iq/models/save_generated_tweet.dart';
-import 'package:isomorph_iq/models/tweets_model.dart';
-import 'package:isomorph_iq/models/upsert_user_personality.dart';
-import 'package:isomorph_iq/models/user_points.dart';
-import 'package:isomorph_iq/models/user_rank_model.dart';
-import 'package:isomorph_iq/services/api_client.dart';
-import 'package:isomorph_iq/services/api_exceptions.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
+import 'package:isomorph_iq_nanda/models/app_connections_model.dart';
+import 'package:isomorph_iq_nanda/models/crypto_news_model.dart';
+import 'package:isomorph_iq_nanda/models/fetch_user_personality.dart';
+import 'package:isomorph_iq_nanda/models/generate_token_model.dart';
+import 'package:isomorph_iq_nanda/models/generate_tweet.dart';
+import 'package:isomorph_iq_nanda/models/google_sign.dart';
+import 'package:isomorph_iq_nanda/models/leaderboard_model.dart';
+import 'package:isomorph_iq_nanda/models/post_model.dart';
+import 'package:isomorph_iq_nanda/models/profile_model.dart';
+import 'package:isomorph_iq_nanda/models/save_generated_tweet.dart';
+import 'package:isomorph_iq_nanda/models/tweets_model.dart';
+import 'package:isomorph_iq_nanda/models/upsert_user_personality.dart';
+import 'package:isomorph_iq_nanda/models/user_points.dart';
+import 'package:isomorph_iq_nanda/models/user_rank_model.dart';
+import 'package:isomorph_iq_nanda/services/api_client.dart';
+import 'package:isomorph_iq_nanda/services/api_exceptions.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_constants.dart';
 
 class ApiService {
   ApiClient apiClient = ApiClient();
@@ -29,7 +29,7 @@ class ApiService {
         AppConstants.tokenEndpoint,
         options: Options(
           headers: {
-            'hash' : hash,
+            'hash': hash,
           },
         ),
         queryParameters: {

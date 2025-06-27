@@ -2,11 +2,11 @@ import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/app/app.locator.dart';
-import 'package:isomorph_iq/app/app.router.dart';
-import 'package:isomorph_iq/services/api_service.dart';
-import 'package:isomorph_iq/services/hive_service.dart';
-import 'package:isomorph_iq/ui/common/app_strings.dart';
+import 'package:isomorph_iq_nanda/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/app/app.router.dart';
+import 'package:isomorph_iq_nanda/services/api_service.dart';
+import 'package:isomorph_iq_nanda/services/hive_service.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:telegram_web_app/telegram_web_app.dart';

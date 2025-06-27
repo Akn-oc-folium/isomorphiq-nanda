@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:isomorph_iq/gen/assets.gen.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/text_styles.dart';
-import 'package:isomorph_iq/ui/common/ui_helpers.dart';
-import 'package:isomorph_iq/ui/widgets/buttons.dart';
-import 'package:isomorph_iq/ui/widgets/custom_app_bar.dart';
-import 'package:isomorph_iq/ui/widgets/tweet_card.dart';
+import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
+import 'package:isomorph_iq_nanda/ui/common/ui_helpers.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/buttons.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/custom_app_bar.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/tweet_card.dart';
 import 'package:stacked/stacked.dart';
 
 import 'twitter_persona_viewmodel.dart';

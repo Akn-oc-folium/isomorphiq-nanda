@@ -1,5 +1,5 @@
-// import 'package:isomorph_iq/ui/common/app_colors.dart';
-// import 'package:isomorph_iq/ui/common/ui_helpers.dart';
+// import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+// import 'package:isomorph_iq_nanda/ui/common/ui_helpers.dart';
 // import 'package:flutter/material.dart';
 // import 'package:stacked/stacked.dart';
 

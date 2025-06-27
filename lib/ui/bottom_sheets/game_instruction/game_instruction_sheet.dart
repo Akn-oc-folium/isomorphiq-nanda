@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/ui/common/app_colors.dart';
-import 'package:isomorph_iq/ui/common/text_styles.dart';
-import 'package:isomorph_iq/ui/common/ui_helpers.dart';
-import 'package:isomorph_iq/ui/widgets/buttons.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
+import 'package:isomorph_iq_nanda/ui/common/ui_helpers.dart';
+import 'package:isomorph_iq_nanda/ui/widgets/buttons.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 

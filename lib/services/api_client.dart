@@ -1,8 +1,8 @@
 // api_client.dart
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:isomorph_iq/services/token_interceptors.dart';
-import 'package:isomorph_iq/ui/common/app_constants.dart';
+import 'package:isomorph_iq_nanda/services/token_interceptors.dart';
+import 'package:isomorph_iq_nanda/ui/common/app_constants.dart';
 
 class ApiClient {
   late final Dio _dio;

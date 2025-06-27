@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:isomorph_iq/gen/fonts.gen.dart';
+import 'package:isomorph_iq_nanda/gen/fonts.gen.dart';
 
 class TextStyles {
   TextStyles._();
