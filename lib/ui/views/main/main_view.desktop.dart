@@ -8,6 +8,7 @@ import 'package:isomorph_iq_nanda/ui/common/app_strings.dart';
 import 'package:isomorph_iq_nanda/ui/views/agents/agents_view.dart';
 import 'package:isomorph_iq_nanda/ui/views/home/home_view.dart';
 import 'package:isomorph_iq_nanda/ui/views/jackpot/jackpot_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/main_layout/main_layout_view.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_viewmodel.dart';
@@ -127,12 +128,12 @@ class MainViewDesktop extends StatelessWidget {
   Widget getViewForIndex(int index) {
     switch (index) {
       case 0:
-        return HomeView(key: UniqueKey());
+        return MainLayoutView(body: HomeView(key: UniqueKey()));
       case 1:
-        return const AgentsView();
+        return MainLayoutView(body: const AgentsView());
       case 2:
-        return const JackpotView();
+        return MainLayoutView(body: const JackpotView());
     }
-    return HomeView(key: UniqueKey());
+    return MainLayoutView(body: HomeView(key: UniqueKey()));
   }
 }

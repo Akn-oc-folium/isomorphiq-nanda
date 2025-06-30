@@ -158,6 +158,9 @@ class $AssetsIconsGen {
   /// File path: assets/icons/x-logo-outline.svg
   String get xLogoOutline => 'assets/icons/x-logo-outline.svg';
 
+  /// File path: assets/icons/x-logo-vector.svg
+  String get xLogoVector => 'assets/icons/x-logo-vector.svg';
+
   /// File path: assets/icons/x-logo.png
   AssetGenImage get xLogo => const AssetGenImage('assets/icons/x-logo.png');
 
@@ -200,6 +203,7 @@ class $AssetsIconsGen {
         uniswapLogo,
         warpcastLogo,
         xLogoOutline,
+        xLogoVector,
         xLogo
       ];
 }

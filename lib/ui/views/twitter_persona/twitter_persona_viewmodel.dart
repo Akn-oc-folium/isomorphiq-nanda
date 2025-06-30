@@ -18,8 +18,66 @@ class TwitterPersonaViewModel extends BaseViewModel {
   final _hiveService = locator<HiveService>();
 
   TextEditingController topicController = TextEditingController();
+  Tweet? selectedTweet;
+  TextEditingController editTweetController = TextEditingController();
 
-  List<Tweet> _tweets = [];
+  List<Tweet> _tweets = [
+    Tweet(
+      id: '14-abc123',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'PENDING',
+      createdAt: DateTime.now().subtract(Duration(days: 1)),
+      updatedAt: DateTime.now(),
+    ),
+    Tweet(
+      id: '13-def456',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'EDITED',
+      createdAt: DateTime.now().subtract(Duration(days: 2)),
+      updatedAt: DateTime.now(),
+    ),
+    Tweet(
+      id: '23-ghi789',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'APPROVED',
+      createdAt: DateTime.now().subtract(Duration(days: 3)),
+      updatedAt: DateTime.now(),
+    ),
+    Tweet(
+      id: '14-abc123',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'PENDING',
+      createdAt: DateTime.now().subtract(Duration(days: 1)),
+      updatedAt: DateTime.now(),
+    ),
+    Tweet(
+      id: '14-abc123',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'PENDING',
+      createdAt: DateTime.now().subtract(Duration(days: 1)),
+      updatedAt: DateTime.now(),
+    ),
+    Tweet(
+      id: '14-abc123',
+      userId: 'user001',
+      tweetContent:
+          'Pi Network, the closely followed tap-to-earn cryptocurrency network, launched its open mainnet today, Feb. 20, at 8 am UTC. The launch was a significant milestone for the project.',
+      tweetStatus: 'PENDING',
+      createdAt: DateTime.now().subtract(Duration(days: 1)),
+      updatedAt: DateTime.now(),
+    ),
+  ];
+
   List<Tweet> get tweets => _tweets;
 
   bool isFilterDropdownVisible = false;
@@ -116,6 +174,23 @@ class TwitterPersonaViewModel extends BaseViewModel {
     if (response?.confirmed ?? false) {
       await fetchTweets();
     }
+  }
+
+  void selectTweetForEdit(Tweet tweet) {
+    selectedTweet = tweet;
+    editTweetController.text = tweet.tweetContent;
+    notifyListeners();
+  }
+
+  void closeEditPanel() {
+    selectedTweet = null;
+    notifyListeners();
+  }
+
+  void updateEditedTweet() {
+    // Implement API call to update tweet here if needed
+    selectedTweet = null;
+    notifyListeners();
   }
 
   Future<void> updateTweetStatus(String tweetId, String tweetStatus) async {

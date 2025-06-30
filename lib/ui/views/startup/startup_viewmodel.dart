@@ -11,6 +11,18 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:telegram_web_app/telegram_web_app.dart';
 
+class TelegramUser {
+  final String username;
+  final String firstName;
+  final String lastName;
+
+  TelegramUser({
+    required this.username,
+    required this.firstName,
+    required this.lastName,
+  });
+}
+
 class StartupViewModel extends BaseViewModel {
   final _routerService = locator<RouterService>();
   final _hiveService = locator<HiveService>();
@@ -57,8 +69,9 @@ class StartupViewModel extends BaseViewModel {
   }
 
   Future<void> _updateUserDetails() async {
-    final telegramUser = _telegramWebApp.initDataUnsafe?.user;
-
+    //final telegramUser = _telegramWebApp.initDataUnsafe?.user;
+    TelegramUser telegramUser =
+        TelegramUser(username: 'monky75', firstName: 'Ankit', lastName: 'Nath');
     if (telegramUser?.username == null) {
       var response = await _dialogService.showDialog(
         title: 'Error: Telegram Username Required',

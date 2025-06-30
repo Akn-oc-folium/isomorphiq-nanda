@@ -24,6 +24,7 @@ import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:isomorph_iq_nanda/ui/bottom_sheets/connect_app/connect_app_sheet.dart';
 import 'package:isomorph_iq_nanda/ui/bottom_sheets/topic_interest/topic_interest_sheet.dart';
+import 'package:isomorph_iq_nanda/ui/views/main_layout/main_layout_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -41,6 +42,7 @@ import 'package:isomorph_iq_nanda/ui/bottom_sheets/topic_interest/topic_interest
     CustomRoute(page: ChoosePlanView),
     CustomRoute(page: AiPersonaView),
     CustomRoute(page: TweetSettingsView),
+    CustomRoute(page: MainLayoutView),
 // @stacked-route
 
     CustomRoute(page: UnknownView, path: '/404'),

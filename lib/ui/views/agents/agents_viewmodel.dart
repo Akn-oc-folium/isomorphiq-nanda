@@ -21,4 +21,8 @@ class AgentsViewModel extends BaseViewModel {
   void onCryptoNewsPressed() {
     _routerService.navigateToCryptoNewsAgentView();
   }
+
+  void navigateBack() {
+    _routerService.back();
+  }
 }
