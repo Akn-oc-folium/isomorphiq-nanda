@@ -45,14 +45,18 @@ class StartupViewModel extends BaseViewModel {
     // you have custom startup logic
 
     await _updateUserDetails();
-
+    _username = 'techsatya5';
+    _userFirstName = 'Satyajit';
+    _userLastName = 'Barik';
     try {
       final jwtToken = await _hiveService.retrieveData(kUserBox, kJwtTokenKey);
       debugPrint("JWT Token outside: $jwtToken");
       if (jwtToken == null) {
+        debugPrint('username $_username,$userFirstName, $userLastName');
         var hashOutput = sha256
             .convert(utf8.encode("$_username$_userFirstName $_userLastName"))
             .toString();
+
         debugPrint("Hash Output: $hashOutput");
         final jwtResponse =
             await _apiService.getJwt(username: _username!, hash: hashOutput);
@@ -70,8 +74,8 @@ class StartupViewModel extends BaseViewModel {
 
   Future<void> _updateUserDetails() async {
     //final telegramUser = _telegramWebApp.initDataUnsafe?.user;
-    TelegramUser telegramUser =
-        TelegramUser(username: 'monky75', firstName: 'Ankit', lastName: 'Nath');
+    TelegramUser telegramUser = TelegramUser(
+        username: 'techsatya5', firstName: 'Satyajit', lastName: 'Barik');
     if (telegramUser?.username == null) {
       var response = await _dialogService.showDialog(
         title: 'Error: Telegram Username Required',

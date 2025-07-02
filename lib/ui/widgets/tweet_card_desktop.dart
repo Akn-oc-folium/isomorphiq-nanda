@@ -33,7 +33,6 @@ class TweetCardDesktop extends ViewModelWidget<TwitterPersonaViewModel> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          /// Title + actions row
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -68,7 +67,7 @@ class TweetCardDesktop extends ViewModelWidget<TwitterPersonaViewModel> {
                   horizontalSpace08,
                   PrimaryButton.icon(
                     icon: Icon(Icons.edit),
-                    onPressed: onEdit, // ✅ Corrected to call passed onEdit
+                    onPressed: onEdit,
                   ),
                   horizontalSpace08,
                   PrimaryButton.icon(
@@ -87,8 +86,6 @@ class TweetCardDesktop extends ViewModelWidget<TwitterPersonaViewModel> {
             ],
           ),
           verticalSpace16,
-
-          /// Tweet content
           Text(
             tweet.tweetContent,
             style: TextStyles.bodyPrimary.copyWith(

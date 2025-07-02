@@ -188,7 +188,6 @@ class TwitterPersonaViewModel extends BaseViewModel {
   }
 
   void updateEditedTweet() {
-    // Implement API call to update tweet here if needed
     selectedTweet = null;
     notifyListeners();
   }

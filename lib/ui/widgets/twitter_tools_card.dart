@@ -20,7 +20,7 @@ class TwitterToolsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 221.h,
-      width: 288.w,
+      constraints: BoxConstraints(maxWidth: 288.w),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
         color: kcPrimaryColorLight,

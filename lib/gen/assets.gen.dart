@@ -239,6 +239,10 @@ class $AssetsImagesGen {
   AssetGenImage get chestTasks =>
       const AssetGenImage('assets/images/chest-tasks.png');
 
+  /// File path: assets/images/crypto_news_desktop.png
+  AssetGenImage get cryptoNewsDesktop =>
+      const AssetGenImage('assets/images/crypto_news_desktop.png');
+
   /// File path: assets/images/earned-points.png
   AssetGenImage get earnedPoints =>
       const AssetGenImage('assets/images/earned-points.png');
@@ -267,6 +271,10 @@ class $AssetsImagesGen {
   AssetGenImage get trophy4x =>
       const AssetGenImage('assets/images/trophy-4x.png');
 
+  /// File path: assets/images/twitter_tools_desktop.png
+  AssetGenImage get twitterToolsDesktop =>
+      const AssetGenImage('assets/images/twitter_tools_desktop.png');
+
   /// List of all assets
   List<AssetGenImage> get values => [
         chestLevel1Closed,
@@ -276,13 +284,15 @@ class $AssetsImagesGen {
         chestLevel3Closed,
         chestLevel3Opened,
         chestTasks,
+        cryptoNewsDesktop,
         earnedPoints,
         isomorphLogoWithText,
         onboardingSlide1Bg,
         onboardingSlide2Bg,
         revealCard,
         trophy2x,
-        trophy4x
+        trophy4x,
+        twitterToolsDesktop
       ];
 }
 

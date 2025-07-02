@@ -90,15 +90,25 @@ class AgentsViewDesktop extends ViewModelWidget<AgentsViewModel> {
         verticalSpace36,
         Row(
           children: [
-            TwitterToolsCard(
-              number: 16,
-              title: 'Generated tweets to review',
-              onPressed: viewModel.onTwitterPersonaPressed,
+            Expanded(
+              child: TwitterToolsCard(
+                number: 16,
+                title: 'Generated tweets to review',
+                onPressed: viewModel.onTwitterPersonaPressed,
+              ),
             ),
             horizontalSpace36,
-            TwitterToolsCard(number: 5, title: 'Tagged tweets to be discussed'),
+            Expanded(
+              child: TwitterToolsCard(
+                number: 5,
+                title: 'Tagged tweets to be discussed',
+                onPressed: viewModel.onTaggedTwitterPressed,
+              ),
+            ),
             horizontalSpace36,
-            TwitterToolsCard(number: 8, title: 'Tweets to generate replies to'),
+            Expanded(
+                child: TwitterToolsCard(
+                    number: 8, title: 'Tweets to generate replies to')),
           ],
         ),
       ],
