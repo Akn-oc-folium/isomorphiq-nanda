@@ -29,4 +29,8 @@ class AgentsViewModel extends BaseViewModel {
   void onTaggedTwitterPressed() {
     _routerService.navigateToTaggedTweetView();
   }
+
+  void onReplyTwitterPressed() {
+    _routerService.navigateToReplyTweetView();
+  }
 }
