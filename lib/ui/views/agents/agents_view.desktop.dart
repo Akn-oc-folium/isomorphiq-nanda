@@ -108,7 +108,10 @@ class AgentsViewDesktop extends ViewModelWidget<AgentsViewModel> {
             horizontalSpace36,
             Expanded(
                 child: TwitterToolsCard(
-                    number: 8, title: 'Tweets to generate replies to')),
+              number: 8,
+              title: 'Tweets to generate replies to',
+              onPressed: viewModel.onReplyTwitterPressed,
+            )),
           ],
         ),
       ],

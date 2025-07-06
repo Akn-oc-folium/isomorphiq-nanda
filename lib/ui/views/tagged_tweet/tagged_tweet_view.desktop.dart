@@ -58,13 +58,14 @@ class TaggedTweetViewDesktop extends ViewModelWidget<TaggedTweetViewModel> {
               itemCount: viewModel.taggedTweets.length,
               itemBuilder: (context, index) {
                 final tweet = viewModel.taggedTweets[index];
-                final tweetId = tweet.id;
                 return TaggedTweetCard(
                   user: tweet.user,
                   content: tweet.content,
-                  isSelected: tweetId == viewModel.selectedTweetId,
-                  onStartDiscussion: () => viewModel.startDiscussion(tweetId),
-                  onDelete: () => viewModel.deleteTweet(tweetId),
+                  buttonText: "Generate Reply",
+                  points: 5,
+                  onPrimaryAction: () => viewModel.startDiscussion(tweet.id),
+                  onDelete: () => viewModel.deleteTweet(tweet.id),
+                  isSelected: tweet.id == viewModel.selectedTweetId,
                 );
               },
             ),

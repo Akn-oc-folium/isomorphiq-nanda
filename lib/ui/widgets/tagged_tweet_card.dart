@@ -10,16 +10,20 @@ class TaggedTweetCard extends StatelessWidget {
     super.key,
     required this.user,
     required this.content,
-    this.onStartDiscussion,
-    this.onDelete,
+    this.buttonText = "Start Discussion",
+    this.points = 5,
     this.isSelected = false,
+    this.onPrimaryAction,
+    this.onDelete,
   });
 
   final String user;
   final String content;
-  final VoidCallback? onStartDiscussion;
-  final VoidCallback? onDelete;
+  final String buttonText;
+  final int points;
   final bool isSelected;
+  final VoidCallback? onPrimaryAction;
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,9 @@ class TaggedTweetCard extends StatelessWidget {
       width: 940.w,
       padding: EdgeInsets.all(32.r),
       decoration: BoxDecoration(
-        color: kcPrimaryColorLight,
+        color: isSelected
+            ? kcPrimaryColorLight.withOpacity(0.6)
+            : kcPrimaryColorLight,
         borderRadius: BorderRadius.circular(16.r),
       ),
       child: Column(
@@ -41,9 +47,10 @@ class TaggedTweetCard extends StatelessWidget {
                 child: Text(
                   user,
                   style: TextStyles.titleSecondary.copyWith(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.sp,
-                      color: kcSecondaryColor),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.sp,
+                    color: kcSecondaryColor,
+                  ),
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -51,9 +58,9 @@ class TaggedTweetCard extends StatelessWidget {
                 width: 194.w,
                 height: 56.h,
                 child: PrimaryButton(
-                  text: "Start Discussion",
-                  points: 5,
-                  onPressed: onStartDiscussion,
+                  text: buttonText,
+                  points: points,
+                  onPressed: onPrimaryAction,
                 ),
               ),
               horizontalSpace08,
