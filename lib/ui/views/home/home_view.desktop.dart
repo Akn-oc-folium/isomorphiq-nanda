@@ -31,13 +31,10 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         verticalSpace36,
-
-                        /// TOP BAR: User card, rank, streak
                         Row(
                           children: [
-                            SizedBox(
-                              width:
-                                  250, // fixed width to avoid unbounded issues
+                            Expanded(
+                              flex: 3,
                               child: UserStatusCard(
                                 name: viewModel
                                         .userProfile!.data!.telegramHandle ??
@@ -46,8 +43,10 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                               ),
                             ),
                             horizontalSpace08,
+                            horizontalSpace04,
                             _pointsCard(viewModel),
                             horizontalSpace08,
+                            horizontalSpace04,
                             StreakRedeemCard(
                               points: viewModel.streakPoints,
                               isRedeemed: viewModel.isRedeemedToday,
@@ -57,8 +56,6 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                           ],
                         ),
                         verticalSpace36,
-
-                        /// WELCOME BANNER
                         Container(
                           width: double.infinity,
                           decoration: BoxDecoration(
@@ -95,8 +92,6 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                           ),
                         ),
                         verticalSpace36,
-
-                        /// ACTION BANNER
                         ActionBanner(
                           leading: Image.asset(
                             Assets.images.twitterToolsDesktop.path,
@@ -112,136 +107,134 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                           onButtonPressed: viewModel.navigateToSources,
                         ),
                         verticalSpace36,
-
-                        /// GRID: Twitter Tools & News
-                        /// GRID: Twitter Tools & News
                         Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            /// TWITTER TOOLS
                             Expanded(
-                              child: Container(
-                                height: 180.h,
-                                width: 450.w,
-                                padding: EdgeInsets.only(
-                                    left: 24.r, top: 24.r, bottom: 24.r),
-                                decoration: BoxDecoration(
-                                  color: kcPrimaryColorLight,
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    /// Positioned image to extreme right
-                                    Positioned(
-                                      right: -20,
-                                      top: 0,
-                                      bottom: 0,
-                                      child: Image.asset(
-                                        Assets.images.twitterToolsDesktop.path,
-                                        scale: 1.5,
-                                        fit: BoxFit.contain,
+                              child: GestureDetector(
+                                onTap: viewModel.navigateToTweetPersona,
+                                child: Container(
+                                  height: 180.h,
+                                  width: 450.w,
+                                  padding: EdgeInsets.only(
+                                      left: 24.r, top: 24.r, bottom: 24.r),
+                                  decoration: BoxDecoration(
+                                    color: kcPrimaryColorLight,
+                                    borderRadius: BorderRadius.circular(16.r),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        right: -20,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: Image.asset(
+                                          Assets
+                                              .images.twitterToolsDesktop.path,
+                                          scale: 1.5,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
-                                    ),
-
-                                    /// Main content
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Twitter Tools',
-                                          style: TextStyles.titleSecondary
-                                              .copyWith(
-                                            color: kcSecondaryColor,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Twitter Tools',
+                                            style: TextStyles.titleSecondary
+                                                .copyWith(
+                                                    color: kcSecondaryColor,
+                                                    fontSize: 20.sp),
                                           ),
-                                        ),
-                                        verticalSpace16,
-                                        Row(
-                                          children: [
-                                            _toolCard(
-                                              icon: Icons.edit,
-                                              label: 'Generate\nTweet',
-                                            ),
-                                            horizontalSpace08,
-                                            _toolCard(
-                                              icon: Icons.tag,
-                                              label: 'Tagged\nTweets',
-                                            ),
-                                            horizontalSpace08,
-                                            _toolCard(
-                                              icon: Icons.reply,
-                                              label: 'Generate\nReply',
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                          verticalSpace16,
+                                          Row(
+                                            children: [
+                                              _toolCard(
+                                                icon: Icons.edit,
+                                                label: 'Generate\nTweet',
+                                              ),
+                                              horizontalSpace08,
+                                              _toolCard(
+                                                icon: Icons.tag,
+                                                label: 'Tagged\nTweets',
+                                              ),
+                                              horizontalSpace08,
+                                              _toolCard(
+                                                icon: Icons.reply,
+                                                label: 'Generate\nReply',
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             horizontalSpace16,
-
-                            /// CRYPTO NEWS
                             Expanded(
-                              child: Container(
-                                height: 180.h,
-                                width: 450.w,
-                                padding: EdgeInsets.all(24.r),
-                                decoration: BoxDecoration(
-                                  color: kcPrimaryColorLight,
-                                  borderRadius: BorderRadius.circular(16.r),
-                                ),
-                                child: Stack(
-                                  children: [
-                                    /// Positioned image to extreme right
-                                    Positioned(
-                                      right: 0,
-                                      top: 0,
-                                      bottom: 0,
-                                      child: Image.asset(
-                                        Assets.images.cryptoNewsDesktop.path,
-                                        height: 150.h,
-                                        fit: BoxFit.contain,
+                              child: GestureDetector(
+                                onTap: viewModel.navigateToCryptoNews,
+                                child: Container(
+                                  height: 180.h,
+                                  width: 450.w,
+                                  padding: EdgeInsets.only(
+                                      left: 24.r, top: 24.r, bottom: 24.r),
+                                  decoration: BoxDecoration(
+                                    color: kcPrimaryColorLight,
+                                    borderRadius: BorderRadius.circular(16.r),
+                                  ),
+                                  child: Stack(
+                                    children: [
+                                      Positioned(
+                                        right: -20,
+                                        top: 0,
+                                        bottom: 0,
+                                        child: Image.asset(
+                                          Assets.images.cryptoNewsDesktop.path,
+                                          height: 150.h,
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
-                                    ),
-
-                                    /// Main content
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Crypto News',
-                                          style: TextStyles.titleSecondary
-                                              .copyWith(
-                                            color: kcSecondaryColor,
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Crypto News',
+                                            style: TextStyles.titleSecondary
+                                                .copyWith(
+                                                    color: kcSecondaryColor,
+                                                    fontSize: 20.sp),
                                           ),
-                                        ),
-                                        verticalSpace08,
-                                        Text(
-                                          'Monitor AI-curated news matching your interests!',
-                                          style:
-                                              TextStyles.bodyPrimary.copyWith(
-                                            color: kcSecondaryColor,
+                                          verticalSpace16,
+                                          verticalSpace08,
+                                          SizedBox(
+                                            width: 163.w,
+                                            child: Text(
+                                              'Monitor AI-curated news matching your interests!',
+                                              style: TextStyles.bodyPrimary
+                                                  .copyWith(
+                                                      color: kcSecondaryColor,
+                                                      fontSize: 16.sp),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ],
                         ),
-
                         verticalSpace36,
-
-                        /// DATA SOURCES & DAILY CHALLENGE
                         Row(
                           children: [
                             Expanded(
                               child: _smallCard(
+                                onTap: viewModel.navigateToSources,
                                 title: 'Data Sources',
                                 subtitle:
                                     'Connect your accounts to earn points and train IQ!',
@@ -251,6 +244,7 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                             horizontalSpace16,
                             Expanded(
                               child: _smallCard(
+                                onTap: () {},
                                 title: 'Daily Chat Challenge',
                                 subtitle: 'Your responses shape your score!',
                                 icon: Icons.arrow_forward,
@@ -268,13 +262,23 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
     );
   }
 
-  /// POINTS CARD
   Widget _pointsCard(HomeViewModel viewModel) {
     return Container(
+      width: 118.w,
+      height: 54.h,
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.r),
         color: kcPrimaryColorLight,
+        borderRadius: BorderRadius.circular(12.r),
+        border: Border.all(
+          color: kcStrokeSecondary,
+        ),
+        boxShadow: const [
+          BoxShadow(
+            color: kcStrokePrimary,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
@@ -290,7 +294,6 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
     );
   }
 
-  /// TOOL CARD
   Widget _toolCard({required IconData icon, required String label}) {
     return SizedBox(
       width: 100.w,
@@ -315,35 +318,63 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
     );
   }
 
-  /// SMALL CARD
   Widget _smallCard(
       {required String title,
       required String subtitle,
-      required IconData icon}) {
-    return Container(
-      padding: EdgeInsets.all(16.r),
-      decoration: BoxDecoration(
-        color: kcPrimaryColorLight,
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title,
-                    style: TextStyles.titleSecondary
-                        .copyWith(color: kcSecondaryColor)),
-                verticalSpace08,
-                Text(subtitle,
-                    style: TextStyles.bodyPrimary
-                        .copyWith(color: kcSecondaryColor)),
-              ],
-            ),
+      required IconData icon,
+      required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 450.w,
+        height: 114.h,
+        padding: EdgeInsets.all(20.r),
+        decoration: BoxDecoration(
+          color: kcWhite,
+          borderRadius: BorderRadius.circular(16.r),
+          border: Border.all(
+            color: kcStrokeSecondary,
           ),
-          Icon(icon, color: kcPrimaryColor),
-        ],
+          boxShadow: const [
+            BoxShadow(
+              color: kcStrokePrimary,
+              offset: Offset(0, 1),
+            ),
+          ],
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(title,
+                      style: TextStyles.titleSecondary
+                          .copyWith(color: kcSecondaryColor, fontSize: 20.sp)),
+                  verticalSpace08,
+                  SizedBox(
+                    width: 202.w,
+                    child: Text(subtitle,
+                        style: TextStyles.bodyPrimary.copyWith(
+                            color: kcSecondaryColor, fontSize: 16.sp)),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+                width: 53.w,
+                height: 51.h,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.r),
+                  color: kcPrimaryColor,
+                ),
+                child: Icon(
+                  icon,
+                  color: kcWhite,
+                  size: 24.r,
+                )),
+          ],
+        ),
       ),
     );
   }

@@ -72,7 +72,6 @@ class HomeViewModel extends BaseViewModel {
     await fetchNews();
   }
 
-  /// Returns true if the user has redeemed today.
   bool get isRedeemedToday {
     if (lastRedeemedDate == null) return false;
     final now = DateTime.now();
@@ -81,7 +80,6 @@ class HomeViewModel extends BaseViewModel {
         lastRedeemedDate!.day == now.day;
   }
 
-  /// Load the stored redemption date from Hive.
   Future<void> _loadRedeemStatus() async {
     final storedDate =
         await _hiveService.retrieveData(kUserBox, kLastRedeemedKey);
@@ -93,7 +91,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> onClickStreakRedeem() async {
     setBusyForObject("redeemingStreak", true);
-    if (isRedeemedToday) return; // Already redeemed today.
+    if (isRedeemedToday) return;
 
     _totalEarned += streakPoints;
     final storedUserId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
@@ -102,7 +100,6 @@ class HomeViewModel extends BaseViewModel {
           userId: storedUserId, points: streakPoints);
     }
 
-    // Record that redemption happened now.
     lastRedeemedDate = DateTime.now();
     await _hiveService.storeData(
         kUserBox, kLastRedeemedKey, lastRedeemedDate!.toIso8601String());
@@ -147,22 +144,17 @@ class HomeViewModel extends BaseViewModel {
   Future<void> _fetchUserLevel({required int? userLevel}) async {
     setBusy(true);
     try {
-      // Retrieve the previously stored user level.
       final storedUserLevel =
           await _hiveService.retrieveData(kUserBox, kUserLevelKey);
       debugPrint('Stored user level: $storedUserLevel');
 
-      // If no level is stored or the fetched level is different, update it.
       if (storedUserLevel == null || storedUserLevel != userLevel) {
         await _hiveService.storeData(kUserBox, kUserLevelKey, userLevel);
         if (userLevel! > 1) {
           await _hiveService.storeData(kUserBox, kPlayActiveKey, true);
           debugPrint('Stored user level after storing: $storedUserLevel');
         }
-      }
-      // If the play-active flag is not present and the user level is above 1,
-      // ensure the play button is active.
-      else if (!await _hiveService.containsKey(kUserBox, kPlayActiveKey) &&
+      } else if (!await _hiveService.containsKey(kUserBox, kPlayActiveKey) &&
           userLevel! > 1) {
         await _hiveService.storeData(kUserBox, kPlayActiveKey, true);
       }

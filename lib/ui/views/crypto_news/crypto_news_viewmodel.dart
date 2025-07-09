@@ -17,7 +17,58 @@ class CryptoNewsViewModel extends BaseViewModel {
 
   List<News> _newsList = [];
   News? get currentNews =>
-      _newsList.isNotEmpty ? _newsList[_currentIndex] : null;
+      _newsList.isNotEmpty && _currentIndex < _newsList.length
+          ? _newsList[_currentIndex]
+          : null;
+
+  List<News> savedNews = [
+    News(
+      id: '1',
+      headline: "Pi Network mainnet launch sees Pi coin rally over 35%",
+      summary:
+          "Pi coin surged over 35% less than an hour after its highly anticipated mainnet went live.",
+      source: Source(domain: "CBS News", url: "https://cbsnews.com/pi"),
+      imageUrl: "https://via.placeholder.com/150",
+    ),
+    News(
+      id: '1',
+      headline: "Pi Network mainnet launch sees Pi coin rally over 35%",
+      summary:
+          "Pi coin surged over 35% less than an hour after its highly anticipated mainnet went live.",
+      source: Source(domain: "CBS News", url: "https://cbsnews.com/pi"),
+      imageUrl: "https://via.placeholder.com/150",
+    ),
+    News(
+      id: '1',
+      headline: "Pi Network mainnet launch sees Pi coin rally over 35%",
+      summary:
+          "Pi coin surged over 35% less than an hour after its highly anticipated mainnet went live.",
+      source: Source(domain: "CBS News", url: "https://cbsnews.com/pi"),
+      imageUrl: "https://via.placeholder.com/150",
+    ),
+    News(
+      id: '1',
+      headline: "Pi Network mainnet launch sees Pi coin rally over 35%",
+      summary:
+          "Pi coin surged over 35% less than an hour after its highly anticipated mainnet went live.",
+      source: Source(domain: "CBS News", url: "https://cbsnews.com/pi"),
+      imageUrl: "https://via.placeholder.com/150",
+    ),
+    News(
+      id: '1',
+      headline: "Pi Network mainnet launch sees Pi coin rally over 35%",
+      summary:
+          "Pi coin surged over 35% less than an hour after its highly anticipated mainnet went live.",
+      source: Source(domain: "CBS News", url: "https://cbsnews.com/pi"),
+      imageUrl: "https://via.placeholder.com/150",
+    ),
+  ];
+
+  String selectedFilter = 'All';
+
+  void init() {
+    fetchNews();
+  }
 
   Future<void> fetchNews() async {
     setBusy(true);
@@ -50,6 +101,26 @@ class CryptoNewsViewModel extends BaseViewModel {
       _currentIndex++;
       notifyListeners();
     }
+  }
+
+  void loadSavedNews(News news) {
+    final index = _newsList.indexWhere((n) => n.id == news.id);
+    if (index != -1) {
+      _currentIndex = index;
+      notifyListeners();
+    }
+  }
+
+  void saveCurrentNews() {
+    if (currentNews != null && !savedNews.contains(currentNews)) {
+      savedNews.add(currentNews!);
+      notifyListeners();
+    }
+  }
+
+  void selectFilter(String filter) {
+    selectedFilter = filter;
+    notifyListeners();
   }
 
   void navigateBack() {
