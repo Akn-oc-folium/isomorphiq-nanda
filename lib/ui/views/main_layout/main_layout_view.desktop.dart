@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:isomorph_iq_nanda/gen/assets.gen.dart';
 import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
+import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
 import 'package:stacked/stacked.dart';
 
 import 'main_layout_viewmodel.dart';
@@ -21,8 +21,12 @@ class MainLayoutViewDesktop extends ViewModelWidget<MainLayoutViewModel> {
   Widget build(BuildContext context, MainLayoutViewModel viewModel) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: kcPrimaryColorLight,
-          leading: Assets.images.isomorphLogoWithText.image()),
+        backgroundColor: kcPrimaryColorLight,
+        centerTitle: true,
+        title: Text('NANDA',
+            style: TextStyles.titleSecondary
+                .copyWith(color: kcSecondaryColor, fontSize: 20.sp)),
+      ),
       body: Row(
         children: [
           SizedBox(width: 490.w),

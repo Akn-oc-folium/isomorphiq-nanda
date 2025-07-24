@@ -40,14 +40,14 @@ class MainViewDesktop extends StatelessWidget {
                 getCustomizedNavItem(
                   index: 1,
                   selectedIndex: viewModel.currentIndex,
-                  iconPath: Assets.icons.logoStatic.path,
-                  label: ksAgentNavTitle,
+                  iconPath: Assets.icons.jackpot,
+                  label: ksJackpotNavTitle,
                 ),
                 getCustomizedNavItem(
                   index: 2,
                   selectedIndex: viewModel.currentIndex,
-                  iconPath: Assets.icons.jackpot,
-                  label: ksJackpotNavTitle,
+                  iconPath: Assets.icons.logoStatic.path,
+                  label: ksAgentNavTitle,
                 ),
               ],
             ),
@@ -130,9 +130,9 @@ class MainViewDesktop extends StatelessWidget {
       case 0:
         return MainLayoutView(body: HomeView(key: UniqueKey()));
       case 1:
-        return MainLayoutView(body: const AgentsView());
-      case 2:
         return MainLayoutView(body: const JackpotView());
+      case 2:
+        return MainLayoutView(body: const AgentsView());
     }
     return MainLayoutView(body: HomeView(key: UniqueKey()));
   }

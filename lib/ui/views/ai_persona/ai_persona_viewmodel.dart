@@ -17,7 +17,6 @@ class AiPersonaViewModel extends BaseViewModel {
 
   List<String> selectedTopics = ["Bitcoin", "Decentralisation", "NFT's"];
 
-  /// Default slider values for each personality aspect.
   final Map<String, double> sliderValues = {
     "Degen": 1,
     "Humor": 1,
@@ -44,18 +43,15 @@ class AiPersonaViewModel extends BaseViewModel {
     "Crypto X AI": ["Automated DAOs", "Predictive analytics", "On-chain AI"],
   };
 
-  /// Getters for slider values to avoid duplicate state.
   double get degenValue => sliderValues["Degen"] ?? 1;
   double get humorValue => sliderValues["Humor"] ?? 1;
   double get storytellingValue => sliderValues["Storytelling"] ?? 1;
   double get optimismValue => sliderValues["Optimism"] ?? 1;
   double get enthusiasmValue => sliderValues["Enthusiasm"] ?? 1;
 
-  /// Capitalizes the first letter of the given string.
   String capitalize(String text) =>
       text.isNotEmpty ? text[0].toUpperCase() + text.substring(1) : text;
 
-  /// Fetches the slider values from the API and updates the [sliderValues] map.
   Future<void> fetchSliderValues() async {
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
     try {
@@ -75,7 +71,6 @@ class AiPersonaViewModel extends BaseViewModel {
     }
   }
 
-  /// Updates a specific slider value and notifies listeners.
   void updateSlider(String title, double value) {
     if (sliderValues.containsKey(title)) {
       sliderValues[title] = value;
@@ -83,7 +78,6 @@ class AiPersonaViewModel extends BaseViewModel {
     }
   }
 
-  /// Placeholder for topic change action.
   void changeTopics() async {
     debugPrint("Change Topics Clicked!");
     var response = await _bottomSheetService.showCustomSheet(
@@ -98,7 +92,6 @@ class AiPersonaViewModel extends BaseViewModel {
     }
   }
 
-  /// Confirms changes by posting updated slider values to the API.
   Future<void> confirmChanges() async {
     setBusyForObject('personaUpdating', true);
     final userId = await _hiveService.retrieveData(kUserBox, kUserIdKey);
@@ -122,5 +115,25 @@ class AiPersonaViewModel extends BaseViewModel {
   void dispose() {
     accountsController.dispose();
     super.dispose();
+  }
+
+  final TextEditingController interestController = TextEditingController();
+
+  void addInterest() {
+    final input = interestController.text.trim();
+    if (input.isNotEmpty && !selectedTopics.contains(input)) {
+      selectedTopics.add(input);
+      interestController.clear();
+      notifyListeners();
+    }
+  }
+
+  void removeTopic(String tag) {
+    selectedTopics.remove(tag);
+    notifyListeners();
+  }
+
+  void navigateBack() {
+    _routerService.back();
   }
 }

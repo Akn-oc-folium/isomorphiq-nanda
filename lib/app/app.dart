@@ -27,6 +27,7 @@ import 'package:isomorph_iq_nanda/ui/bottom_sheets/topic_interest/topic_interest
 import 'package:isomorph_iq_nanda/ui/views/main_layout/main_layout_view.dart';
 import 'package:isomorph_iq_nanda/ui/views/tagged_tweet/tagged_tweet_view.dart';
 import 'package:isomorph_iq_nanda/ui/views/reply_tweet/reply_tweet_view.dart';
+import 'package:isomorph_iq_nanda/ui/views/agent_home/agent_home_view.dart';
 // @stacked-import
 
 @StackedApp(
@@ -47,6 +48,7 @@ import 'package:isomorph_iq_nanda/ui/views/reply_tweet/reply_tweet_view.dart';
     CustomRoute(page: MainLayoutView),
     CustomRoute(page: TaggedTweetView),
     CustomRoute(page: ReplyTweetView),
+    CustomRoute(page: AgentHomeView),
 // @stacked-route
 
     CustomRoute(page: UnknownView, path: '/404'),

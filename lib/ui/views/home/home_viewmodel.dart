@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:isomorph_iq_nanda/app/app.locator.dart';
 import 'package:isomorph_iq_nanda/app/app.router.dart';
+import 'package:isomorph_iq_nanda/models/conversation_model.dart';
 import 'package:isomorph_iq_nanda/models/crypto_news_model.dart';
 import 'package:isomorph_iq_nanda/models/profile_model.dart';
 import 'package:isomorph_iq_nanda/models/user_rank_model.dart';
@@ -42,6 +43,15 @@ class HomeViewModel extends BaseViewModel {
 
   List<News>? _newsList;
   List<News>? get newsList => _newsList;
+
+  final List<ConversationModel> recentConversations = [
+    ConversationModel(name: 'Moonbakery', unreadCount: 6),
+    ConversationModel(name: 'Abhirup', unreadCount: 8),
+    ConversationModel(name: 'Moonbakery', unreadCount: 6),
+    ConversationModel(name: 'Abhirup', unreadCount: 8),
+    ConversationModel(name: 'Moonbakery', unreadCount: 6),
+    ConversationModel(name: 'Abhirup', unreadCount: 8),
+  ];
 
   Future<void> refreshData() async {
     try {

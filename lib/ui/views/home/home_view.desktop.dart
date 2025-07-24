@@ -6,7 +6,6 @@ import 'package:isomorph_iq_nanda/ui/common/app_colors.dart';
 import 'package:isomorph_iq_nanda/ui/common/text_styles.dart';
 import 'package:isomorph_iq_nanda/ui/common/ui_helpers.dart';
 import 'package:isomorph_iq_nanda/ui/widgets/action_banner.dart';
-import 'package:isomorph_iq_nanda/ui/widgets/streak_redeem_card.dart';
 import 'package:isomorph_iq_nanda/ui/widgets/user_status_card.dart';
 import 'package:stacked/stacked.dart';
 import 'home_viewmodel.dart';
@@ -42,56 +41,153 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                                 rank: viewModel.userRank?.data.rank ?? 0,
                               ),
                             ),
-                            horizontalSpace08,
-                            horizontalSpace04,
-                            _pointsCard(viewModel),
-                            horizontalSpace08,
-                            horizontalSpace04,
-                            StreakRedeemCard(
-                              points: viewModel.streakPoints,
-                              isRedeemed: viewModel.isRedeemedToday,
-                              onRedeem: (_) => viewModel.onClickStreakRedeem(),
-                              isBusy: viewModel.busy("redeemingStreak"),
-                            ),
                           ],
                         ),
-                        verticalSpace36,
+                        verticalSpace16,
+                        verticalSpace04,
                         Container(
+                          height: 83.h,
                           width: double.infinity,
                           decoration: BoxDecoration(
-                            color: kcPrimaryColorLight,
-                            borderRadius: BorderRadius.circular(32.r),
+                            color: kcSecondaryColor,
+                            borderRadius: BorderRadius.circular(12.r),
                           ),
                           padding: EdgeInsets.symmetric(
-                              vertical: 40.h, horizontal: 24.w),
-                          child: Column(
+                              horizontal: 20.w, vertical: 16.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              SizedBox(
-                                height: 100.h,
-                                child: Image.asset(
-                                  Assets.gifs.isomorphLogo.path,
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              verticalSpace16,
-                              Text.rich(
-                                TextSpan(
-                                  text: 'Welcome to ',
-                                  style: TextStyles.titlePrimary
-                                      .copyWith(color: kcSecondaryColor),
-                                  children: [
-                                    TextSpan(
-                                      text: 'IsomorphIQ',
-                                      style: TextStyles.titlePrimary
-                                          .copyWith(color: kcPrimaryColor),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    'Talk to Your Agent',
+                                    style: TextStyles.titleSecondary.copyWith(
+                                      color: kcWhite,
+                                      fontSize: 18.sp,
                                     ),
+                                  ),
+                                  verticalSpace04,
+                                  Text(
+                                    'Ask anything, get help, or let it handle stuff for you.',
+                                    style: TextStyles.bodyPrimary
+                                        .copyWith(color: kcWhite),
+                                  ),
+                                ],
+                              ),
+                              GestureDetector(
+                                onTap: () {},
+                                child: Row(
+                                  children: [
+                                    Text(
+                                      'Open Personal Chat',
+                                      style: TextStyles.bodyPrimary.copyWith(
+                                        color: kcWhite,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                    horizontalSpace04,
+                                    Icon(Icons.arrow_forward,
+                                        color: kcWhite, size: 20.r),
                                   ],
                                 ),
+                              )
+                            ],
+                          ),
+                        ),
+                        verticalSpace16,
+                        verticalSpace08,
+                        verticalSpace04,
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.all(20.r),
+                          decoration: BoxDecoration(
+                            color: kcPrimaryColorLight.withOpacity(0.25),
+                            borderRadius: BorderRadius.circular(16.r),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Recent Conversations',
+                                style: TextStyles.titleSecondary.copyWith(
+                                  color: kcSecondaryColor,
+                                  fontSize: 20.sp,
+                                ),
+                              ),
+                              verticalSpace08,
+                              verticalSpace04,
+                              Text(
+                                'Pick up where you left off or check on updates.',
+                                style: TextStyles.bodyPrimary
+                                    .copyWith(color: kcSecondaryColor),
+                              ),
+                              verticalSpace16,
+                              verticalSpace04,
+                              GridView.count(
+                                crossAxisCount: 4,
+                                crossAxisSpacing: 16.w,
+                                mainAxisSpacing: 12.h,
+                                childAspectRatio: 160.w / 50.h,
+                                shrinkWrap: true, // ✅ Important
+                                physics:
+                                    const NeverScrollableScrollPhysics(), // ✅ Important
+                                children:
+                                    viewModel.recentConversations.map((conv) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 12.w, vertical: 10.h),
+                                    decoration: BoxDecoration(
+                                      color: kcWhite,
+                                      borderRadius: BorderRadius.circular(8.r),
+                                      border: Border.all(
+                                          color:
+                                              kcPrimaryColor.withOpacity(0.4)),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Image.asset(Assets.icons.iqCoin.path,
+                                            width: 24.w),
+                                        horizontalSpace08,
+                                        Expanded(
+                                          child: Text(
+                                            conv.name,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyles.bodyPrimary
+                                                .copyWith(
+                                                    color: kcSecondaryColor),
+                                          ),
+                                        ),
+                                        if ((conv.unreadCount) > 0)
+                                          Container(
+                                            margin: EdgeInsets.only(left: 4.w),
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: 6.w, vertical: 2.h),
+                                            decoration: BoxDecoration(
+                                              color: kcPrimaryColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.r),
+                                            ),
+                                            child: Text(
+                                              '${conv.unreadCount}',
+                                              style: TextStyles.bodyPrimary
+                                                  .copyWith(
+                                                color: kcWhite,
+                                                fontSize: 12.sp,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  );
+                                }).toList(),
                               ),
                             ],
                           ),
                         ),
-                        verticalSpace36,
+                        verticalSpace16,
+                        verticalSpace04,
                         ActionBanner(
                           leading: Image.asset(
                             Assets.images.twitterToolsDesktop.path,
@@ -230,27 +326,12 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                           ],
                         ),
                         verticalSpace36,
-                        Row(
-                          children: [
-                            Expanded(
-                              child: _smallCard(
-                                onTap: viewModel.navigateToSources,
-                                title: 'Data Sources',
-                                subtitle:
-                                    'Connect your accounts to earn points and train IQ!',
-                                icon: Icons.arrow_forward,
-                              ),
-                            ),
-                            horizontalSpace16,
-                            Expanded(
-                              child: _smallCard(
-                                onTap: () {},
-                                title: 'Daily Chat Challenge',
-                                subtitle: 'Your responses shape your score!',
-                                icon: Icons.arrow_forward,
-                              ),
-                            ),
-                          ],
+                        _smallCard(
+                          onTap: viewModel.navigateToSources,
+                          title: 'Data Sources',
+                          subtitle:
+                              'Connect your accounts to earn points and train IQ!',
+                          icon: Icons.arrow_forward,
                         ),
                         verticalSpace36,
                       ],
@@ -258,38 +339,6 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                   ),
                 ),
               ),
-      ),
-    );
-  }
-
-  Widget _pointsCard(HomeViewModel viewModel) {
-    return Container(
-      width: 118.w,
-      height: 54.h,
-      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-      decoration: BoxDecoration(
-        color: kcPrimaryColorLight,
-        borderRadius: BorderRadius.circular(12.r),
-        border: Border.all(
-          color: kcStrokeSecondary,
-        ),
-        boxShadow: const [
-          BoxShadow(
-            color: kcStrokePrimary,
-            offset: Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            viewModel.totalEarned.toString(),
-            style: TextStyles.titlePrimary.copyWith(color: kcSecondaryColor),
-          ),
-          horizontalSpace04,
-          Image.asset(Assets.icons.iqCoin.path, width: 24.w),
-        ],
       ),
     );
   }
@@ -326,7 +375,6 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width: 450.w,
         height: 114.h,
         padding: EdgeInsets.all(20.r),
         decoration: BoxDecoration(
@@ -352,12 +400,9 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                       style: TextStyles.titleSecondary
                           .copyWith(color: kcSecondaryColor, fontSize: 20.sp)),
                   verticalSpace08,
-                  SizedBox(
-                    width: 202.w,
-                    child: Text(subtitle,
-                        style: TextStyles.bodyPrimary.copyWith(
-                            color: kcSecondaryColor, fontSize: 16.sp)),
-                  ),
+                  Text(subtitle,
+                      style: TextStyles.bodyPrimary
+                          .copyWith(color: kcSecondaryColor, fontSize: 16.sp)),
                 ],
               ),
             ),

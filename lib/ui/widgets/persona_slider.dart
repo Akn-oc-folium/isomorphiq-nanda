@@ -34,7 +34,8 @@ class PersonaSlider extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title,
-            style: TextStyles.titleSecondary.copyWith(color: kcSecondaryColor)),
+            style: TextStyles.titleSecondary
+                .copyWith(color: kcSecondaryColor, fontSize: 24.sp)),
         SliderTheme(
           data: SliderThemeData(
             trackHeight: 2.0.h,
@@ -59,11 +60,13 @@ class PersonaSlider extends StatelessWidget {
           children: [
             Text(
               leftLabel,
-              style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+              style: TextStyles.bodyPrimary
+                  .copyWith(color: kcSecondaryColor, fontSize: 18.sp),
             ),
             Text(
               rightLabel,
-              style: TextStyles.bodyPrimary.copyWith(color: kcSecondaryColor),
+              style: TextStyles.bodyPrimary
+                  .copyWith(color: kcSecondaryColor, fontSize: 18.sp),
             ),
           ],
         ),

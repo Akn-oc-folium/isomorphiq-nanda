@@ -34,14 +34,14 @@ class MainViewMobile extends StatelessWidget {
             getCustomizedNavItem(
               index: 1,
               selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.logoStatic.path,
-              label: ksAgentNavTitle,
+              iconPath: Assets.icons.jackpot,
+              label: ksJackpotNavTitle,
             ),
             getCustomizedNavItem(
               index: 2,
               selectedIndex: viewModel.currentIndex,
-              iconPath: Assets.icons.jackpot,
-              label: ksJackpotNavTitle,
+              iconPath: Assets.icons.logoStatic.path,
+              label: ksAgentNavTitle,
             ),
           ],
         ),
@@ -122,9 +122,9 @@ class MainViewMobile extends StatelessWidget {
       case 0:
         return HomeView(key: UniqueKey());
       case 1:
-        return const AgentsView();
-      case 2:
         return const JackpotView();
+      case 2:
+        return const AgentsView();
     }
     return HomeView(key: UniqueKey());
   }
