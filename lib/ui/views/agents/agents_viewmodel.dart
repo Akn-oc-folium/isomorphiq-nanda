@@ -119,8 +119,10 @@ class AgentsViewModel extends BaseViewModel {
     }
   }
 
+  void onPlanUpgradePressed() => _routerService.navigateToChoosePlanView();
   void navigateToSources() => _routerService.navigateToSourcesView();
   void navigateToTweetPersona() => _routerService.navigateToAgentHomeView();
   void navigateToCryptoNews() => _routerService.navigateToCryptoNewsAgentView();
   void navigateToAgentSettings() => _routerService.navigateToAiPersonaView();
+  void navigateToAgentHome() => _routerService.navigateToAgentHomeView();
 }

@@ -64,7 +64,7 @@ class AgentHomeViewDesktop extends ViewModelWidget<AgentHomeViewModel> {
                               children: [
                                 IconButton(
                                   onPressed: viewModel.navigateBack,
-                                  icon: Icon(Icons.arrow_back,
+                                  icon: Icon(Icons.arrow_back_ios,
                                       color: Colors.black),
                                 ),
                                 horizontalSpace08,

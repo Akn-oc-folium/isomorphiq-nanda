@@ -39,20 +39,26 @@ class ActionBanner extends StatelessWidget {
       ),
       child: Row(
         children: [
-          //Leading widget (icon, text, number) if provided
           leading,
           horizontalSpace08,
-          // Expanded text in the middle
           Expanded(
             child: text,
           ),
-          horizontalSpace08,
-          // Right-aligned button
-          PrimaryButton.small(
-            width: 96.w,
-            text: buttonLabel,
-            onPressed: onButtonPressed,
-          ),
+          horizontalSpace04,
+          if (buttonLabel != '') ...[
+            PrimaryButton.small(
+              width: 96.w,
+              text: buttonLabel,
+              onPressed: onButtonPressed,
+            ),
+          ] else
+            GestureDetector(
+                onTap: onButtonPressed,
+                child: Icon(
+                  Icons.arrow_forward,
+                  color: kcWhite,
+                  size: 24.sp,
+                )),
         ],
       ),
     );

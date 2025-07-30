@@ -121,6 +121,7 @@ class HomeViewModel extends BaseViewModel {
     try {
       _userProfile = await _apiService.getDashboard(username: _username!);
       final userId = _userProfile?.data?.id;
+      print('Hari, ${userId}');
       if (userId != null || userId!.isNotEmpty) {
         if (!await _hiveService.containsKey(kUserBox, kUserIdKey)) {
           await _hiveService.storeData(kUserBox, kUserIdKey, userId);

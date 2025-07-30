@@ -45,17 +45,10 @@ class TwitterPersonaViewMobile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Twitter Persona",
+                      "Generate New Tweet",
                       style: TextStyles.titlePrimary
-                          .copyWith(color: kcSecondaryColor),
+                          .copyWith(color: kcSecondaryColor, fontSize: 20.sp),
                     ),
-                    verticalSpace08,
-                    Text(
-                      'Use IQ to interact with AI Agents, and level up your personal AI',
-                      style: TextStyles.titleTertiary
-                          .copyWith(color: kcSecondaryColor),
-                    ),
-                    verticalSpace04,
                     verticalSpace08,
                     Container(
                       width: double.infinity,

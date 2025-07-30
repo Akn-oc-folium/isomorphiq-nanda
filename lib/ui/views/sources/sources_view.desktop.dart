@@ -34,7 +34,7 @@ class SourcesViewDesktop extends StatelessWidget {
                     children: [
                       IconButton(
                         onPressed: () => Navigator.pop(context),
-                        icon: Icon(Icons.arrow_back, size: 30.r),
+                        icon: Icon(Icons.arrow_back_ios, size: 30.r),
                         color: kcSecondaryColor,
                       ),
                       horizontalSpace04,

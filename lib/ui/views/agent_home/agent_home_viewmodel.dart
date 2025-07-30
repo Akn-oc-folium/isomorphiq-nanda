@@ -33,6 +33,4 @@ class AgentHomeViewModel extends BaseViewModel {
   void onReplyTwitterPressed() {
     _routerService.navigateToReplyTweetView();
   }
-
-  void navigateToSources() {}
 }

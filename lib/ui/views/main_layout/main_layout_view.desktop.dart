@@ -21,6 +21,7 @@ class MainLayoutViewDesktop extends ViewModelWidget<MainLayoutViewModel> {
   Widget build(BuildContext context, MainLayoutViewModel viewModel) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: kcPrimaryColorLight,
         centerTitle: true,
         title: Text('NANDA',

@@ -23,7 +23,7 @@ class CryptoNewsViewMobile extends ViewModelWidget<CryptoNewsViewModel> {
               centerTitle: true,
               leading: IconButton(
                 onPressed: viewModel.navigateBack,
-                icon: Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back_ios, color: Colors.black),
               ),
               title: Text('Crypto News Agent',
                   style: TextStyles.titleSecondary

@@ -130,9 +130,8 @@ class HomeViewDesktop extends StackedView<HomeViewModel> {
                                 crossAxisSpacing: 16.w,
                                 mainAxisSpacing: 12.h,
                                 childAspectRatio: 160.w / 50.h,
-                                shrinkWrap: true, // ✅ Important
-                                physics:
-                                    const NeverScrollableScrollPhysics(), // ✅ Important
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
                                 children:
                                     viewModel.recentConversations.map((conv) {
                                   return Container(

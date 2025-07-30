@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:isomorph_iq_nanda/app/app.bottomsheets.dart';
 import 'package:isomorph_iq_nanda/app/app.locator.dart';
+import 'package:isomorph_iq_nanda/ui/bottom_sheets/generated_tweet/generated_tweet_sheet_model.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class TaggedTweetViewModel extends BaseViewModel {
   final RouterService _routerService = locator<RouterService>();
+  final _bottomSheetService = locator<BottomSheetService>();
 
   bool showFilterPanel = false;
   bool showDiscussionPanel = false;
@@ -31,6 +34,8 @@ class TaggedTweetViewModel extends BaseViewModel {
 
   String currentDiscussionPrompt =
       "GM Ans, what do you want to know about the latest Pi Network mainnet.";
+
+  void loadTaggedTweets() {}
 
   void toggleFilterPanel() {
     showFilterPanel = !showFilterPanel;
@@ -70,6 +75,26 @@ class TaggedTweetViewModel extends BaseViewModel {
   }
 
   void navigateBack() => _routerService.back();
+
+  void openGeneratedTweetModal(TaggedTweet tweet) async {
+    final response = await _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.generatedTweet,
+      title: 'Tagged Tweet',
+      description: tweet.content,
+      data: {
+        'type': TweetSheetType.tagged,
+        'tweetId': tweet.id,
+        'handle': tweet.user,
+      },
+      isScrollControlled: true,
+    );
+
+    if (response?.confirmed == true &&
+        response?.data?['startDiscussion'] == true) {
+      final tweetId = response!.data!['tweetId'];
+      startDiscussion(tweetId);
+    }
+  }
 }
 
 class ChatMessage {

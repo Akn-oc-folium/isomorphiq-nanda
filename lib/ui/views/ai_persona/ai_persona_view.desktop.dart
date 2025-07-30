@@ -27,7 +27,7 @@ class AiPersonaViewDesktop extends ViewModelWidget<AiPersonaViewModel> {
                   GestureDetector(
                     onTap: viewModel.navigateBack,
                     child: Icon(
-                      Icons.arrow_back,
+                      Icons.arrow_back_ios,
                       color: Colors.black,
                     ),
                   ),
